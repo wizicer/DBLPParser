@@ -1,0 +1,713 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="dblpModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="dblpModelStoreContainer">
+          <EntitySet Name="articles" EntityType="dblpModel.Store.articles" store:Type="Tables" Schema="dblp" />
+          <EntitySet Name="authors" EntityType="dblpModel.Store.authors" store:Type="Tables" Schema="dblp" />
+          <EntitySet Name="dblp_author" EntityType="dblpModel.Store.dblp_author" store:Type="Tables" Schema="dblp" />
+          <EntitySet Name="dblp_conference" EntityType="dblpModel.Store.dblp_conference" store:Type="Tables" Schema="dblp" />
+          <EntitySet Name="dblp_inproceedings" EntityType="dblpModel.Store.dblp_inproceedings" store:Type="Tables" Schema="dblp" />
+          <EntitySet Name="inproceedings" EntityType="dblpModel.Store.inproceedings" store:Type="Tables" Schema="dblp" />
+          <EntitySet Name="phdthesis" EntityType="dblpModel.Store.phdthesis" store:Type="Tables" Schema="dblp" />
+          <EntitySet Name="proceedings" EntityType="dblpModel.Store.proceedings" store:Type="Tables" Schema="dblp" />
+          <EntitySet Name="table_articles" EntityType="dblpModel.Store.table_articles" store:Type="Tables" Schema="dblp" />
+          <EntitySet Name="table_inproceedings" EntityType="dblpModel.Store.table_inproceedings" store:Type="Tables" Schema="dblp" />
+          <EntitySet Name="table_phdthesis" EntityType="dblpModel.Store.table_phdthesis" store:Type="Tables" Schema="dblp" />
+          <EntitySet Name="table_proceedings" EntityType="dblpModel.Store.table_proceedings" store:Type="Tables" Schema="dblp" />
+          <EntitySet Name="table_www" EntityType="dblpModel.Store.table_www" store:Type="Tables" Schema="dblp" />
+        </EntityContainer>
+        <EntityType Name="articles">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="key" Type="text" Nullable="false" />
+          <Property Name="mdate" Type="text" Nullable="false" />
+          <Property Name="title" Type="text" />
+          <Property Name="pages" Type="text" />
+          <Property Name="year" Type="text" />
+          <Property Name="volume" Type="text" />
+          <Property Name="journal" Type="text" />
+          <Property Name="ee" Type="text" />
+          <Property Name="url" Type="text" />
+          <Property Name="crossref" Type="text" />
+          <Property Name="author_keys" Type="text" />
+          <Property Name="proceeding_key" Type="int" />
+        </EntityType>
+        <EntityType Name="authors">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="mdate" Type="text" />
+          <Property Name="key" Type="text" />
+          <Property Name="name" Type="text" Nullable="false" />
+          <Property Name="crossref" Type="text" />
+          <Property Name="alias" Type="text" />
+          <Property Name="url" Type="text" />
+          <Property Name="articles_keys" Type="text" />
+          <Property Name="inproceedings_keys" Type="text" />
+          <Property Name="title" Type="text" />
+          <Property Name="count" Type="int" />
+        </EntityType>
+        <EntityType Name="dblp_author">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="name" Type="text" />
+          <Property Name="inproceedings" Type="text" />
+          <Property Name="count" Type="int" />
+        </EntityType>
+        <EntityType Name="dblp_conference">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="name" Type="text" />
+          <Property Name="inproceedings" Type="text" />
+          <Property Name="count" Type="int" />
+        </EntityType>
+        <EntityType Name="dblp_inproceedings">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="key" Type="text" />
+          <Property Name="title" Type="text" />
+          <Property Name="authors" Type="text" />
+          <Property Name="conference" Type="text" />
+          <Property Name="count" Type="int" />
+          <Property Name="conference_id" Type="int" />
+          <Property Name="year" Type="text" />
+          <Property Name="ee" Type="text" />
+          <Property Name="url" Type="text" />
+          <Property Name="pages" Type="text" />
+          <Property Name="crossref" Type="text" />
+          <Property Name="mdate" Type="text" />
+        </EntityType>
+        <EntityType Name="inproceedings">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="key" Type="text" Nullable="false" />
+          <Property Name="mdate" Type="text" Nullable="false" />
+          <Property Name="title" Type="text" Nullable="false" />
+          <Property Name="pages" Type="text" />
+          <Property Name="year" Type="text" />
+          <Property Name="booktitle" Type="text" />
+          <Property Name="ee" Type="text" />
+          <Property Name="url" Type="text" />
+          <Property Name="crossref" Type="text" />
+          <Property Name="author_keys" Type="text" />
+          <Property Name="proceeding_key" Type="int" />
+          <Property Name="count" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="phdthesis">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="text" />
+          <Property Name="authors" Type="text" />
+          <Property Name="key" Type="text" />
+          <Property Name="mdate" Type="text" />
+          <Property Name="year" Type="text" />
+          <Property Name="school" Type="text" />
+          <Property Name="pages" Type="text" />
+          <Property Name="isbn" Type="text" />
+          <Property Name="note" Type="text" />
+        </EntityType>
+        <EntityType Name="proceedings">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="key" Type="text" Nullable="false" />
+          <Property Name="mdate" Type="text" Nullable="false" />
+          <Property Name="title" Type="text" Nullable="false" />
+          <Property Name="booktitle" Type="text" />
+          <Property Name="series" Type="text" />
+          <Property Name="volume" Type="text" />
+          <Property Name="publisher" Type="text" />
+          <Property Name="year" Type="text" />
+          <Property Name="isbn" Type="text" />
+          <Property Name="url" Type="text" />
+          <Property Name="series_href" Type="text" />
+          <Property Name="editors" Type="text" />
+        </EntityType>
+        <EntityType Name="table_articles">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="KEY" Type="varchar" MaxLength="33" />
+          <Property Name="MDATE" Type="varchar" MaxLength="10" />
+          <Property Name="TITLE" Type="mediumtext" />
+          <Property Name="PAGES" Type="varchar" MaxLength="9" />
+          <Property Name="YEAR" Type="int" />
+          <Property Name="VOLUME" Type="varchar" MaxLength="27" />
+          <Property Name="JOURNAL" Type="varchar" MaxLength="112" />
+          <Property Name="EE" Type="varchar" MaxLength="92" />
+          <Property Name="URL" Type="varchar" MaxLength="77" />
+          <Property Name="CROSSREF" Type="varchar" MaxLength="10" />
+          <Property Name="AUTHORS" Type="varchar" MaxLength="500" />
+          <Property Name="COUNT" Type="int" />
+          <Property Name="author_keys" Type="varchar" Nullable="false" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="table_inproceedings">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="KEY" Type="varchar" MaxLength="39" />
+          <Property Name="MDATE" Type="varchar" MaxLength="10" />
+          <Property Name="TITLE" Type="longtext" />
+          <Property Name="PAGES" Type="varchar" MaxLength="9" />
+          <Property Name="YEAR" Type="int" />
+          <Property Name="BOOKTITLE" Type="varchar" MaxLength="36" />
+          <Property Name="EE" Type="varchar" MaxLength="73" />
+          <Property Name="URL" Type="varchar" MaxLength="57" />
+          <Property Name="CROSSREF" Type="varchar" MaxLength="19" />
+          <Property Name="AUTHORS" Type="varchar" MaxLength="500" />
+          <Property Name="COUNT" Type="int" />
+          <Property Name="author_keys" Type="varchar" Nullable="false" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="table_phdthesis">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="KEY" Type="varchar" MaxLength="27" />
+          <Property Name="MDATE" Type="varchar" MaxLength="10" />
+          <Property Name="TITLE" Type="mediumtext" />
+          <Property Name="PAGES" Type="varchar" MaxLength="5" />
+          <Property Name="YEAR" Type="int" />
+          <Property Name="SCHOOL" Type="varchar" MaxLength="72" />
+          <Property Name="NOTE" Type="varchar" MaxLength="31" />
+          <Property Name="URL" Type="varchar" MaxLength="122" />
+          <Property Name="CROSSREF" Type="varchar" MaxLength="10" />
+          <Property Name="AUTHORS" Type="varchar" MaxLength="500" />
+          <Property Name="COUNT" Type="int" />
+          <Property Name="author_keys" Type="varchar" Nullable="false" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="table_proceedings">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="KEY" Type="varchar" MaxLength="33" />
+          <Property Name="MDATE" Type="varchar" MaxLength="10" />
+          <Property Name="TITLE" Type="mediumtext" />
+          <Property Name="VOLUME" Type="varchar" MaxLength="27" />
+          <Property Name="YEAR" Type="int" />
+          <Property Name="BOOKTITLE" Type="varchar" MaxLength="141" />
+          <Property Name="SERIES" Type="varchar" MaxLength="175" />
+          <Property Name="URL" Type="varchar" MaxLength="54" />
+          <Property Name="EDITORS" Type="varchar" MaxLength="500" />
+          <Property Name="COUNT" Type="int" />
+          <Property Name="author_keys" Type="varchar" Nullable="false" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="table_www">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="KEY" Type="varchar" MaxLength="20" />
+          <Property Name="MDATE" Type="varchar" MaxLength="10" />
+          <Property Name="TITLE" Type="varchar" MaxLength="9" />
+          <Property Name="NOTE" Type="varchar" MaxLength="118" />
+          <Property Name="CROSSREF" Type="varchar" MaxLength="20" />
+          <Property Name="URL" Type="varchar" MaxLength="115" />
+          <Property Name="AUTHORS" Type="varchar" MaxLength="500" />
+          <Property Name="COUNT" Type="int" />
+          <Property Name="author_keys" Type="text" Nullable="false" />
+          <Property Name="inproceedings_count" Type="int" />
+          <Property Name="inproceedings_key" Type="text" Nullable="false" />
+        </EntityType>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="dblpModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="dblpData" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="articles" EntityType="dblpModel.article" />
+          <EntitySet Name="authors" EntityType="dblpModel.author" />
+          <EntitySet Name="dblp_author" EntityType="dblpModel.dblp_author" />
+          <EntitySet Name="dblp_conference" EntityType="dblpModel.dblp_conference" />
+          <EntitySet Name="dblp_inproceedings" EntityType="dblpModel.dblp_inproceedings" />
+          <EntitySet Name="inproceedings" EntityType="dblpModel.inproceeding" />
+          <EntitySet Name="phdthesis" EntityType="dblpModel.phdthesi" />
+          <EntitySet Name="proceedings" EntityType="dblpModel.proceedings" />
+          <EntitySet Name="table_articles" EntityType="dblpModel.table_articles" />
+          <EntitySet Name="table_inproceedings" EntityType="dblpModel.table_inproceedings" />
+          <EntitySet Name="table_phdthesis" EntityType="dblpModel.table_phdthesis" />
+          <EntitySet Name="table_proceedings" EntityType="dblpModel.table_proceedings" />
+          <EntitySet Name="table_www" EntityType="dblpModel.table_www" />
+        </EntityContainer>
+        <EntityType Name="article">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="key" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="mdate" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="title" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="pages" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="year" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="volume" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="journal" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ee" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="url" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="crossref" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="author_keys" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="proceeding_key" />
+        </EntityType>
+        <EntityType Name="author">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="mdate" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="key" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="name" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="crossref" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="alias" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="url" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="articles_keys" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="inproceedings_keys" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="title" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="count" />
+        </EntityType>
+        <EntityType Name="dblp_author">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="String" Name="name" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="inproceedings" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="count" />
+        </EntityType>
+        <EntityType Name="dblp_conference">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="String" Name="name" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="inproceedings" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="count" />
+        </EntityType>
+        <EntityType Name="dblp_inproceedings">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="String" Name="key" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="title" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="authors" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="conference" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="count" />
+          <Property Type="Int32" Name="conference_id" />
+          <Property Type="String" Name="year" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ee" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="url" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="pages" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="crossref" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="mdate" MaxLength="65535" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="inproceeding">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="key" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="mdate" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="title" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="pages" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="year" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="booktitle" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ee" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="url" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="crossref" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="author_keys" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="proceeding_key" />
+          <Property Type="Int32" Name="count" Nullable="false" />
+        </EntityType>
+        <EntityType Name="phdthesi">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="title" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="authors" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="key" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="mdate" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="year" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="school" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="pages" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="isbn" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="note" MaxLength="65535" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="proceedings">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="key" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="mdate" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="title" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="booktitle" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="series" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="volume" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="publisher" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="year" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="isbn" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="url" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="series_href" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="editors" MaxLength="65535" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="table_articles">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="KEY" MaxLength="33" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="MDATE" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="TITLE" MaxLength="16777215" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="PAGES" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="YEAR" />
+          <Property Type="String" Name="VOLUME" MaxLength="27" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="JOURNAL" MaxLength="112" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="EE" MaxLength="92" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="URL" MaxLength="77" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CROSSREF" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="AUTHORS" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="COUNT" />
+          <Property Type="String" Name="author_keys" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="table_inproceedings">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="KEY" MaxLength="39" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="MDATE" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="TITLE" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="PAGES" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="YEAR" />
+          <Property Type="String" Name="BOOKTITLE" MaxLength="36" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="EE" MaxLength="73" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="URL" MaxLength="57" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CROSSREF" MaxLength="19" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="AUTHORS" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="COUNT" />
+          <Property Type="String" Name="author_keys" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="table_phdthesis">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="KEY" MaxLength="27" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="MDATE" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="TITLE" MaxLength="16777215" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="PAGES" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="YEAR" />
+          <Property Type="String" Name="SCHOOL" MaxLength="72" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="NOTE" MaxLength="31" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="URL" MaxLength="122" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CROSSREF" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="AUTHORS" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="COUNT" />
+          <Property Type="String" Name="author_keys" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="table_proceedings">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="KEY" MaxLength="33" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="MDATE" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="TITLE" MaxLength="16777215" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="VOLUME" MaxLength="27" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="YEAR" />
+          <Property Type="String" Name="BOOKTITLE" MaxLength="141" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SERIES" MaxLength="175" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="URL" MaxLength="54" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="EDITORS" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="COUNT" />
+          <Property Type="String" Name="author_keys" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="table_www">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="KEY" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="MDATE" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="TITLE" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="NOTE" MaxLength="118" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CROSSREF" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="URL" MaxLength="115" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="AUTHORS" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="COUNT" />
+          <Property Type="String" Name="author_keys" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="inproceedings_count" />
+          <Property Type="String" Name="inproceedings_key" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
+        </EntityType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="dblpModelStoreContainer" CdmEntityContainer="dblpData">
+          <EntitySetMapping Name="articles">
+            <EntityTypeMapping TypeName="dblpModel.article">
+              <MappingFragment StoreEntitySet="articles">
+                <ScalarProperty Name="proceeding_key" ColumnName="proceeding_key" />
+                <ScalarProperty Name="author_keys" ColumnName="author_keys" />
+                <ScalarProperty Name="crossref" ColumnName="crossref" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="ee" ColumnName="ee" />
+                <ScalarProperty Name="journal" ColumnName="journal" />
+                <ScalarProperty Name="volume" ColumnName="volume" />
+                <ScalarProperty Name="year" ColumnName="year" />
+                <ScalarProperty Name="pages" ColumnName="pages" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="mdate" ColumnName="mdate" />
+                <ScalarProperty Name="key" ColumnName="key" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="authors">
+            <EntityTypeMapping TypeName="dblpModel.author">
+              <MappingFragment StoreEntitySet="authors">
+                <ScalarProperty Name="count" ColumnName="count" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="inproceedings_keys" ColumnName="inproceedings_keys" />
+                <ScalarProperty Name="articles_keys" ColumnName="articles_keys" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="alias" ColumnName="alias" />
+                <ScalarProperty Name="crossref" ColumnName="crossref" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="key" ColumnName="key" />
+                <ScalarProperty Name="mdate" ColumnName="mdate" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="dblp_author">
+            <EntityTypeMapping TypeName="dblpModel.dblp_author">
+              <MappingFragment StoreEntitySet="dblp_author">
+                <ScalarProperty Name="count" ColumnName="count" />
+                <ScalarProperty Name="inproceedings" ColumnName="inproceedings" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="dblp_conference">
+            <EntityTypeMapping TypeName="dblpModel.dblp_conference">
+              <MappingFragment StoreEntitySet="dblp_conference">
+                <ScalarProperty Name="count" ColumnName="count" />
+                <ScalarProperty Name="inproceedings" ColumnName="inproceedings" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="dblp_inproceedings">
+            <EntityTypeMapping TypeName="dblpModel.dblp_inproceedings">
+              <MappingFragment StoreEntitySet="dblp_inproceedings">
+                <ScalarProperty Name="mdate" ColumnName="mdate" />
+                <ScalarProperty Name="crossref" ColumnName="crossref" />
+                <ScalarProperty Name="pages" ColumnName="pages" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="ee" ColumnName="ee" />
+                <ScalarProperty Name="year" ColumnName="year" />
+                <ScalarProperty Name="conference_id" ColumnName="conference_id" />
+                <ScalarProperty Name="count" ColumnName="count" />
+                <ScalarProperty Name="conference" ColumnName="conference" />
+                <ScalarProperty Name="authors" ColumnName="authors" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="key" ColumnName="key" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="inproceedings">
+            <EntityTypeMapping TypeName="dblpModel.inproceeding">
+              <MappingFragment StoreEntitySet="inproceedings">
+                <ScalarProperty Name="count" ColumnName="count" />
+                <ScalarProperty Name="proceeding_key" ColumnName="proceeding_key" />
+                <ScalarProperty Name="author_keys" ColumnName="author_keys" />
+                <ScalarProperty Name="crossref" ColumnName="crossref" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="ee" ColumnName="ee" />
+                <ScalarProperty Name="booktitle" ColumnName="booktitle" />
+                <ScalarProperty Name="year" ColumnName="year" />
+                <ScalarProperty Name="pages" ColumnName="pages" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="mdate" ColumnName="mdate" />
+                <ScalarProperty Name="key" ColumnName="key" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="phdthesis">
+            <EntityTypeMapping TypeName="dblpModel.phdthesi">
+              <MappingFragment StoreEntitySet="phdthesis">
+                <ScalarProperty Name="note" ColumnName="note" />
+                <ScalarProperty Name="isbn" ColumnName="isbn" />
+                <ScalarProperty Name="pages" ColumnName="pages" />
+                <ScalarProperty Name="school" ColumnName="school" />
+                <ScalarProperty Name="year" ColumnName="year" />
+                <ScalarProperty Name="mdate" ColumnName="mdate" />
+                <ScalarProperty Name="key" ColumnName="key" />
+                <ScalarProperty Name="authors" ColumnName="authors" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="proceedings">
+            <EntityTypeMapping TypeName="dblpModel.proceedings">
+              <MappingFragment StoreEntitySet="proceedings">
+                <ScalarProperty Name="editors" ColumnName="editors" />
+                <ScalarProperty Name="series_href" ColumnName="series_href" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="isbn" ColumnName="isbn" />
+                <ScalarProperty Name="year" ColumnName="year" />
+                <ScalarProperty Name="publisher" ColumnName="publisher" />
+                <ScalarProperty Name="volume" ColumnName="volume" />
+                <ScalarProperty Name="series" ColumnName="series" />
+                <ScalarProperty Name="booktitle" ColumnName="booktitle" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="mdate" ColumnName="mdate" />
+                <ScalarProperty Name="key" ColumnName="key" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="table_articles">
+            <EntityTypeMapping TypeName="dblpModel.table_articles">
+              <MappingFragment StoreEntitySet="table_articles">
+                <ScalarProperty Name="author_keys" ColumnName="author_keys" />
+                <ScalarProperty Name="COUNT" ColumnName="COUNT" />
+                <ScalarProperty Name="AUTHORS" ColumnName="AUTHORS" />
+                <ScalarProperty Name="CROSSREF" ColumnName="CROSSREF" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="EE" ColumnName="EE" />
+                <ScalarProperty Name="JOURNAL" ColumnName="JOURNAL" />
+                <ScalarProperty Name="VOLUME" ColumnName="VOLUME" />
+                <ScalarProperty Name="YEAR" ColumnName="YEAR" />
+                <ScalarProperty Name="PAGES" ColumnName="PAGES" />
+                <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+                <ScalarProperty Name="MDATE" ColumnName="MDATE" />
+                <ScalarProperty Name="KEY" ColumnName="KEY" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="table_inproceedings">
+            <EntityTypeMapping TypeName="dblpModel.table_inproceedings">
+              <MappingFragment StoreEntitySet="table_inproceedings">
+                <ScalarProperty Name="author_keys" ColumnName="author_keys" />
+                <ScalarProperty Name="COUNT" ColumnName="COUNT" />
+                <ScalarProperty Name="AUTHORS" ColumnName="AUTHORS" />
+                <ScalarProperty Name="CROSSREF" ColumnName="CROSSREF" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="EE" ColumnName="EE" />
+                <ScalarProperty Name="BOOKTITLE" ColumnName="BOOKTITLE" />
+                <ScalarProperty Name="YEAR" ColumnName="YEAR" />
+                <ScalarProperty Name="PAGES" ColumnName="PAGES" />
+                <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+                <ScalarProperty Name="MDATE" ColumnName="MDATE" />
+                <ScalarProperty Name="KEY" ColumnName="KEY" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="table_phdthesis">
+            <EntityTypeMapping TypeName="dblpModel.table_phdthesis">
+              <MappingFragment StoreEntitySet="table_phdthesis">
+                <ScalarProperty Name="author_keys" ColumnName="author_keys" />
+                <ScalarProperty Name="COUNT" ColumnName="COUNT" />
+                <ScalarProperty Name="AUTHORS" ColumnName="AUTHORS" />
+                <ScalarProperty Name="CROSSREF" ColumnName="CROSSREF" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="NOTE" ColumnName="NOTE" />
+                <ScalarProperty Name="SCHOOL" ColumnName="SCHOOL" />
+                <ScalarProperty Name="YEAR" ColumnName="YEAR" />
+                <ScalarProperty Name="PAGES" ColumnName="PAGES" />
+                <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+                <ScalarProperty Name="MDATE" ColumnName="MDATE" />
+                <ScalarProperty Name="KEY" ColumnName="KEY" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="table_proceedings">
+            <EntityTypeMapping TypeName="dblpModel.table_proceedings">
+              <MappingFragment StoreEntitySet="table_proceedings">
+                <ScalarProperty Name="author_keys" ColumnName="author_keys" />
+                <ScalarProperty Name="COUNT" ColumnName="COUNT" />
+                <ScalarProperty Name="EDITORS" ColumnName="EDITORS" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="SERIES" ColumnName="SERIES" />
+                <ScalarProperty Name="BOOKTITLE" ColumnName="BOOKTITLE" />
+                <ScalarProperty Name="YEAR" ColumnName="YEAR" />
+                <ScalarProperty Name="VOLUME" ColumnName="VOLUME" />
+                <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+                <ScalarProperty Name="MDATE" ColumnName="MDATE" />
+                <ScalarProperty Name="KEY" ColumnName="KEY" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="table_www">
+            <EntityTypeMapping TypeName="dblpModel.table_www">
+              <MappingFragment StoreEntitySet="table_www">
+                <ScalarProperty Name="inproceedings_key" ColumnName="inproceedings_key" />
+                <ScalarProperty Name="inproceedings_count" ColumnName="inproceedings_count" />
+                <ScalarProperty Name="author_keys" ColumnName="author_keys" />
+                <ScalarProperty Name="COUNT" ColumnName="COUNT" />
+                <ScalarProperty Name="AUTHORS" ColumnName="AUTHORS" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="CROSSREF" ColumnName="CROSSREF" />
+                <ScalarProperty Name="NOTE" ColumnName="NOTE" />
+                <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+                <ScalarProperty Name="MDATE" ColumnName="MDATE" />
+                <ScalarProperty Name="KEY" ColumnName="KEY" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
