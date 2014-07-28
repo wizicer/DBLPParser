@@ -124,7 +124,7 @@
       this.txtOutput.Name = "txtOutput";
       this.txtOutput.Size = new System.Drawing.Size(200, 20);
       this.txtOutput.TabIndex = 3;
-      this.txtOutput.Text = "G:\\dblp\\2014";
+      this.txtOutput.Text = "G:\\dblp\\2014\\dblp-2014-06-28";
       // 
       // txtDBLPfile
       // 
@@ -132,7 +132,7 @@
       this.txtDBLPfile.Name = "txtDBLPfile";
       this.txtDBLPfile.Size = new System.Drawing.Size(216, 20);
       this.txtDBLPfile.TabIndex = 4;
-      this.txtDBLPfile.Text = "G:\\dblp\\2014\\dblp.xml";
+      this.txtDBLPfile.Text = "G:\\dblp\\2014\\dblp-2014-06-28\\dblp.xml";
       // 
       // label1
       // 

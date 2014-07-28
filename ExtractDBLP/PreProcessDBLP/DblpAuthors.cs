@@ -110,6 +110,13 @@ namespace PreProcessDBLP
             return string.Format("{0}~{1}~{2}~{3}~{4}~{5}",
                   Key, Name, alias, papers, Count, (int)OldValue, (int)CurrentValue);
         }
+        public string ToStringForMapping()
+        {
+          string alias = Alias == null ? "" : Alias.Aggregate("", (x, y) => x + "|" + y.ToString());
+          //ID~KEY~MDATE~TITLE~NOTE~CROSSREF~URL~AUTHORS~COUNT~author_keys~InproceedingsCount~InproceedingsIDs~lineIndex, fileindex
+          return string.Format("{0}\t|{1}\t|{2}\t|{3}",
+                Key, Name, alias, (int) CurrentValue);
+        }
         public Decimal SetValueFromInproceedings(Dictionary<int, DBLPInproceedings> allInproceedings)
         {
             OldValue = CurrentValue;

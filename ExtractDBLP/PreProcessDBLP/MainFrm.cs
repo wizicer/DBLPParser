@@ -41,7 +41,15 @@ namespace PreProcessDBLP
 
         private void btnLoadData_Click(object sender, EventArgs e)
         {
-            Thread tr = new Thread(new ThreadStart(LoadData));
+          DirectoryInfo dInfo = new DirectoryInfo(Path.GetFullPath(txtFolder.Text));
+          fileArticles = dInfo.GetFiles(txtArticlesPrefix.Text + "*", SearchOption.TopDirectoryOnly).ToList();
+          fileInproceedings = dInfo.GetFiles(txtInproceedingsPrefix.Text + "*", SearchOption.TopDirectoryOnly).ToList();
+          fileProceedings = dInfo.GetFiles(txtProceedingsPrefix.Text + "*", SearchOption.TopDirectoryOnly).ToList();
+          filePhdthesis = dInfo.GetFiles(txtPhdThesisPrefix.Text + "*", SearchOption.TopDirectoryOnly).ToList();
+          fileAuthors = dInfo.GetFiles(txtAuthorPrefix.Text + "*", SearchOption.TopDirectoryOnly).ToList();
+          fileConferences = dInfo.GetFiles(txtConferencePrefix.Text + "*", SearchOption.TopDirectoryOnly).ToList();
+       
+          Thread tr = new Thread(new ThreadStart(LoadData));
             tr.Start();
 
         }
@@ -58,27 +66,36 @@ namespace PreProcessDBLP
             var sw = Stopwatch.StartNew();
 
             ParseAuthors();
-
+            //SaveAuthorsForMapping("for-mapping-");
 
             if (chkSaveArticles.Checked)
             {
                 ParseArticles();
+                SaveInproceedingsData("journal");
+                SaveConferences("journal");
+                SaveAuthors("journal");
             }
 
-            ParseInproceedings();
-
-            if (chkSaveAuthors.Checked)
+            if (chkSaveInproceedings.Checked && (!chkSaveArticles.Checked))
             {
-                SaveAuthors();
+               ParseInproceedings();
+               //SaveInproceedingsData("conf");
+               SaveConferences("conf");
+               SaveAuthors("conf");
             }
-            if (chkSaveConference.Checked)
+            if (chkSaveInproceedings.Checked && chkSaveArticles.Checked)
+            {             
+              SaveInproceedingsData("all");              
+            }
+            if (chkSaveAuthors.Checked && chkSaveInproceedings.Checked && chkSaveArticles.Checked)
             {
-                SaveConferences();
+                SaveAuthors("all");
             }
-            if (chkSaveInproceedings.Checked)
+            if (chkSaveConference.Checked && chkSaveInproceedings.Checked && chkSaveArticles.Checked)
             {
-                SaveInproceedingsData();
+                SaveConferences("all");
             }
+            
             sw.Stop();
             if (this.IsHandleCreated)
             {
@@ -313,7 +330,7 @@ namespace PreProcessDBLP
 
         }
 
-        private void SaveAuthors()
+        private void SaveAuthors(string strtype)
         {
 
             Parallel.For(1, fileAuthors.Count + 1, i =>
@@ -325,11 +342,22 @@ namespace PreProcessDBLP
                 {
                     sb.AppendLine(dA.Key + "~" + dA.Value.ToString());
                 });
-                File.WriteAllText(Path.GetFullPath(txtFolder.Text + "\\saved-" +
+                File.WriteAllText(Path.GetFullPath(txtFolder.Text + "\\saved-" + strtype +"-"+
                     txtAuthorPrefix.Text + i.ToString() + ".csv"), sb.ToString());
             });
         }
-        private void SaveInproceedingsData()
+        private void SaveAuthorsForMapping(string strfile)
+        {
+          StringBuilder sb = new StringBuilder();
+          sb.AppendLine("Key\t|Name\t|alias\t|value");
+          dicAuthors.ToList().ForEach(dA =>
+          {
+            sb.AppendLine(dA.Value.ToStringForMapping());
+          });
+          File.WriteAllText(Path.GetFullPath(txtFolder.Text + "\\saved-" + strfile + "-" +
+              txtAuthorPrefix.Text + ".csv"), sb.ToString());
+        }
+        private void SaveInproceedingsData(string strType)
         {
             Parallel.For(1, fileInproceedings.Count + 1, i =>
             {
@@ -338,14 +366,16 @@ namespace PreProcessDBLP
                 var dicI = dicInproceedings.Where(d => d.Value.ifile == i).OrderBy(d => d.Value.iline);
                 dicI.ToList().ForEach(dI =>
                 {
-                    sb.AppendLine(dI.Value.ToString());
+                  File.AppendAllLines(Path.GetFullPath(txtFolder.Text + "\\saved-" +strType+"-"+
+                    txtInproceedingsPrefix.Text + i.ToString() + ".csv"), new string[] { dI.Value.ToString() });
+                   // sb.AppendLine(dI.Value.ToString());
                 });
 
-                File.WriteAllText(Path.GetFullPath(txtFolder.Text + "\\saved-" +
-                    txtInproceedingsPrefix.Text + i.ToString() + ".csv"), sb.ToString());
+                //File.WriteAllText(Path.GetFullPath(txtFolder.Text + "\\saved-" +strType+"-"+
+                //    txtInproceedingsPrefix.Text + i.ToString() + ".csv"), sb.ToString());
             });
         }
-        private void SaveConferences()
+        private void SaveConferences(string strtype)
         {
             object o = new object();
             StringBuilder sb = new StringBuilder();
@@ -356,7 +386,7 @@ namespace PreProcessDBLP
                     sb.AppendLine(c.Value.ToString());
                 }
             });
-            File.WriteAllText(Path.GetFullPath(txtFolder.Text + "\\saved-" + txtConferencePrefix.Text + ".csv"), sb.ToString());
+            File.WriteAllText(Path.GetFullPath(txtFolder.Text + "\\saved-" +strtype+"-"+ txtConferencePrefix.Text + ".csv"), sb.ToString());
         }
 
         private void ParseAuthors()
@@ -415,13 +445,6 @@ namespace PreProcessDBLP
 
         private void MainFrm_Load(object sender, EventArgs e)
         {
-            DirectoryInfo dInfo = new DirectoryInfo(Path.GetFullPath(txtFolder.Text));
-            fileArticles = dInfo.GetFiles(txtArticlesPrefix.Text + "*", SearchOption.TopDirectoryOnly).ToList();
-            fileInproceedings = dInfo.GetFiles(txtInproceedingsPrefix.Text + "*", SearchOption.TopDirectoryOnly).ToList();
-            fileProceedings = dInfo.GetFiles(txtProceedingsPrefix.Text + "*", SearchOption.TopDirectoryOnly).ToList();
-            filePhdthesis = dInfo.GetFiles(txtPhdThesisPrefix.Text + "*", SearchOption.TopDirectoryOnly).ToList();
-            fileAuthors = dInfo.GetFiles(txtAuthorPrefix.Text + "*", SearchOption.TopDirectoryOnly).ToList();
-            fileConferences = dInfo.GetFiles(txtConferencePrefix.Text + "*", SearchOption.TopDirectoryOnly).ToList();
         }
 
         private void btnTestDBLP_Click(object sender, EventArgs e)
