@@ -19,7 +19,8 @@ namespace ExtractDBLPForm
 {
     public partial class FrmDBLPExtract : Form
     {
-        object lock_w= new object();
+        private const int pageSize = 200000000;
+        object lock_w = new object();
         List<AuthorDBLP> listAs = new List<AuthorDBLP>();
         List<InproceedingsDBLP> listIs = new List<InproceedingsDBLP>();
         List<ConferenceDBLP> listCs = new List<ConferenceDBLP>();
@@ -27,507 +28,509 @@ namespace ExtractDBLPForm
         public FrmDBLPExtract()
         {
             InitializeComponent();
+            this.txtDBLPfile.Text = @"C:\Users\icer\Downloads\dblp\dblp-2021-03-01.xml";
+            this.txtOutput.Text = @"C:\Users\icer\Downloads\dblp\dblp-2021-03-01\";
         }
 
         private void btnStart_Click(object sender, EventArgs eventarg)
         {
-          this.Cursor = Cursors.WaitCursor;
+            this.Cursor = Cursors.WaitCursor;
 
 
-          int globalAuthorsCounter = 0;
-          int globalInproceedingsCounter = 0;
-          int globalArticlesCounter = 0;
-          int globalProceedingsCounter = 0;
-          int globalBooksCounter = 0;
-          int globalInCollectionsCounter = 0;
-          int globalPhdthesisCounter = 0;
-          int globalMasterthesisCounter = 0;
+            int globalAuthorsCounter = 0;
+            int globalInproceedingsCounter = 0;
+            int globalArticlesCounter = 0;
+            int globalProceedingsCounter = 0;
+            int globalBooksCounter = 0;
+            int globalInCollectionsCounter = 0;
+            int globalPhdthesisCounter = 0;
+            int globalMasterthesisCounter = 0;
 
-          int globalTitleCounter = 0;
-          StringBuilder sbTitle = new StringBuilder();
-          sbTitle.AppendLine(string.Format("ID~TITLE~HASHCODE"));
+            int globalTitleCounter = 0;
+            StringBuilder sbTitle = new StringBuilder();
+            sbTitle.AppendLine(string.Format("ID~TITLE~HASHCODE"));
 
-          StringBuilder sbAuthor = new StringBuilder();
-          sbAuthor.AppendLine(string.Format("ID~KEY~MDATE~TITLE~NOTE~CROSSREF~URL~AUTHORS~COUNT~author_keys~HASHCODE"));
-          StringBuilder sbArticles = new StringBuilder();
-          sbArticles.AppendLine(string.Format("ID~KEY~MDATE~TITLE~PAGES~YEAR~VOLUME~JOURNAL~EE~URL~CROSSREF~AUTHORS~COUNT~author_keys~HASHCODE"));
-          StringBuilder sbInproceedings = new StringBuilder();
-          sbInproceedings.AppendLine(string.Format("ID~KEY~MDATE~TITLE~PAGES~YEAR~BOOKTITLE~EE~URL~CROSSREF~AUTHORS~COUNT~author_keys~HASHCODE"));
-          StringBuilder sbPhdThesis = new StringBuilder();
-          sbPhdThesis.AppendLine(string.Format("ID~KEY~MDATE~TITLE~PAGES~YEAR~SCHOOL~NOTE~URL~CROSSREF~AUTHORS~COUNT~author_keys~HASHCODE"));
-          StringBuilder sbProceedings = new StringBuilder();
-          sbProceedings.AppendLine(string.Format("ID~KEY~MDATE~TITLE~VOLUME~YEAR~BOOKTITLE~SERIES~URL~EDITORS~COUNT~author_keys~HASHCODE"));
-          StringBuilder sbBooks = new StringBuilder();
-          sbBooks.AppendLine(string.Format("ID~KEY~MDATE~TITLE~VOLUME~YEAR~BOOKTITLE~SERIES~URL~EDITORS~COUNT~author_keys~HASHCODE"));
-          StringBuilder sbInCollections = new StringBuilder();
-          sbInCollections.AppendLine(string.Format("ID~KEY~MDATE~TITLE~VOLUME~YEAR~BOOKTITLE~SERIES~URL~EDITORS~COUNT~author_keys~HASHCODE"));
-          StringBuilder sbMasterThesis = new StringBuilder();
-          sbMasterThesis.AppendLine(string.Format("ID~KEY~MDATE~TITLE~PAGES~YEAR~SCHOOL~NOTE~URL~CROSSREF~AUTHORS~COUNT~author_keys~HASHCODE"));
+            StringBuilder sbAuthor = new StringBuilder();
+            sbAuthor.AppendLine(string.Format("ID~KEY~MDATE~TITLE~NOTE~CROSSREF~URL~AUTHORS~COUNT~author_keys~HASHCODE"));
+            StringBuilder sbArticles = new StringBuilder();
+            sbArticles.AppendLine(string.Format("ID~KEY~MDATE~TITLE~PAGES~YEAR~VOLUME~JOURNAL~EE~URL~CROSSREF~AUTHORS~COUNT~author_keys~HASHCODE"));
+            StringBuilder sbInproceedings = new StringBuilder();
+            sbInproceedings.AppendLine(string.Format("ID~KEY~MDATE~TITLE~PAGES~YEAR~BOOKTITLE~EE~URL~CROSSREF~AUTHORS~COUNT~author_keys~HASHCODE"));
+            StringBuilder sbPhdThesis = new StringBuilder();
+            sbPhdThesis.AppendLine(string.Format("ID~KEY~MDATE~TITLE~PAGES~YEAR~SCHOOL~NOTE~URL~CROSSREF~AUTHORS~COUNT~author_keys~HASHCODE"));
+            StringBuilder sbProceedings = new StringBuilder();
+            sbProceedings.AppendLine(string.Format("ID~KEY~MDATE~TITLE~VOLUME~YEAR~BOOKTITLE~SERIES~URL~EDITORS~COUNT~author_keys~HASHCODE"));
+            StringBuilder sbBooks = new StringBuilder();
+            sbBooks.AppendLine(string.Format("ID~KEY~MDATE~TITLE~VOLUME~YEAR~BOOKTITLE~SERIES~URL~EDITORS~COUNT~author_keys~HASHCODE"));
+            StringBuilder sbInCollections = new StringBuilder();
+            sbInCollections.AppendLine(string.Format("ID~KEY~MDATE~TITLE~VOLUME~YEAR~BOOKTITLE~SERIES~URL~EDITORS~COUNT~author_keys~HASHCODE"));
+            StringBuilder sbMasterThesis = new StringBuilder();
+            sbMasterThesis.AppendLine(string.Format("ID~KEY~MDATE~TITLE~PAGES~YEAR~SCHOOL~NOTE~URL~CROSSREF~AUTHORS~COUNT~author_keys~HASHCODE"));
 
-          XmlReaderSettings settings = new XmlReaderSettings();
-          settings.DtdProcessing = DtdProcessing.Parse;
-          settings.ValidationType = ValidationType.DTD;
-          XmlReader reader = XmlReader.Create(Path.GetFullPath(txtDBLPfile.Text), settings);
+            XmlReaderSettings settings = new XmlReaderSettings();
+            settings.DtdProcessing = DtdProcessing.Parse;
+            settings.ValidationType = ValidationType.DTD;
+            XmlReader reader = XmlReader.Create(Path.GetFullPath(txtDBLPfile.Text), settings);
 
-          string key = reader.GetAttribute("key");
-          string mdate = reader.GetAttribute("mdate");
-          string title = "";
-          string pages = "";
-          string year = "";
-          string volume = "";
-          string journal = "";
-          string ee = "";
-          string url = "";
-          string crossref = "";
-          string booktitle = "";
-          string author_names = "";
-          string author_codes = "";
-          int a_count = 0;
+            string key = reader.GetAttribute("key");
+            string mdate = reader.GetAttribute("mdate");
+            string title = "";
+            string pages = "";
+            string year = "";
+            string volume = "";
+            string journal = "";
+            string ee = "";
+            string url = "";
+            string crossref = "";
+            string booktitle = "";
+            string author_names = "";
+            string author_codes = "";
+            int a_count = 0;
 
 
-          while (!reader.EOF)
-          {
-            reader.MoveToContent();
-            if (reader.Depth != 1)
+            while (!reader.EOF)
             {
-              reader.Read();
-              continue;
+                reader.MoveToContent();
+                if (reader.Depth != 1)
+                {
+                    reader.Read();
+                    continue;
+                }
+                if (reader.NodeType == XmlNodeType.Element)
+                {
+                    title = "";
+                    pages = "";
+                    year = "";
+                    volume = "";
+                    journal = "";
+                    ee = "";
+                    url = "";
+                    crossref = "";
+                    booktitle = "";
+                    author_names = "";
+                    author_codes = "";
+                    a_count = 0;
+                    switch (reader.Name)
+                    {
+                        case "article":
+                            key = reader.GetAttribute("key");
+                            mdate = reader.GetAttribute("mdate");
+                            reader.Read();
+                            while (reader.Depth == 2)
+                            {
+                                if (reader.NodeType == XmlNodeType.Whitespace)
+                                {
+                                    reader.MoveToContent();
+                                }
+                                else if (reader.NodeType == XmlNodeType.Element)
+                                {
+
+                                    switch (reader.Name)
+                                    {
+                                        case "author":
+                                            string tmp = reader.ReadInnerXml().Replace('~', '_');
+                                            author_names += "|" + tmp;
+                                            author_codes += "|" + tmp.GetHashCode();
+                                            a_count++; break;
+                                        case "title": title = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        case "pages": pages = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        case "year": year = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        case "volume": volume = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        case "journal": journal = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        case "ee": ee = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        case "url": url = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        case "crossref": crossref = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        default: reader.ReadElementContentAsString(); break;
+                                    };
+                                }
+                            }
+                            reader.Read();
+                            //sbTitle.AppendLine(string.Format("{0}~{1}~{2}",
+                            //globalTitleCounter++, title,title.GetHashCode().ToString()));
+                            //if (globalTitleCounter % 500000 == 0)
+                            //  {
+                            //      File.WriteAllText(Path.GetFullPath(txtDBLPfile.Text + "-title-" + (globalTitleCounter / 500000) + ".csv"), sbTitle.ToString());
+                            //      sbTitle.Clear();
+                            //      sbTitle.AppendLine(string.Format("ID~TITLE~HASHCODE"));
+                            //  }
+                            sbArticles.AppendLine(string.Format("{0}~{1}~{2}~{3}~{4}~{5}~{6}~{7}~{8}~{9}~{10}~{11}~{12}~{13}`{14}",
+                                      globalArticlesCounter, key, mdate, title, pages, year, volume, journal, ee, url, crossref, author_names,
+                                      a_count, author_codes, title.GetHashCode().ToString()));
+                            globalArticlesCounter++;
+                            if (globalArticlesCounter % pageSize == 0)
+                            {
+                                File.WriteAllText(Path.GetFullPath(txtDBLPfile.Text + "-articles-" + (globalArticlesCounter / pageSize) + ".csv"), sbArticles.ToString());
+                                sbArticles.Clear();
+                                sbArticles.AppendLine(string.Format("ID~KEY~MDATE~TITLE~PAGES~YEAR~VOLUME~JOURNAL~EE~URL~CROSSREF~AUTHORS~COUNT~author_keys~HASHCODE"));
+                            }
+                            break;
+                        case "inproceedings":
+                            key = reader.GetAttribute("key");
+                            mdate = reader.GetAttribute("mdate");
+                            reader.Read();
+                            while (reader.Depth == 2)
+                            {
+                                if (reader.NodeType == XmlNodeType.Whitespace)
+                                {
+                                    reader.MoveToContent();
+                                }
+                                else if (reader.NodeType == XmlNodeType.Element)
+                                {
+                                    switch (reader.Name)
+                                    {
+                                        case "author":
+                                            string tmp = reader.ReadInnerXml().Replace('~', '_');
+                                            author_names += "|" + tmp;
+                                            author_codes += "|" + tmp.GetHashCode();
+                                            a_count++; break;
+                                        case "title": title = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        case "pages": pages = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        case "year": year = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        case "booktitle": booktitle = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        case "ee": ee = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        case "url": url = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        case "crossref": crossref = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        default: reader.ReadElementContentAsString(); break;
+                                    };
+                                }
+                            }
+                            reader.Read();
+                            //sbTitle.AppendLine(string.Format("{0}~{1}~{2}",
+                            //globalTitleCounter++, title,title.GetHashCode().ToString()));
+                            //if (globalTitleCounter % 500000 == 0)
+                            //{
+                            //  File.WriteAllText(Path.GetFullPath(txtDBLPfile.Text + "-title-" + (globalTitleCounter / 500000) + ".csv"), sbTitle.ToString());
+                            //  sbTitle.Clear();
+                            //  sbTitle.AppendLine(string.Format("ID~TITLE~HASHCODE"));
+                            //}
+                            sbInproceedings.AppendLine(string.Format("{0}~{1}~{2}~{3}~{4}~{5}~{6}~{7}~{8}~{9}~{10}~{11}~{12}~{13}",
+                                globalInproceedingsCounter, key, mdate, title, pages, year, booktitle, ee, url, crossref, author_names,
+                                a_count, author_codes, title.GetHashCode().ToString()));
+                            globalInproceedingsCounter++;
+                            if (globalInproceedingsCounter % pageSize == 0)
+                            {
+                                File.WriteAllText(Path.GetFullPath(txtDBLPfile.Text + "-inproceedings-" + (globalInproceedingsCounter / pageSize) + ".csv"), sbInproceedings.ToString());
+                                sbInproceedings.Clear();
+                                sbInproceedings.AppendLine(string.Format("ID~KEY~MDATE~TITLE~PAGES~YEAR~BOOKTITLE~EE~URL~CROSSREF~AUTHORS~COUNT~author_keys~HASHCODE"));
+                            }
+                            break;
+                        case "phdthesis":
+                            key = reader.GetAttribute("key");
+                            mdate = reader.GetAttribute("mdate");
+                            reader.Read();
+                            while (reader.Depth == 2)
+                            {
+                                if (reader.NodeType == XmlNodeType.Whitespace)
+                                {
+                                    reader.MoveToContent();
+                                }
+                                else if (reader.NodeType == XmlNodeType.Element)
+                                {
+                                    switch (reader.Name)
+                                    {
+                                        case "author":
+                                            string tmp = reader.ReadInnerXml().Replace('~', '_');
+                                            author_names += "|" + tmp;
+                                            author_codes += "|" + tmp.GetHashCode();
+                                            a_count++; break;
+                                        case "title": title = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        case "pages": pages = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        case "year": year = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        case "school": booktitle = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        case "note": ee = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        case "url": url = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        case "crossref": crossref = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        default: reader.ReadElementContentAsString(); break;
+                                    };
+                                }
+                            }
+                            reader.Read();
+                            //sbTitle.AppendLine(string.Format("{0}~{1}~{2}",
+                            // globalTitleCounter++, title, title.GetHashCode().ToString()));
+                            //if (globalTitleCounter % 500000 == 0)
+                            //{
+                            //  File.WriteAllText(Path.GetFullPath(txtDBLPfile.Text + "-title-" + (globalTitleCounter / 500000) + ".csv"), sbTitle.ToString());
+                            //  sbTitle.Clear();
+                            //  sbTitle.AppendLine(string.Format("ID~TITLE~HASHCODE"));
+                            //}
+                            sbPhdThesis.AppendLine(string.Format("{0}~{1}~{2}~{3}~{4}~{5}~{6}~{7}~{8}~{9}~{10}~{11}~{12}~{13}",
+                                globalPhdthesisCounter, key, mdate, title, pages, year, booktitle, ee, url, crossref, author_names, a_count,
+                                author_codes, title.GetHashCode().ToString()));
+                            globalPhdthesisCounter++;
+                            if (globalPhdthesisCounter % pageSize == 0)
+                            {
+                                File.WriteAllText(Path.GetFullPath(txtDBLPfile.Text + "-phdthesis-" + (globalPhdthesisCounter / pageSize) + ".csv"), sbPhdThesis.ToString());
+                                sbPhdThesis.Clear();
+                                sbPhdThesis.AppendLine(string.Format("ID~KEY~MDATE~TITLE~PAGES~YEAR~SCHOOL~NOTE~URL~CROSSREF~AUTHORS~COUNT~author_keys~HASHCODE"));
+                            }
+                            break;
+                        case "proceedings":
+                            key = reader.GetAttribute("key");
+                            mdate = reader.GetAttribute("mdate");
+                            reader.Read();
+                            while (reader.Depth == 2)
+                            {
+                                if (reader.NodeType == XmlNodeType.Whitespace)
+                                {
+                                    reader.MoveToContent();
+                                }
+                                else if (reader.NodeType == XmlNodeType.Element)
+                                {
+                                    switch (reader.Name)
+                                    {
+                                        case "editor":
+                                            string tmp = reader.ReadInnerXml().Replace('~', '_');
+                                            author_names += "|" + tmp;
+                                            author_codes += "|" + tmp.GetHashCode();
+                                            a_count++; break;
+                                        case "title": title = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        case "volume": pages = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        case "year": year = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        case "booktitle": booktitle = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        case "series": ee = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        case "url": url = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        default: reader.ReadElementContentAsString(); break;
+                                    };
+                                }
+                            }
+                            reader.Read();
+                            //sbTitle.AppendLine(string.Format("{0}~{1}~{2}",
+                            // globalTitleCounter++, title, title.GetHashCode().ToString()));
+                            //if (globalTitleCounter % 500000 == 0)
+                            //{
+                            //  File.WriteAllText(Path.GetFullPath(txtDBLPfile.Text + "-title-" + (globalTitleCounter / 500000) + ".csv"), sbTitle.ToString());
+                            //  sbTitle.Clear();
+                            //  sbTitle.AppendLine(string.Format("ID~TITLE~HASHCODE"));
+                            //}
+                            sbProceedings.AppendLine(string.Format("{0}~{1}~{2}~{3}~{4}~{5}~{6}~{7}~{8}~{9}~{10}~{11}~{12}",
+                                globalProceedingsCounter, key, mdate, title, pages, year, booktitle, ee, url, author_names, a_count,
+                                author_codes, title.GetHashCode().ToString()));
+                            globalProceedingsCounter++;
+                            if (globalProceedingsCounter % pageSize == 0)
+                            {
+                                File.WriteAllText(Path.GetFullPath(txtDBLPfile.Text + "-proceedings-" + (globalProceedingsCounter / pageSize) + ".csv"), sbProceedings.ToString());
+                                sbProceedings.Clear();
+                                sbProceedings.AppendLine(string.Format("ID~KEY~MDATE~TITLE~VOLUME~YEAR~BOOKTITLE~SERIES~URL~EDITORS~COUNT~author_keys~HASHCODE"));
+                            }
+                            break;
+                        case "www":
+                            key = reader.GetAttribute("key");
+                            mdate = reader.GetAttribute("mdate");
+                            reader.Read();
+                            while (reader.Depth == 2)
+                            {
+                                if (reader.NodeType == XmlNodeType.Whitespace)
+                                {
+                                    reader.MoveToContent();
+                                }
+                                else if (reader.NodeType == XmlNodeType.Element)
+                                {
+                                    switch (reader.Name)
+                                    {
+                                        case "author":
+                                            string tmp = reader.ReadInnerXml().Replace('~', '_');
+                                            author_names += "|" + tmp;
+                                            author_codes += "|" + tmp.GetHashCode();
+                                            a_count++; break;
+                                        case "title": title = reader.ReadInnerXml().Replace('~', '_').Replace('~', '_'); break;
+                                        case "note": pages = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        case "crossref": ee = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        case "url": url = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        default: reader.ReadElementContentAsString(); break;
+                                    };
+                                }
+                            }
+                            reader.Read();
+                            if (title == "Home Page")
+                            {
+                                sbAuthor.AppendLine(string.Format("{0}~{1}~{2}~{3}~{4}~{5}~{6}~{7}~{8}~{9}",
+                                    globalAuthorsCounter, key, mdate, title, pages, ee, url, author_names, a_count, author_codes));
+                                globalAuthorsCounter++;
+
+                                if (globalAuthorsCounter % pageSize == 0)
+                                {
+                                    File.WriteAllText(Path.GetFullPath(txtDBLPfile.Text + "-www-" + (globalAuthorsCounter / pageSize) + ".csv"), sbAuthor.ToString());
+                                    sbAuthor.Clear();
+                                    sbAuthor.AppendLine(string.Format("ID~KEY~MDATE~TITLE~NOTE~CROSSREF~URL~AUTHORS~COUNT~author_keys"));
+                                }
+                            }
+                            break;
+                        case "book":
+                            key = reader.GetAttribute("key");
+                            mdate = reader.GetAttribute("mdate");
+                            reader.Read();
+                            while (reader.Depth == 2)
+                            {
+                                if (reader.NodeType == XmlNodeType.Whitespace)
+                                {
+                                    reader.MoveToContent();
+                                }
+                                else if (reader.NodeType == XmlNodeType.Element)
+                                {
+                                    switch (reader.Name)
+                                    {
+                                        case "editor":
+                                        case "author":
+                                            string tmp = reader.ReadInnerXml().Replace('~', '_');
+                                            author_names += "|" + tmp;
+                                            author_codes += "|" + tmp.GetHashCode();
+                                            a_count++; break;
+                                        case "title": title = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        case "volume": pages = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        case "year": year = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        case "booktitle": booktitle = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        case "series": ee = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        case "url": url = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        default: reader.ReadElementContentAsString(); break;
+                                    };
+                                }
+                            }
+                            reader.Read();
+                            //sbTitle.AppendLine(string.Format("{0}~{1}~{2}",
+                            // globalTitleCounter++, title, title.GetHashCode().ToString()));
+                            //if (globalTitleCounter % 500000 == 0)
+                            //{
+                            //  File.WriteAllText(Path.GetFullPath(txtDBLPfile.Text + "-title-" + (globalTitleCounter / 500000) + ".csv"), sbTitle.ToString());
+                            //  sbTitle.Clear();
+                            //  sbTitle.AppendLine(string.Format("ID~TITLE~HASHCODE"));
+                            //}
+                            sbBooks.AppendLine(string.Format("{0}~{1}~{2}~{3}~{4}~{5}~{6}~{7}~{8}~{9}~{10}~{11}~{12}",
+                                globalBooksCounter++, key, mdate, title, pages, year, booktitle, ee, url, author_names,
+                                a_count, author_codes, title.GetHashCode().ToString()));
+
+                            if (globalBooksCounter % pageSize == 0)
+                            {
+                                File.WriteAllText(Path.GetFullPath(txtDBLPfile.Text + "-books-" + (globalBooksCounter / pageSize) + ".csv"), sbBooks.ToString());
+                                sbBooks.Clear();
+                                sbBooks.AppendLine(string.Format("ID~KEY~MDATE~TITLE~VOLUME~YEAR~BOOKTITLE~SERIES~URL~EDITORS~COUNT~author_keys~HASHCODE"));
+                            }
+                            break;
+                        case "incollection":
+                            key = reader.GetAttribute("key");
+                            mdate = reader.GetAttribute("mdate");
+                            reader.Read();
+                            while (reader.Depth == 2)
+                            {
+                                if (reader.NodeType == XmlNodeType.Whitespace)
+                                {
+                                    reader.MoveToContent();
+                                }
+                                else if (reader.NodeType == XmlNodeType.Element)
+                                {
+                                    switch (reader.Name)
+                                    {
+                                        case "editor":
+                                        case "author":
+                                            string tmp = reader.ReadInnerXml().Replace('~', '_');
+                                            author_names += "|" + tmp;
+                                            author_codes += "|" + tmp.GetHashCode();
+                                            a_count++; break;
+                                        case "title": title = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        case "volume": pages = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        case "year": year = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        case "booktitle": booktitle = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        case "series": ee = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        case "ee": ee = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        case "url": url = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        default: reader.ReadElementContentAsString(); break;
+                                    };
+                                }
+                            }
+                            reader.Read();
+                            //sbTitle.AppendLine(string.Format("{0}~{1}~{2}",
+                            //  globalTitleCounter++, title, title.GetHashCode().ToString()));
+                            //if (globalTitleCounter % 500000 == 0)
+                            //{
+                            //  File.WriteAllText(Path.GetFullPath(txtDBLPfile.Text + "-title-" + (globalTitleCounter / 500000) + ".csv"), sbTitle.ToString());
+                            //  sbTitle.Clear();
+                            //  sbTitle.AppendLine(string.Format("ID~TITLE~HASHCODE"));
+                            //}
+                            sbInCollections.AppendLine(string.Format("{0}~{1}~{2}~{3}~{4}~{5}~{6}~{7}~{8}~{9}~{10}~{11}~{12}",
+                                globalInCollectionsCounter++, key, mdate, title, pages, year, booktitle, ee, url,
+                                author_names, a_count, author_codes, title.GetHashCode().ToString()));
+                            if (globalInCollectionsCounter % pageSize == 0)
+                            {
+                                File.WriteAllText(Path.GetFullPath(txtDBLPfile.Text + "-incollections-" + (globalInCollectionsCounter / pageSize) + ".csv"), sbInCollections.ToString());
+                                sbInCollections.Clear();
+                                sbInCollections.AppendLine(string.Format("ID~KEY~MDATE~TITLE~VOLUME~YEAR~BOOKTITLE~SERIES~URL~EDITORS~COUNT~author_keys~HASHCODE"));
+                            }
+                            break;
+                        case "mastersthesis":
+                            key = reader.GetAttribute("key");
+                            mdate = reader.GetAttribute("mdate");
+                            reader.Read();
+                            while (reader.Depth == 2)
+                            {
+                                if (reader.NodeType == XmlNodeType.Whitespace)
+                                {
+                                    reader.MoveToContent();
+                                }
+                                else if (reader.NodeType == XmlNodeType.Element)
+                                {
+                                    switch (reader.Name)
+                                    {
+                                        case "author":
+                                            string tmp = reader.ReadInnerXml().Replace('~', '_');
+                                            author_names += "|" + tmp;
+                                            author_codes += "|" + tmp.GetHashCode();
+                                            a_count++; break;
+                                        case "title": title = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        case "pages": pages = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        case "year": year = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        case "school": booktitle = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        case "note": ee = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        case "url": url = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        case "crossref": crossref = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        default: reader.ReadElementContentAsString(); break;
+                                    };
+                                }
+                            }
+                            reader.Read();
+                            //sbTitle.AppendLine(string.Format("{0}~{1}~{2}",
+                            // globalTitleCounter++, title, title.GetHashCode().ToString()));
+                            //if (globalTitleCounter % 500000 == 0)
+                            //{
+                            //  File.WriteAllText(Path.GetFullPath(txtDBLPfile.Text + "-title-" + (globalTitleCounter / 500000) + ".csv"), sbTitle.ToString());
+                            //  sbTitle.Clear();
+                            //  sbTitle.AppendLine(string.Format("ID~TITLE~HASHCODE"));
+                            //}
+                            sbMasterThesis.AppendLine(string.Format("{0}~{1}~{2}~{3}~{4}~{5}~{6}~{7}~{8}~{9}~{10}~{11}~{12}~{13}",
+                                globalMasterthesisCounter++, key, mdate, title, pages, year, booktitle, ee, url, crossref, author_names,
+                                a_count, author_codes, title.GetHashCode().ToString()));
+
+                            if (globalMasterthesisCounter % pageSize == 0)
+                            {
+                                File.WriteAllText(Path.GetFullPath(txtDBLPfile.Text + "-masterthesis-" + (globalMasterthesisCounter / pageSize) + ".csv"), sbMasterThesis.ToString());
+                                sbMasterThesis.Clear();
+                                sbMasterThesis.AppendLine(string.Format("ID~KEY~MDATE~TITLE~PAGES~YEAR~SCHOOL~NOTE~URL~CROSSREF~AUTHORS~COUNT~author_keys~HASHCODE"));
+                            }
+                            break;
+                        default:
+                            reader.Read();
+                            break;
+                    }
+                }
+                else
+                {
+                    reader.Read();
+                }
+
             }
-            if (reader.NodeType == XmlNodeType.Element)
-            {
-              title = "";
-              pages = "";
-              year = "";
-              volume = "";
-              journal = "";
-              ee = "";
-              url = "";
-              crossref = "";
-              booktitle = "";
-              author_names = "";
-              author_codes = "";
-              a_count = 0;
-              switch (reader.Name)
-              {
-                case "article":
-                  key = reader.GetAttribute("key");
-                  mdate = reader.GetAttribute("mdate");
-                  reader.Read();
-                  while (reader.Depth == 2)
-                  {
-                    if (reader.NodeType == XmlNodeType.Whitespace)
-                    {
-                      reader.MoveToContent();
-                    }
-                    else if (reader.NodeType == XmlNodeType.Element)
-                    {
+            //File.WriteAllText(Path.GetFullPath(txtDBLPfile.Text + "-title-" + (globalTitleCounter / 500000) + "-end.csv"), sbTitle.ToString());
 
-                      switch (reader.Name)
-                      {
-                        case "author":
-                          string tmp = reader.ReadInnerXml().Replace('~', '_');
-                          author_names += "|" + tmp;
-                          author_codes += "|" + tmp.GetHashCode();
-                          a_count++; break;
-                        case "title": title = reader.ReadInnerXml().Replace('~', '_'); break;
-                        case "pages": pages = reader.ReadInnerXml().Replace('~', '_'); break;
-                        case "year": year = reader.ReadInnerXml().Replace('~', '_'); break;
-                        case "volume": volume = reader.ReadInnerXml().Replace('~', '_'); break;
-                        case "journal": journal = reader.ReadInnerXml().Replace('~', '_'); break;
-                        case "ee": ee = reader.ReadInnerXml().Replace('~', '_'); break;
-                        case "url": url = reader.ReadInnerXml().Replace('~', '_'); break;
-                        case "crossref": crossref = reader.ReadInnerXml().Replace('~', '_'); break;
-                        default: reader.ReadElementContentAsString(); break;
-                      };
-                    }
-                  }
-                  reader.Read();
-                  //sbTitle.AppendLine(string.Format("{0}~{1}~{2}",
-                  //globalTitleCounter++, title,title.GetHashCode().ToString()));
-                  //if (globalTitleCounter % 500000 == 0)
-                  //  {
-                  //      File.WriteAllText(Path.GetFullPath(txtDBLPfile.Text + "-title-" + (globalTitleCounter / 500000) + ".csv"), sbTitle.ToString());
-                  //      sbTitle.Clear();
-                  //      sbTitle.AppendLine(string.Format("ID~TITLE~HASHCODE"));
-                  //  }
-                  sbArticles.AppendLine(string.Format("{0}~{1}~{2}~{3}~{4}~{5}~{6}~{7}~{8}~{9}~{10}~{11}~{12}~{13}`{14}",
-                            globalArticlesCounter, key, mdate, title, pages, year, volume, journal, ee, url, crossref, author_names,
-                            a_count, author_codes, title.GetHashCode().ToString()));
-                  globalArticlesCounter++;
-                  if (globalArticlesCounter % 200000 == 0)
-                  {
-                    File.WriteAllText(Path.GetFullPath(txtDBLPfile.Text + "-articles-" + (globalArticlesCounter / 200000) + ".csv"), sbArticles.ToString());
-                    sbArticles.Clear();
-                    sbArticles.AppendLine(string.Format("ID~KEY~MDATE~TITLE~PAGES~YEAR~VOLUME~JOURNAL~EE~URL~CROSSREF~AUTHORS~COUNT~author_keys~HASHCODE"));
-                  }
-                  break;
-                case "inproceedings":
-                  key = reader.GetAttribute("key");
-                  mdate = reader.GetAttribute("mdate");
-                  reader.Read();
-                  while (reader.Depth == 2)
-                  {
-                    if (reader.NodeType == XmlNodeType.Whitespace)
-                    {
-                      reader.MoveToContent();
-                    }
-                    else if (reader.NodeType == XmlNodeType.Element)
-                    {
-                      switch (reader.Name)
-                      {
-                        case "author":
-                          string tmp = reader.ReadInnerXml().Replace('~', '_');
-                          author_names += "|" + tmp;
-                          author_codes += "|" + tmp.GetHashCode();
-                          a_count++; break;
-                        case "title": title = reader.ReadInnerXml().Replace('~', '_'); break;
-                        case "pages": pages = reader.ReadInnerXml().Replace('~', '_'); break;
-                        case "year": year = reader.ReadInnerXml().Replace('~', '_'); break;
-                        case "booktitle": booktitle = reader.ReadInnerXml().Replace('~', '_'); break;
-                        case "ee": ee = reader.ReadInnerXml().Replace('~', '_'); break;
-                        case "url": url = reader.ReadInnerXml().Replace('~', '_'); break;
-                        case "crossref": crossref = reader.ReadInnerXml().Replace('~', '_'); break;
-                        default: reader.ReadElementContentAsString(); break;
-                      };
-                    }
-                  }
-                  reader.Read();
-                  //sbTitle.AppendLine(string.Format("{0}~{1}~{2}",
-                  //globalTitleCounter++, title,title.GetHashCode().ToString()));
-                  //if (globalTitleCounter % 500000 == 0)
-                  //{
-                  //  File.WriteAllText(Path.GetFullPath(txtDBLPfile.Text + "-title-" + (globalTitleCounter / 500000) + ".csv"), sbTitle.ToString());
-                  //  sbTitle.Clear();
-                  //  sbTitle.AppendLine(string.Format("ID~TITLE~HASHCODE"));
-                  //}
-                  sbInproceedings.AppendLine(string.Format("{0}~{1}~{2}~{3}~{4}~{5}~{6}~{7}~{8}~{9}~{10}~{11}~{12}~{13}",
-                      globalInproceedingsCounter, key, mdate, title, pages, year, booktitle, ee, url, crossref, author_names,
-                      a_count, author_codes, title.GetHashCode().ToString()));
-                  globalInproceedingsCounter++;
-                  if (globalInproceedingsCounter % 200000 == 0)
-                  {
-                    File.WriteAllText(Path.GetFullPath(txtDBLPfile.Text + "-inproceedings-" + (globalInproceedingsCounter / 200000) + ".csv"), sbInproceedings.ToString());
-                    sbInproceedings.Clear();
-                    sbInproceedings.AppendLine(string.Format("ID~KEY~MDATE~TITLE~PAGES~YEAR~BOOKTITLE~EE~URL~CROSSREF~AUTHORS~COUNT~author_keys~HASHCODE"));
-                  }
-                  break;
-                case "phdthesis":
-                  key = reader.GetAttribute("key");
-                  mdate = reader.GetAttribute("mdate");
-                  reader.Read();
-                  while (reader.Depth == 2)
-                  {
-                    if (reader.NodeType == XmlNodeType.Whitespace)
-                    {
-                      reader.MoveToContent();
-                    }
-                    else if (reader.NodeType == XmlNodeType.Element)
-                    {
-                      switch (reader.Name)
-                      {
-                        case "author":
-                          string tmp = reader.ReadInnerXml().Replace('~', '_');
-                          author_names += "|" + tmp;
-                          author_codes += "|" + tmp.GetHashCode();
-                          a_count++; break;
-                        case "title": title = reader.ReadInnerXml().Replace('~', '_'); break;
-                        case "pages": pages = reader.ReadInnerXml().Replace('~', '_'); break;
-                        case "year": year = reader.ReadInnerXml().Replace('~', '_'); break;
-                        case "school": booktitle = reader.ReadInnerXml().Replace('~', '_'); break;
-                        case "note": ee = reader.ReadInnerXml().Replace('~', '_'); break;
-                        case "url": url = reader.ReadInnerXml().Replace('~', '_'); break;
-                        case "crossref": crossref = reader.ReadInnerXml().Replace('~', '_'); break;
-                        default: reader.ReadElementContentAsString(); break;
-                      };
-                    }
-                  }
-                  reader.Read();
-                  //sbTitle.AppendLine(string.Format("{0}~{1}~{2}",
-                  // globalTitleCounter++, title, title.GetHashCode().ToString()));
-                  //if (globalTitleCounter % 500000 == 0)
-                  //{
-                  //  File.WriteAllText(Path.GetFullPath(txtDBLPfile.Text + "-title-" + (globalTitleCounter / 500000) + ".csv"), sbTitle.ToString());
-                  //  sbTitle.Clear();
-                  //  sbTitle.AppendLine(string.Format("ID~TITLE~HASHCODE"));
-                  //}
-                  sbPhdThesis.AppendLine(string.Format("{0}~{1}~{2}~{3}~{4}~{5}~{6}~{7}~{8}~{9}~{10}~{11}~{12}~{13}",
-                      globalPhdthesisCounter, key, mdate, title, pages, year, booktitle, ee, url, crossref, author_names, a_count,
-                      author_codes, title.GetHashCode().ToString()));
-                  globalPhdthesisCounter++;
-                  if (globalPhdthesisCounter % 200000 == 0)
-                  {
-                    File.WriteAllText(Path.GetFullPath(txtDBLPfile.Text + "-phdthesis-" + (globalPhdthesisCounter / 200000) + ".csv"), sbPhdThesis.ToString());
-                    sbPhdThesis.Clear();
-                    sbPhdThesis.AppendLine(string.Format("ID~KEY~MDATE~TITLE~PAGES~YEAR~SCHOOL~NOTE~URL~CROSSREF~AUTHORS~COUNT~author_keys~HASHCODE"));
-                  }
-                  break;
-                case "proceedings":
-                  key = reader.GetAttribute("key");
-                  mdate = reader.GetAttribute("mdate");
-                  reader.Read();
-                  while (reader.Depth == 2)
-                  {
-                    if (reader.NodeType == XmlNodeType.Whitespace)
-                    {
-                      reader.MoveToContent();
-                    }
-                    else if (reader.NodeType == XmlNodeType.Element)
-                    {
-                      switch (reader.Name)
-                      {
-                        case "editor":
-                          string tmp = reader.ReadInnerXml().Replace('~', '_');
-                          author_names += "|" + tmp;
-                          author_codes += "|" + tmp.GetHashCode();
-                          a_count++; break;
-                        case "title": title = reader.ReadInnerXml().Replace('~', '_'); break;
-                        case "volume": pages = reader.ReadInnerXml().Replace('~', '_'); break;
-                        case "year": year = reader.ReadInnerXml().Replace('~', '_'); break;
-                        case "booktitle": booktitle = reader.ReadInnerXml().Replace('~', '_'); break;
-                        case "series": ee = reader.ReadInnerXml().Replace('~', '_'); break;
-                        case "url": url = reader.ReadInnerXml().Replace('~', '_'); break;
-                        default: reader.ReadElementContentAsString(); break;
-                      };
-                    }
-                  }
-                  reader.Read();
-                  //sbTitle.AppendLine(string.Format("{0}~{1}~{2}",
-                  // globalTitleCounter++, title, title.GetHashCode().ToString()));
-                  //if (globalTitleCounter % 500000 == 0)
-                  //{
-                  //  File.WriteAllText(Path.GetFullPath(txtDBLPfile.Text + "-title-" + (globalTitleCounter / 500000) + ".csv"), sbTitle.ToString());
-                  //  sbTitle.Clear();
-                  //  sbTitle.AppendLine(string.Format("ID~TITLE~HASHCODE"));
-                  //}
-                  sbProceedings.AppendLine(string.Format("{0}~{1}~{2}~{3}~{4}~{5}~{6}~{7}~{8}~{9}~{10}~{11}~{12}",
-                      globalProceedingsCounter, key, mdate, title, pages, year, booktitle, ee, url, author_names, a_count,
-                      author_codes, title.GetHashCode().ToString()));
-                  globalProceedingsCounter++;
-                  if (globalProceedingsCounter % 200000 == 0)
-                  {
-                    File.WriteAllText(Path.GetFullPath(txtDBLPfile.Text + "-proceedings-" + (globalProceedingsCounter / 200000) + ".csv"), sbProceedings.ToString());
-                    sbProceedings.Clear();
-                    sbProceedings.AppendLine(string.Format("ID~KEY~MDATE~TITLE~VOLUME~YEAR~BOOKTITLE~SERIES~URL~EDITORS~COUNT~author_keys~HASHCODE"));
-                  }
-                  break;
-                case "www":
-                  key = reader.GetAttribute("key");
-                  mdate = reader.GetAttribute("mdate");
-                  reader.Read();
-                  while (reader.Depth == 2)
-                  {
-                    if (reader.NodeType == XmlNodeType.Whitespace)
-                    {
-                      reader.MoveToContent();
-                    }
-                    else if (reader.NodeType == XmlNodeType.Element)
-                    {
-                      switch (reader.Name)
-                      {
-                        case "author":
-                          string tmp = reader.ReadInnerXml().Replace('~', '_');
-                          author_names += "|" + tmp;
-                          author_codes += "|" + tmp.GetHashCode();
-                          a_count++; break;
-                        case "title": title = reader.ReadInnerXml().Replace('~', '_').Replace('~', '_'); break;
-                        case "note": pages = reader.ReadInnerXml().Replace('~', '_'); break;
-                        case "crossref": ee = reader.ReadInnerXml().Replace('~', '_'); break;
-                        case "url": url = reader.ReadInnerXml().Replace('~', '_'); break;
-                        default: reader.ReadElementContentAsString(); break;
-                      };
-                    }
-                  }
-                  reader.Read();
-                  if (title == "Home Page")
-                  {
-                    sbAuthor.AppendLine(string.Format("{0}~{1}~{2}~{3}~{4}~{5}~{6}~{7}~{8}~{9}",
-                        globalAuthorsCounter, key, mdate, title, pages, ee, url, author_names, a_count, author_codes));
-                    globalAuthorsCounter++;
+            File.WriteAllText(Path.GetFullPath(txtDBLPfile.Text + "-articles-" + (globalArticlesCounter / pageSize) + "-end.csv"), sbArticles.ToString());
+            File.WriteAllText(Path.GetFullPath(txtDBLPfile.Text + "-inproceedings-" + (globalInproceedingsCounter / pageSize) + "-end.csv"), sbInproceedings.ToString());
+            File.WriteAllText(Path.GetFullPath(txtDBLPfile.Text + "-incollections-" + (globalInCollectionsCounter / pageSize) + "-end.csv"), sbInCollections.ToString());
 
-                    if (globalAuthorsCounter % 200000 == 0)
-                    {
-                      File.WriteAllText(Path.GetFullPath(txtDBLPfile.Text + "-www-" + (globalAuthorsCounter / 200000) + ".csv"), sbAuthor.ToString());
-                      sbAuthor.Clear();
-                      sbAuthor.AppendLine(string.Format("ID~KEY~MDATE~TITLE~NOTE~CROSSREF~URL~AUTHORS~COUNT~author_keys"));
-                    }
-                  }
-                  break;
-                case "book":
-                  key = reader.GetAttribute("key");
-                  mdate = reader.GetAttribute("mdate");
-                  reader.Read();
-                  while (reader.Depth == 2)
-                  {
-                    if (reader.NodeType == XmlNodeType.Whitespace)
-                    {
-                      reader.MoveToContent();
-                    }
-                    else if (reader.NodeType == XmlNodeType.Element)
-                    {
-                      switch (reader.Name)
-                      {
-                        case "editor":
-                        case "author":
-                          string tmp = reader.ReadInnerXml().Replace('~', '_');
-                          author_names += "|" + tmp;
-                          author_codes += "|" + tmp.GetHashCode();
-                          a_count++; break;
-                        case "title": title = reader.ReadInnerXml().Replace('~', '_'); break;
-                        case "volume": pages = reader.ReadInnerXml().Replace('~', '_'); break;
-                        case "year": year = reader.ReadInnerXml().Replace('~', '_'); break;
-                        case "booktitle": booktitle = reader.ReadInnerXml().Replace('~', '_'); break;
-                        case "series": ee = reader.ReadInnerXml().Replace('~', '_'); break;
-                        case "url": url = reader.ReadInnerXml().Replace('~', '_'); break;
-                        default: reader.ReadElementContentAsString(); break;
-                      };
-                    }
-                  }
-                  reader.Read();
-                  //sbTitle.AppendLine(string.Format("{0}~{1}~{2}",
-                  // globalTitleCounter++, title, title.GetHashCode().ToString()));
-                  //if (globalTitleCounter % 500000 == 0)
-                  //{
-                  //  File.WriteAllText(Path.GetFullPath(txtDBLPfile.Text + "-title-" + (globalTitleCounter / 500000) + ".csv"), sbTitle.ToString());
-                  //  sbTitle.Clear();
-                  //  sbTitle.AppendLine(string.Format("ID~TITLE~HASHCODE"));
-                  //}
-                  sbBooks.AppendLine(string.Format("{0}~{1}~{2}~{3}~{4}~{5}~{6}~{7}~{8}~{9}~{10}~{11}~{12}",
-                      globalBooksCounter++, key, mdate, title, pages, year, booktitle, ee, url, author_names,
-                      a_count, author_codes, title.GetHashCode().ToString()));
+            File.WriteAllText(Path.GetFullPath(txtDBLPfile.Text + "-phdthesis-" + (globalPhdthesisCounter / pageSize) + "-end.csv"), sbPhdThesis.ToString());
+            File.WriteAllText(Path.GetFullPath(txtDBLPfile.Text + "-masterthesis-" + (globalPhdthesisCounter / pageSize) + "-end.csv"), sbMasterThesis.ToString());
+            File.WriteAllText(Path.GetFullPath(txtDBLPfile.Text + "-books-" + (globalBooksCounter / pageSize) + "-end.csv"), sbBooks.ToString());
 
-                  if (globalBooksCounter % 200000 == 0)
-                  {
-                    File.WriteAllText(Path.GetFullPath(txtDBLPfile.Text + "-books-" + (globalBooksCounter / 200000) + ".csv"), sbBooks.ToString());
-                    sbBooks.Clear();
-                    sbBooks.AppendLine(string.Format("ID~KEY~MDATE~TITLE~VOLUME~YEAR~BOOKTITLE~SERIES~URL~EDITORS~COUNT~author_keys~HASHCODE"));
-                  }
-                  break;
-                case "incollection":
-                  key = reader.GetAttribute("key");
-                  mdate = reader.GetAttribute("mdate");
-                  reader.Read();
-                  while (reader.Depth == 2)
-                  {
-                    if (reader.NodeType == XmlNodeType.Whitespace)
-                    {
-                      reader.MoveToContent();
-                    }
-                    else if (reader.NodeType == XmlNodeType.Element)
-                    {
-                      switch (reader.Name)
-                      {
-                        case "editor":
-                        case "author":
-                          string tmp = reader.ReadInnerXml().Replace('~', '_');
-                          author_names += "|" + tmp;
-                          author_codes += "|" + tmp.GetHashCode();
-                          a_count++; break;
-                        case "title": title = reader.ReadInnerXml().Replace('~', '_'); break;
-                        case "volume": pages = reader.ReadInnerXml().Replace('~', '_'); break;
-                        case "year": year = reader.ReadInnerXml().Replace('~', '_'); break;
-                        case "booktitle": booktitle = reader.ReadInnerXml().Replace('~', '_'); break;
-                        case "series": ee = reader.ReadInnerXml().Replace('~', '_'); break;
-                        case "ee": ee = reader.ReadInnerXml().Replace('~', '_'); break;
-                        case "url": url = reader.ReadInnerXml().Replace('~', '_'); break;
-                        default: reader.ReadElementContentAsString(); break;
-                      };
-                    }
-                  }
-                  reader.Read();
-                  //sbTitle.AppendLine(string.Format("{0}~{1}~{2}",
-                  //  globalTitleCounter++, title, title.GetHashCode().ToString()));
-                  //if (globalTitleCounter % 500000 == 0)
-                  //{
-                  //  File.WriteAllText(Path.GetFullPath(txtDBLPfile.Text + "-title-" + (globalTitleCounter / 500000) + ".csv"), sbTitle.ToString());
-                  //  sbTitle.Clear();
-                  //  sbTitle.AppendLine(string.Format("ID~TITLE~HASHCODE"));
-                  //}
-                  sbInCollections.AppendLine(string.Format("{0}~{1}~{2}~{3}~{4}~{5}~{6}~{7}~{8}~{9}~{10}~{11}~{12}",
-                      globalInCollectionsCounter++, key, mdate, title, pages, year, booktitle, ee, url,
-                      author_names, a_count, author_codes, title.GetHashCode().ToString()));
-                  if (globalInCollectionsCounter % 200000 == 0)
-                  {
-                    File.WriteAllText(Path.GetFullPath(txtDBLPfile.Text + "-incollections-" + (globalInCollectionsCounter / 200000) + ".csv"), sbInCollections.ToString());
-                    sbInCollections.Clear();
-                    sbInCollections.AppendLine(string.Format("ID~KEY~MDATE~TITLE~VOLUME~YEAR~BOOKTITLE~SERIES~URL~EDITORS~COUNT~author_keys~HASHCODE"));
-                  }
-                  break;
-                case "mastersthesis":
-                  key = reader.GetAttribute("key");
-                  mdate = reader.GetAttribute("mdate");
-                  reader.Read();
-                  while (reader.Depth == 2)
-                  {
-                    if (reader.NodeType == XmlNodeType.Whitespace)
-                    {
-                      reader.MoveToContent();
-                    }
-                    else if (reader.NodeType == XmlNodeType.Element)
-                    {
-                      switch (reader.Name)
-                      {
-                        case "author":
-                          string tmp = reader.ReadInnerXml().Replace('~', '_');
-                          author_names += "|" + tmp;
-                          author_codes += "|" + tmp.GetHashCode();
-                          a_count++; break;
-                        case "title": title = reader.ReadInnerXml().Replace('~', '_'); break;
-                        case "pages": pages = reader.ReadInnerXml().Replace('~', '_'); break;
-                        case "year": year = reader.ReadInnerXml().Replace('~', '_'); break;
-                        case "school": booktitle = reader.ReadInnerXml().Replace('~', '_'); break;
-                        case "note": ee = reader.ReadInnerXml().Replace('~', '_'); break;
-                        case "url": url = reader.ReadInnerXml().Replace('~', '_'); break;
-                        case "crossref": crossref = reader.ReadInnerXml().Replace('~', '_'); break;
-                        default: reader.ReadElementContentAsString(); break;
-                      };
-                    }
-                  }
-                  reader.Read();
-                  //sbTitle.AppendLine(string.Format("{0}~{1}~{2}",
-                  // globalTitleCounter++, title, title.GetHashCode().ToString()));
-                  //if (globalTitleCounter % 500000 == 0)
-                  //{
-                  //  File.WriteAllText(Path.GetFullPath(txtDBLPfile.Text + "-title-" + (globalTitleCounter / 500000) + ".csv"), sbTitle.ToString());
-                  //  sbTitle.Clear();
-                  //  sbTitle.AppendLine(string.Format("ID~TITLE~HASHCODE"));
-                  //}
-                  sbMasterThesis.AppendLine(string.Format("{0}~{1}~{2}~{3}~{4}~{5}~{6}~{7}~{8}~{9}~{10}~{11}~{12}~{13}",
-                      globalMasterthesisCounter++, key, mdate, title, pages, year, booktitle, ee, url, crossref, author_names,
-                      a_count, author_codes, title.GetHashCode().ToString()));
+            File.WriteAllText(Path.GetFullPath(txtDBLPfile.Text + "-proceedings-" + (globalProceedingsCounter / pageSize) + "-end.csv"), sbProceedings.ToString());
+            File.WriteAllText(Path.GetFullPath(txtDBLPfile.Text + "-www-" + (globalAuthorsCounter / pageSize) + "-end.csv"), sbAuthor.ToString());
 
-                  if (globalMasterthesisCounter % 200000 == 0)
-                  {
-                    File.WriteAllText(Path.GetFullPath(txtDBLPfile.Text + "-masterthesis-" + (globalMasterthesisCounter / 200000) + ".csv"), sbMasterThesis.ToString());
-                    sbMasterThesis.Clear();
-                    sbMasterThesis.AppendLine(string.Format("ID~KEY~MDATE~TITLE~PAGES~YEAR~SCHOOL~NOTE~URL~CROSSREF~AUTHORS~COUNT~author_keys~HASHCODE"));
-                  }
-                  break;
-                default:
-                  reader.Read();
-                  break;
-              }
-            }
-            else
-            {
-              reader.Read();
-            }
-
-          }
-          //File.WriteAllText(Path.GetFullPath(txtDBLPfile.Text + "-title-" + (globalTitleCounter / 500000) + "-end.csv"), sbTitle.ToString());
-
-          File.WriteAllText(Path.GetFullPath(txtDBLPfile.Text + "-articles-" + (globalArticlesCounter / 200000) + "-end.csv"), sbArticles.ToString());
-          File.WriteAllText(Path.GetFullPath(txtDBLPfile.Text + "-inproceedings-" + (globalInproceedingsCounter / 200000) + "-end.csv"), sbInproceedings.ToString());
-          File.WriteAllText(Path.GetFullPath(txtDBLPfile.Text + "-incollections-" + (globalInCollectionsCounter / 200000) + "-end.csv"), sbInCollections.ToString());
-
-          File.WriteAllText(Path.GetFullPath(txtDBLPfile.Text + "-phdthesis-" + (globalPhdthesisCounter / 200000) + "-end.csv"), sbPhdThesis.ToString());
-          File.WriteAllText(Path.GetFullPath(txtDBLPfile.Text + "-masterthesis-" + (globalPhdthesisCounter / 200000) + "-end.csv"), sbMasterThesis.ToString());
-          File.WriteAllText(Path.GetFullPath(txtDBLPfile.Text + "-books-" + (globalBooksCounter / 200000) + "-end.csv"), sbBooks.ToString());
-
-          File.WriteAllText(Path.GetFullPath(txtDBLPfile.Text + "-proceedings-" + (globalProceedingsCounter / 200000) + "-end.csv"), sbProceedings.ToString());
-          File.WriteAllText(Path.GetFullPath(txtDBLPfile.Text + "-www-" + (globalAuthorsCounter / 200000) + "-end.csv"), sbAuthor.ToString());
-
-          MessageBox.Show("Done");
-          this.Cursor = Cursors.Default;
+            MessageBox.Show("Done");
+            this.Cursor = Cursors.Default;
         }
 
         private void BuildConference(Dictionary<ConferenceDBLP, int> ConferenceToId)
@@ -552,7 +555,8 @@ namespace ExtractDBLPForm
         {
             dblpData dataDBLP = new dblpData();
             dblp_author author;
-            foreach(AuthorDBLP a in authorToId.Keys){
+            foreach (AuthorDBLP a in authorToId.Keys)
+            {
                 author = new dblp_author()
                 {
                     name = a.Name,
@@ -585,7 +589,7 @@ namespace ExtractDBLPForm
             }
             dataDBLP.SaveChanges();
         }
-    
+
 
         private void btnConnect_Click(object sender, EventArgs e)
         {
@@ -697,7 +701,7 @@ namespace ExtractDBLPForm
         private void btnRun_Click(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
-            double sumAs1, sumIs1, sumCs, sumIs2, sumAs2, min, ratio, max ;
+            double sumAs1, sumIs1, sumCs, sumIs2, sumAs2, min, ratio, max;
             max = 1000;
             while (max > Convert.ToDouble(txtMinstop.Text))
             {
@@ -732,13 +736,13 @@ namespace ExtractDBLPForm
             var sw = Stopwatch.StartNew();
             List<table_articles> listArticles = new List<table_articles>();
             List<table_inproceedings> listInproceedings = new List<table_inproceedings>();
-        
+
             List<table_phdthesis> listPhdthesis = new List<table_phdthesis>();
             List<table_proceedings> listProceedings = new List<table_proceedings>();
             List<table_www> listWWWs = new List<table_www>();
             int start = Convert.ToInt32(txtAuthorIDStart.Text);
             int end = Convert.ToInt32(txtAuthorIDEnd.Text);
-           
+
             using (dblpData dataDBLP = new dblpData())
             {
                 if (chkUpdateAll.Checked)
@@ -749,46 +753,46 @@ namespace ExtractDBLPForm
                 {
                     listWWWs = dataDBLP.table_www.Where(a => a.ID >= start && a.ID <= end && a.COUNT == 1 && (a.inproceedings_count == 0 || a.inproceedings_count == null)).ToList();
                 }
-                    //listWWWs = dataDBLP.table_www.Where(a => a.ID == 49).ToList();
+                //listWWWs = dataDBLP.table_www.Where(a => a.ID == 49).ToList();
 
                 listWWWs.AsParallel().ForAll(w => AssignAuthorPaperList(w, ref listAs, ref listIs, ref listCs));
                 dataDBLP.SaveChanges();
             }
             sw.Stop();
-           
 
-           Console.WriteLine("Total: {0}:{1}:{2}", sw.Elapsed.Hours, sw.Elapsed.Minutes, sw.Elapsed.Seconds);
-           // running on worker thread
-           if (this.IsHandleCreated)
-           {
-               this.Invoke((MethodInvoker)delegate
-               {
-                   txtMsg.Text += string.Format("Total: {0}:{1}:{2}", sw.Elapsed.Hours, sw.Elapsed.Minutes, sw.Elapsed.Seconds);
 
-                   dgvAuthors.Invoke((MethodInvoker)delegate
-                   {
-                       dgvAuthors.DataSource = listAs;
-                       dgvAuthors.Refresh();
+            Console.WriteLine("Total: {0}:{1}:{2}", sw.Elapsed.Hours, sw.Elapsed.Minutes, sw.Elapsed.Seconds);
+            // running on worker thread
+            if (this.IsHandleCreated)
+            {
+                this.Invoke((MethodInvoker)delegate
+                {
+                    txtMsg.Text += string.Format("Total: {0}:{1}:{2}", sw.Elapsed.Hours, sw.Elapsed.Minutes, sw.Elapsed.Seconds);
 
-                   });
-                   dgvInproceedings.Invoke((MethodInvoker)delegate
-                   {
-                       dgvInproceedings.DataSource = listIs;
-                       dgvInproceedings.Refresh();
-                       dgvConferences.Refresh();
-                       dgvConferences.DataSource = listCs;
-                   });
-                   dgvConferences.Invoke((MethodInvoker)delegate
-                   {
-                       dgvConferences.DataSource = listCs;
-                       dgvConferences.Refresh();
-                   });
-               });
+                    dgvAuthors.Invoke((MethodInvoker)delegate
+                    {
+                        dgvAuthors.DataSource = listAs;
+                        dgvAuthors.Refresh();
 
-           }
-           MessageBox.Show("Done");
+                    });
+                    dgvInproceedings.Invoke((MethodInvoker)delegate
+                    {
+                        dgvInproceedings.DataSource = listIs;
+                        dgvInproceedings.Refresh();
+                        dgvConferences.Refresh();
+                        dgvConferences.DataSource = listCs;
+                    });
+                    dgvConferences.Invoke((MethodInvoker)delegate
+                    {
+                        dgvConferences.DataSource = listCs;
+                        dgvConferences.Refresh();
+                    });
+                });
+
+            }
+            MessageBox.Show("Done");
         }
-        private void AssignAuthorPaperList(table_www w, ref List<AuthorDBLP> listAuthors, ref  List<InproceedingsDBLP> listInDBLP,
+        private void AssignAuthorPaperList(table_www w, ref List<AuthorDBLP> listAuthors, ref List<InproceedingsDBLP> listInDBLP,
             ref List<ConferenceDBLP> listConferences)
         {
             List<table_inproceedings> listIns = new List<table_inproceedings>();
@@ -884,7 +888,7 @@ namespace ExtractDBLPForm
                 dgvInproceedings.Invoke((MethodInvoker)delegate
                 {
                     dgvInproceedings.DataSource = listIs;
-                    dgvInproceedings.Refresh();                 
+                    dgvInproceedings.Refresh();
                 });
                 dgvConferences.Invoke((MethodInvoker)delegate
                 {
@@ -893,6 +897,6 @@ namespace ExtractDBLPForm
                 });
             });
         }
-   
+
     }
 }
