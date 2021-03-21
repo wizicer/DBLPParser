@@ -53,9 +53,9 @@ namespace ExtractDBLPForm
             var sbAuthor = new StreamWriter(Path.GetFullPath(txtDBLPfile.Text + "-www.csv"));
             sbAuthor.WriteLine(string.Format("ID~KEY~MDATE~TITLE~NOTE~CROSSREF~URL~AUTHORS~COUNT~author_keys~HASHCODE"));
             var sbArticles = new StreamWriter(Path.GetFullPath(txtDBLPfile.Text + "-articles.csv"));
-            sbArticles.WriteLine(string.Format("ID~KEY~MDATE~TITLE~PAGES~YEAR~VOLUME~JOURNAL~EE~URL~CROSSREF~AUTHORS~COUNT~author_keys~HASHCODE"));
+            sbArticles.WriteLine(string.Format("ID~KEY~MDATE~TITLE~PAGES~YEAR~VOLUME~JOURNAL~EE~URL~CROSSREF~AUTHORS~COUNT~author_keys"));
             var sbInproceedings = new StreamWriter(Path.GetFullPath(txtDBLPfile.Text + "-inproceedings.csv"));
-            sbInproceedings.WriteLine(string.Format("ID~KEY~MDATE~TITLE~PAGES~YEAR~BOOKTITLE~EE~URL~CROSSREF~AUTHORS~COUNT~author_keys~HASHCODE"));
+            sbInproceedings.WriteLine(string.Format("ID~KEY~MDATE~TITLE~PAGES~YEAR~BOOKTITLE~EE~URL~CROSSREF~AUTHORS~COUNT~author_keys"));
             var sbPhdThesis = new StreamWriter(Path.GetFullPath(txtDBLPfile.Text + "-phdthesis.csv"));
             sbPhdThesis.WriteLine(string.Format("ID~KEY~MDATE~TITLE~PAGES~YEAR~SCHOOL~NOTE~URL~CROSSREF~AUTHORS~COUNT~author_keys~HASHCODE"));
             var sbProceedings = new StreamWriter(Path.GetFullPath(txtDBLPfile.Text + "-proceedings.csv"));
@@ -153,9 +153,9 @@ namespace ExtractDBLPForm
                             //      sbTitle.Clear();
                             //      sbTitle.AppendLine(string.Format("ID~TITLE~HASHCODE"));
                             //  }
-                            sbArticles.WriteLine(string.Format("{0}~{1}~{2}~{3}~{4}~{5}~{6}~{7}~{8}~{9}~{10}~{11}~{12}~{13}`{14}",
+                            sbArticles.WriteLine(string.Format("{0}~{1}~{2}~{3}~{4}~{5}~{6}~{7}~{8}~{9}~{10}~{11}~{12}~{13}",
                                       globalArticlesCounter, key, mdate, title, pages, year, volume, journal, ee, url, crossref, author_names,
-                                      a_count, author_codes, title.GetHashCode().ToString()));
+                                      a_count, author_codes));
                             globalArticlesCounter++;
                             break;
                         case "inproceedings":
@@ -197,9 +197,9 @@ namespace ExtractDBLPForm
                             //  sbTitle.Clear();
                             //  sbTitle.AppendLine(string.Format("ID~TITLE~HASHCODE"));
                             //}
-                            sbInproceedings.WriteLine(string.Format("{0}~{1}~{2}~{3}~{4}~{5}~{6}~{7}~{8}~{9}~{10}~{11}~{12}~{13}",
+                            sbInproceedings.WriteLine(string.Format("{0}~{1}~{2}~{3}~{4}~{5}~{6}~{7}~{8}~{9}~{10}~{11}~{12}",
                                 globalInproceedingsCounter, key, mdate, title, pages, year, booktitle, ee, url, crossref, author_names,
-                                a_count, author_codes, title.GetHashCode().ToString()));
+                                a_count, author_codes));
                             globalInproceedingsCounter++;
                             break;
                         case "phdthesis":
@@ -864,6 +864,6 @@ namespace ExtractDBLPForm
     public static class Extensions
     {
         public static string ReadInnerXmlAndRegulate(this XmlReader reader)
-            => reader.ReadInnerXmlAndRegulate().Replace("\"", "\"\"");
+            => reader.ReadInnerXml().Replace('~', '_').Replace("\"", "\"\"");
     }
 }
