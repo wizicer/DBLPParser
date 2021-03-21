@@ -128,18 +128,18 @@ namespace ExtractDBLPForm
                                     switch (reader.Name)
                                     {
                                         case "author":
-                                            string tmp = reader.ReadInnerXml().Replace('~', '_');
+                                            string tmp = reader.ReadInnerXmlAndRegulate();
                                             author_names += "|" + tmp;
                                             author_codes += "|" + tmp.GetHashCode();
                                             a_count++; break;
-                                        case "title": title = reader.ReadInnerXml().Replace('~', '_'); break;
-                                        case "pages": pages = reader.ReadInnerXml().Replace('~', '_'); break;
-                                        case "year": year = reader.ReadInnerXml().Replace('~', '_'); break;
-                                        case "volume": volume = reader.ReadInnerXml().Replace('~', '_'); break;
-                                        case "journal": journal = reader.ReadInnerXml().Replace('~', '_'); break;
-                                        case "ee": ee = reader.ReadInnerXml().Replace('~', '_'); break;
-                                        case "url": url = reader.ReadInnerXml().Replace('~', '_'); break;
-                                        case "crossref": crossref = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        case "title": title = reader.ReadInnerXmlAndRegulate(); break;
+                                        case "pages": pages = reader.ReadInnerXmlAndRegulate(); break;
+                                        case "year": year = reader.ReadInnerXmlAndRegulate(); break;
+                                        case "volume": volume = reader.ReadInnerXmlAndRegulate(); break;
+                                        case "journal": journal = reader.ReadInnerXmlAndRegulate(); break;
+                                        case "ee": ee = reader.ReadInnerXmlAndRegulate(); break;
+                                        case "url": url = reader.ReadInnerXmlAndRegulate(); break;
+                                        case "crossref": crossref = reader.ReadInnerXmlAndRegulate(); break;
                                         default: reader.ReadElementContentAsString(); break;
                                     };
                                 }
@@ -173,17 +173,17 @@ namespace ExtractDBLPForm
                                     switch (reader.Name)
                                     {
                                         case "author":
-                                            string tmp = reader.ReadInnerXml().Replace('~', '_');
+                                            string tmp = reader.ReadInnerXmlAndRegulate();
                                             author_names += "|" + tmp;
                                             author_codes += "|" + tmp.GetHashCode();
                                             a_count++; break;
-                                        case "title": title = reader.ReadInnerXml().Replace('~', '_'); break;
-                                        case "pages": pages = reader.ReadInnerXml().Replace('~', '_'); break;
-                                        case "year": year = reader.ReadInnerXml().Replace('~', '_'); break;
-                                        case "booktitle": booktitle = reader.ReadInnerXml().Replace('~', '_'); break;
-                                        case "ee": ee = reader.ReadInnerXml().Replace('~', '_'); break;
-                                        case "url": url = reader.ReadInnerXml().Replace('~', '_'); break;
-                                        case "crossref": crossref = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        case "title": title = reader.ReadInnerXmlAndRegulate(); break;
+                                        case "pages": pages = reader.ReadInnerXmlAndRegulate(); break;
+                                        case "year": year = reader.ReadInnerXmlAndRegulate(); break;
+                                        case "booktitle": booktitle = reader.ReadInnerXmlAndRegulate(); break;
+                                        case "ee": ee = reader.ReadInnerXmlAndRegulate(); break;
+                                        case "url": url = reader.ReadInnerXmlAndRegulate(); break;
+                                        case "crossref": crossref = reader.ReadInnerXmlAndRegulate(); break;
                                         default: reader.ReadElementContentAsString(); break;
                                     };
                                 }
@@ -217,17 +217,17 @@ namespace ExtractDBLPForm
                                     switch (reader.Name)
                                     {
                                         case "author":
-                                            string tmp = reader.ReadInnerXml().Replace('~', '_');
+                                            string tmp = reader.ReadInnerXmlAndRegulate();
                                             author_names += "|" + tmp;
                                             author_codes += "|" + tmp.GetHashCode();
                                             a_count++; break;
-                                        case "title": title = reader.ReadInnerXml().Replace('~', '_'); break;
-                                        case "pages": pages = reader.ReadInnerXml().Replace('~', '_'); break;
-                                        case "year": year = reader.ReadInnerXml().Replace('~', '_'); break;
-                                        case "school": booktitle = reader.ReadInnerXml().Replace('~', '_'); break;
-                                        case "note": ee = reader.ReadInnerXml().Replace('~', '_'); break;
-                                        case "url": url = reader.ReadInnerXml().Replace('~', '_'); break;
-                                        case "crossref": crossref = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        case "title": title = reader.ReadInnerXmlAndRegulate(); break;
+                                        case "pages": pages = reader.ReadInnerXmlAndRegulate(); break;
+                                        case "year": year = reader.ReadInnerXmlAndRegulate(); break;
+                                        case "school": booktitle = reader.ReadInnerXmlAndRegulate(); break;
+                                        case "note": ee = reader.ReadInnerXmlAndRegulate(); break;
+                                        case "url": url = reader.ReadInnerXmlAndRegulate(); break;
+                                        case "crossref": crossref = reader.ReadInnerXmlAndRegulate(); break;
                                         default: reader.ReadElementContentAsString(); break;
                                     };
                                 }
@@ -261,16 +261,16 @@ namespace ExtractDBLPForm
                                     switch (reader.Name)
                                     {
                                         case "editor":
-                                            string tmp = reader.ReadInnerXml().Replace('~', '_');
+                                            string tmp = reader.ReadInnerXmlAndRegulate();
                                             author_names += "|" + tmp;
                                             author_codes += "|" + tmp.GetHashCode();
                                             a_count++; break;
-                                        case "title": title = reader.ReadInnerXml().Replace('~', '_'); break;
-                                        case "volume": pages = reader.ReadInnerXml().Replace('~', '_'); break;
-                                        case "year": year = reader.ReadInnerXml().Replace('~', '_'); break;
-                                        case "booktitle": booktitle = reader.ReadInnerXml().Replace('~', '_'); break;
-                                        case "series": ee = reader.ReadInnerXml().Replace('~', '_'); break;
-                                        case "url": url = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        case "title": title = reader.ReadInnerXmlAndRegulate(); break;
+                                        case "volume": pages = reader.ReadInnerXmlAndRegulate(); break;
+                                        case "year": year = reader.ReadInnerXmlAndRegulate(); break;
+                                        case "booktitle": booktitle = reader.ReadInnerXmlAndRegulate(); break;
+                                        case "series": ee = reader.ReadInnerXmlAndRegulate(); break;
+                                        case "url": url = reader.ReadInnerXmlAndRegulate(); break;
                                         default: reader.ReadElementContentAsString(); break;
                                     };
                                 }
@@ -304,14 +304,14 @@ namespace ExtractDBLPForm
                                     switch (reader.Name)
                                     {
                                         case "author":
-                                            string tmp = reader.ReadInnerXml().Replace('~', '_');
+                                            string tmp = reader.ReadInnerXmlAndRegulate();
                                             author_names += "|" + tmp;
                                             author_codes += "|" + tmp.GetHashCode();
                                             a_count++; break;
-                                        case "title": title = reader.ReadInnerXml().Replace('~', '_').Replace('~', '_'); break;
-                                        case "note": pages = reader.ReadInnerXml().Replace('~', '_'); break;
-                                        case "crossref": ee = reader.ReadInnerXml().Replace('~', '_'); break;
-                                        case "url": url = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        case "title": title = reader.ReadInnerXmlAndRegulate().Replace('~', '_'); break;
+                                        case "note": pages = reader.ReadInnerXmlAndRegulate(); break;
+                                        case "crossref": ee = reader.ReadInnerXmlAndRegulate(); break;
+                                        case "url": url = reader.ReadInnerXmlAndRegulate(); break;
                                         default: reader.ReadElementContentAsString(); break;
                                     };
                                 }
@@ -341,16 +341,16 @@ namespace ExtractDBLPForm
                                     {
                                         case "editor":
                                         case "author":
-                                            string tmp = reader.ReadInnerXml().Replace('~', '_');
+                                            string tmp = reader.ReadInnerXmlAndRegulate();
                                             author_names += "|" + tmp;
                                             author_codes += "|" + tmp.GetHashCode();
                                             a_count++; break;
-                                        case "title": title = reader.ReadInnerXml().Replace('~', '_'); break;
-                                        case "volume": pages = reader.ReadInnerXml().Replace('~', '_'); break;
-                                        case "year": year = reader.ReadInnerXml().Replace('~', '_'); break;
-                                        case "booktitle": booktitle = reader.ReadInnerXml().Replace('~', '_'); break;
-                                        case "series": ee = reader.ReadInnerXml().Replace('~', '_'); break;
-                                        case "url": url = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        case "title": title = reader.ReadInnerXmlAndRegulate(); break;
+                                        case "volume": pages = reader.ReadInnerXmlAndRegulate(); break;
+                                        case "year": year = reader.ReadInnerXmlAndRegulate(); break;
+                                        case "booktitle": booktitle = reader.ReadInnerXmlAndRegulate(); break;
+                                        case "series": ee = reader.ReadInnerXmlAndRegulate(); break;
+                                        case "url": url = reader.ReadInnerXmlAndRegulate(); break;
                                         default: reader.ReadElementContentAsString(); break;
                                     };
                                 }
@@ -385,17 +385,17 @@ namespace ExtractDBLPForm
                                     {
                                         case "editor":
                                         case "author":
-                                            string tmp = reader.ReadInnerXml().Replace('~', '_');
+                                            string tmp = reader.ReadInnerXmlAndRegulate();
                                             author_names += "|" + tmp;
                                             author_codes += "|" + tmp.GetHashCode();
                                             a_count++; break;
-                                        case "title": title = reader.ReadInnerXml().Replace('~', '_'); break;
-                                        case "volume": pages = reader.ReadInnerXml().Replace('~', '_'); break;
-                                        case "year": year = reader.ReadInnerXml().Replace('~', '_'); break;
-                                        case "booktitle": booktitle = reader.ReadInnerXml().Replace('~', '_'); break;
-                                        case "series": ee = reader.ReadInnerXml().Replace('~', '_'); break;
-                                        case "ee": ee = reader.ReadInnerXml().Replace('~', '_'); break;
-                                        case "url": url = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        case "title": title = reader.ReadInnerXmlAndRegulate(); break;
+                                        case "volume": pages = reader.ReadInnerXmlAndRegulate(); break;
+                                        case "year": year = reader.ReadInnerXmlAndRegulate(); break;
+                                        case "booktitle": booktitle = reader.ReadInnerXmlAndRegulate(); break;
+                                        case "series": ee = reader.ReadInnerXmlAndRegulate(); break;
+                                        case "ee": ee = reader.ReadInnerXmlAndRegulate(); break;
+                                        case "url": url = reader.ReadInnerXmlAndRegulate(); break;
                                         default: reader.ReadElementContentAsString(); break;
                                     };
                                 }
@@ -428,17 +428,17 @@ namespace ExtractDBLPForm
                                     switch (reader.Name)
                                     {
                                         case "author":
-                                            string tmp = reader.ReadInnerXml().Replace('~', '_');
+                                            string tmp = reader.ReadInnerXmlAndRegulate();
                                             author_names += "|" + tmp;
                                             author_codes += "|" + tmp.GetHashCode();
                                             a_count++; break;
-                                        case "title": title = reader.ReadInnerXml().Replace('~', '_'); break;
-                                        case "pages": pages = reader.ReadInnerXml().Replace('~', '_'); break;
-                                        case "year": year = reader.ReadInnerXml().Replace('~', '_'); break;
-                                        case "school": booktitle = reader.ReadInnerXml().Replace('~', '_'); break;
-                                        case "note": ee = reader.ReadInnerXml().Replace('~', '_'); break;
-                                        case "url": url = reader.ReadInnerXml().Replace('~', '_'); break;
-                                        case "crossref": crossref = reader.ReadInnerXml().Replace('~', '_'); break;
+                                        case "title": title = reader.ReadInnerXmlAndRegulate(); break;
+                                        case "pages": pages = reader.ReadInnerXmlAndRegulate(); break;
+                                        case "year": year = reader.ReadInnerXmlAndRegulate(); break;
+                                        case "school": booktitle = reader.ReadInnerXmlAndRegulate(); break;
+                                        case "note": ee = reader.ReadInnerXmlAndRegulate(); break;
+                                        case "url": url = reader.ReadInnerXmlAndRegulate(); break;
+                                        case "crossref": crossref = reader.ReadInnerXmlAndRegulate(); break;
                                         default: reader.ReadElementContentAsString(); break;
                                     };
                                 }
@@ -859,5 +859,11 @@ namespace ExtractDBLPForm
             });
         }
 
+    }
+
+    public static class Extensions
+    {
+        public static string ReadInnerXmlAndRegulate(this XmlReader reader)
+            => reader.ReadInnerXmlAndRegulate().Replace("\"", "\"\"");
     }
 }
