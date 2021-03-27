@@ -142,7 +142,7 @@ namespace ExtractDBLPForm
                                         case "ee":
                                             string tmpee = reader.ReadInnerXmlAndRegulate();
                                             if (tmpee.IndexOf("https://doi.org") > -1) doi = tmpee;
-                                            ee += "|" + tmpee;
+                                            else ee += (string.IsNullOrEmpty(ee) ? "" : "|") + tmpee;
                                             break;
                                         case "url": url = reader.ReadInnerXmlAndRegulate(); break;
                                         case "crossref": crossref = reader.ReadInnerXmlAndRegulate(); break;
@@ -191,7 +191,7 @@ namespace ExtractDBLPForm
                                         case "ee":
                                             string tmpee = reader.ReadInnerXmlAndRegulate();
                                             if (tmpee.IndexOf("https://doi.org") > -1) doi = tmpee;
-                                            ee += "|" + tmpee;
+                                            else ee += (string.IsNullOrEmpty(ee) ? "" : "|") + tmpee;
                                             break;
                                         case "url": url = reader.ReadInnerXmlAndRegulate(); break;
                                         case "crossref": crossref = reader.ReadInnerXmlAndRegulate(); break;
@@ -331,8 +331,8 @@ namespace ExtractDBLPForm
                             reader.Read();
                             if (title == "Home Page")
                             {
-                                sbAuthor.WriteLine(string.Format("{0}~{1}~{2}~{3}~{4}~{5}~{6}~{7}~{8}~{9}",
-                                    globalAuthorsCounter, key, mdate, title, pages, ee, url, author_names, a_count, author_codes));
+                                await sbAuthor.WriteItemsLineAsync("~",
+                                    globalAuthorsCounter, key, mdate, title, pages, ee, url, author_names, a_count, author_codes);
                                 globalAuthorsCounter++;
 
                             }
