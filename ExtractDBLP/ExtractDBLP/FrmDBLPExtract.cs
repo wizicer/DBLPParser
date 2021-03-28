@@ -86,6 +86,7 @@ namespace ExtractDBLPForm
             string booktitle = "";
             string author_names = "";
             string author_codes = "";
+            string publtype = "";
             int a_count = 0;
 
 
@@ -111,6 +112,7 @@ namespace ExtractDBLPForm
                     booktitle = "";
                     author_names = "";
                     author_codes = "";
+                    publtype = "";
                     a_count = 0;
                     switch (reader.Name)
                     {
@@ -146,6 +148,7 @@ namespace ExtractDBLPForm
                                             break;
                                         case "url": url = reader.ReadInnerXmlAndRegulate(); break;
                                         case "crossref": crossref = reader.ReadInnerXmlAndRegulate(); break;
+                                        case "publtype": publtype = reader.ReadInnerXmlAndRegulate(); break;
                                         default: reader.ReadElementContentAsString(); break;
                                     };
                                 }
