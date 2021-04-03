@@ -1,34 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
-using System.Xml;
-using System.Xml.Linq;
-using System.Diagnostics;
-using System.IO;
-using System.Threading;
-
-namespace ExtractDBLPForm
+﻿namespace ExtractDBLPForm
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using System.Windows.Forms;
+
+    using System.Xml;
+    using System.IO;
+
     public partial class FrmDBLPExtract : Form
     {
-        private const int pageSize = 200000000;
-        object lock_w = new object();
-        List<AuthorDBLP> listAs = new List<AuthorDBLP>();
-        List<InproceedingsDBLP> listIs = new List<InproceedingsDBLP>();
-        List<ConferenceDBLP> listCs = new List<ConferenceDBLP>();
-
         public FrmDBLPExtract()
         {
             InitializeComponent();
             this.txtDBLPfile.Text = @"C:\Users\icer\Downloads\dblp\dblp-2021-03-01.xml";
             this.txtOutput.Text = @"C:\Users\icer\Downloads\dblp\dblp-2021-03-01\";
+        }
+
+        private void FrmDBLPExtract_Load(object sender, EventArgs e)
+        {
         }
 
         private async void btnStart_Click(object sender, EventArgs eventarg)
@@ -198,28 +189,6 @@ namespace ExtractDBLPForm
             //sbInCollections.Close();
             //sbMasterThesis.Close();
 
-        }
-
-
-
-        private void btnConnect_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void FrmDBLPExtract_Load(object sender, EventArgs e)
-        {
-        }
-
-        private void btnLoadData_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void btnRun_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void btnNew_Click(object sender, EventArgs e)
-        {
         }
     }
     public class DblpRecord
