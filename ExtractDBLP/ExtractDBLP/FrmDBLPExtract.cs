@@ -27,34 +27,6 @@
             var txtDBLPfile = @"C:\Users\icer\Downloads\dblp\dblp-2021-03-01.xml";
             var txtOutput = @"C:\Users\icer\Downloads\dblp\dblp-2021-03-01\";
 
-
-            //int globalAuthorsCounter = 0;
-            //int globalInproceedingsCounter = 0;
-            //int globalArticlesCounter = 0;
-            //int globalProceedingsCounter = 0;
-            //int globalBooksCounter = 0;
-            //int globalInCollectionsCounter = 0;
-            //int globalPhdthesisCounter = 0;
-            //int globalMasterthesisCounter = 0;
-
-            //var sbAuthor = new StreamWriter(Path.GetFullPath(txtDBLPfile + "-www.csv"));
-            //sbAuthor.WriteItemsLine("~", "ID", "KEY", "MDATE", "TITLE", "NOTE", "CROSSREF", "URL", "AUTHORS", "COUNT", "author_keys", "HASHCODE");
-            //var sbArticles = new StreamWriter(Path.GetFullPath(txtDBLPfile + "-articles.csv"));
-            //sbArticles.WriteItemsLine("~", "ID", "KEY", "MDATE", "TITLE", "PAGES", "YEAR", "VOLUME", "JOURNAL", "EE", "DOI", "URL", "CROSSREF", "AUTHORS", "COUNT");
-            //var sbInproceedings = new StreamWriter(Path.GetFullPath(txtDBLPfile + "-inproceedings.csv"));
-            //sbInproceedings.WriteItemsLine("~", "ID", "KEY", "MDATE", "TITLE", "PAGES", "YEAR", "BOOKTITLE", "EE", "DOI", "URL", "CROSSREF", "AUTHORS", "COUNT");
-            //var sbPhdThesis = new StreamWriter(Path.GetFullPath(txtDBLPfile + "-phdthesis.csv"));
-            //sbPhdThesis.WriteItemsLine("~", "ID", "KEY", "MDATE", "TITLE", "PAGES", "YEAR", "SCHOOL", "NOTE", "URL", "CROSSREF", "AUTHORS", "COUNT", "author_keys", "HASHCODE");
-            //var sbProceedings = new StreamWriter(Path.GetFullPath(txtDBLPfile + "-proceedings.csv"));
-            //sbProceedings.WriteItemsLine("~", "ID", "KEY", "MDATE", "TITLE", "VOLUME", "YEAR", "BOOKTITLE", "SERIES", "URL", "EDITORS", "COUNT", "author_keys", "HASHCODE");
-            //var sbBooks = new StreamWriter(Path.GetFullPath(txtDBLPfile + "-books.csv"));
-            //sbBooks.WriteItemsLine("~", "ID", "KEY", "MDATE", "TITLE", "VOLUME", "YEAR", "BOOKTITLE", "SERIES", "URL", "EDITORS", "COUNT", "author_keys", "HASHCODE");
-            //var sbInCollections = new StreamWriter(Path.GetFullPath(txtDBLPfile + "-incollections.csv"));
-            //sbInCollections.WriteItemsLine("~", "ID", "KEY", "MDATE", "TITLE", "VOLUME", "YEAR", "BOOKTITLE", "SERIES", "URL", "EDITORS", "COUNT", "author_keys", "HASHCODE");
-            //var sbMasterThesis = new StreamWriter(Path.GetFullPath(txtDBLPfile + "-masterthesis.csv"));
-            //sbMasterThesis.WriteItemsLine("~", "ID", "KEY", "MDATE", "TITLE", "PAGES", "YEAR", "SCHOOL", "NOTE", "URL", "CROSSREF", "AUTHORS", "COUNT", "author_keys", "HASHCODE");
-
-
             var d = GetRecords();
             var dd = d.Take(10).ToArray();
             var k = 1;
@@ -67,14 +39,6 @@
                 settings.ValidationType = ValidationType.DTD;
                 XmlReader reader = XmlReader.Create(Path.GetFullPath(txtDBLPfile), settings);
 
-                string tkey = reader.GetAttribute("key");
-                string tmdate = reader.GetAttribute("mdate");
-                List<string> ee = new List<string>();
-                List<string> author_names = new List<string>();
-                Dictionary<string, object> fields = new Dictionary<string, object>();
-                int a_count = 0;
-
-
                 while (!reader.EOF)
                 {
                     reader.MoveToContent();
@@ -83,111 +47,107 @@
                         reader.Read();
                         continue;
                     }
-                    if (reader.NodeType == XmlNodeType.Element)
-                    {
-                        ee = new List<string>();
-                        author_names = new List<string>();
-                        fields = new Dictionary<string, object>();
-                        var type = reader.Name;
-                        fields.Add("type", type);
-                        fields.Add("key", reader.GetAttribute("key"));
-                        fields.Add("mdate", reader.GetAttribute("mdate"));
-                        //key = reader.GetAttribute("key");
-                        //mdate = reader.GetAttribute("mdate");
-                        reader.Read();
-                        while (reader.Depth == 2)
-                        {
-                            if (reader.NodeType == XmlNodeType.Whitespace)
-                            {
-                                reader.MoveToContent();
-                            }
-                            else if (reader.NodeType == XmlNodeType.Element)
-                            {
-
-                                var entity = reader.Name;
-                                switch (entity)
-                                {
-                                    case "author":
-                                    case "editor":
-                                        string tmp = reader.ReadInnerXmlAndRegulate();
-                                        author_names.Add(tmp);
-                                        a_count++; break;
-                                    case "ee":
-                                        string tmpee = reader.ReadInnerXmlAndRegulate();
-                                        if (tmpee.IndexOf("https://doi.org") > -1) fields.Add("doi", tmpee);
-                                        else ee.Add(tmpee);
-                                        break;
-                                    default:
-                                        var field = reader.ReadElementContentAsString();
-                                        fields.Add(entity, field);
-                                        break;
-                                };
-                            }
-                        }
-                        fields.Add("authors", author_names.ToArray());
-                        fields.Add("ee", ee.ToArray());
-
-                        reader.Read();
-                        DblpRecord ent = null;
-                        switch (type)
-                        {
-                            case "article":
-                                ent = new Article();
-                                break;
-                            case "inproceedings":
-                                ent = new Inproceeding();
-
-                                break;
-                            case "phdthesis":
-                                ent = new PhdThesis();
-                                break;
-                            case "proceedings":
-                                ent = new Proceeding();
-                                break;
-                            case "www":
-                                if (fields["title"] == "Home Page")
-                                {
-                                    ent = new Www();
-                                }
-                                break;
-                            case "book":
-                                ent = new Book();
-                                break;
-                            case "incollection":
-                                ent = new InCollection();
-                                break;
-                            case "mastersthesis":
-                                ent = new MasterThesis();
-                                break;
-                            default:
-                                break;
-                        }
-
-                        if (ent == null) continue;
-                        foreach (var kvp in fields)
-                        {
-                            var propertyInfo = ent.GetType().GetProperty(kvp.Key);
-                            if (propertyInfo == null) continue;
-                            propertyInfo.SetValue(ent, kvp.Value, null);
-                        }
-                        yield return ent;
-                    }
-                    else
+                    if (reader.NodeType != XmlNodeType.Element)
                     {
                         reader.Read();
+                        continue;
                     }
+
+                    var ee = new List<string>();
+                    var author_names = new List<string>();
+                    var fields = new Dictionary<string, object>();
+                    var type = reader.Name;
+                    fields.Add("type", type);
+                    fields.Add("key", reader.GetAttribute("key"));
+                    fields.Add("mdate", reader.GetAttribute("mdate"));
+                    reader.Read();
+                    while (reader.Depth == 2)
+                    {
+                        if (reader.NodeType == XmlNodeType.Whitespace)
+                        {
+                            reader.MoveToContent();
+                        }
+                        else if (reader.NodeType == XmlNodeType.Element)
+                        {
+
+                            var entity = reader.Name;
+                            switch (entity)
+                            {
+                                case "author":
+                                case "editor":
+                                    string tmp = reader.ReadInnerXmlAndRegulate();
+                                    author_names.Add(tmp);
+                                    break;
+                                case "ee":
+                                    string tmpee = reader.ReadInnerXmlAndRegulate();
+                                    if (tmpee.IndexOf("https://doi.org") > -1) fields.Add("doi", tmpee);
+                                    else ee.Add(tmpee);
+                                    break;
+                                default:
+                                    var field = reader.ReadElementContentAsString();
+                                    fields.Add(entity, field);
+                                    break;
+                            };
+                        }
+                    }
+                    fields.Add("authors", author_names.ToArray());
+                    fields.Add("ee", ee.ToArray());
+
+                    reader.Read();
+                    var ent = ProduceEntity(type, fields);
+                    if (ent == null) continue;
+                    yield return ent;
 
                 }
-            }
 
-            //sbAuthor.Close();
-            //sbArticles.Close();
-            //sbInproceedings.Close();
-            //sbPhdThesis.Close();
-            //sbProceedings.Close();
-            //sbBooks.Close();
-            //sbInCollections.Close();
-            //sbMasterThesis.Close();
+                DblpRecord ProduceEntity(string type, Dictionary<string, object> fields)
+                {
+                    DblpRecord ent = null;
+                    switch (type)
+                    {
+                        case "article":
+                            ent = new Article();
+                            break;
+                        case "inproceedings":
+                            ent = new Inproceeding();
+
+                            break;
+                        case "phdthesis":
+                            ent = new PhdThesis();
+                            break;
+                        case "proceedings":
+                            ent = new Proceeding();
+                            break;
+                        case "www":
+                            if (fields["title"] is string title && title == "Home Page")
+                            {
+                                ent = new Www();
+                            }
+                            break;
+                        case "book":
+                            ent = new Book();
+                            break;
+                        case "incollection":
+                            ent = new InCollection();
+                            break;
+                        case "mastersthesis":
+                            ent = new MasterThesis();
+                            break;
+                        default:
+                            break;
+                    }
+
+                    if (ent == null) return null;
+                    foreach (var kvp in fields)
+                    {
+                        var propertyInfo = ent.GetType().GetProperty(kvp.Key);
+                        if (propertyInfo == null) continue;
+                        propertyInfo.SetValue(ent, kvp.Value, null);
+                    }
+
+                    return ent;
+                }
+            }
 
         }
     }
