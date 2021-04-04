@@ -15,7 +15,7 @@
         public FrmDBLPExtract()
         {
             InitializeComponent();
-            this.txtDBLPfile.Text = @"C:\Users\icer\Downloads\dblp\dblp-2021-03-01.xml";
+            this.txtDBLPfile.Text = @"C:\Users\icer\Downloads\dblp\dblp-2021-04-01.xml";
         }
 
         private void FrmDBLPExtract_Load(object sender, EventArgs e)
@@ -37,7 +37,7 @@
                 new { records = fw, stats = wordStats, filename = Path.GetFileName(this.txtDBLPfile.Text) },
                 Newtonsoft.Json.Formatting.Indented,
                 new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
-            File.WriteAllText(@"..\..\papers.json", json);
+            File.WriteAllText(@"..\..\papers.js", "var papers = " + json);
 
             IEnumerable<DblpRecord> FilterWords(IEnumerable<DblpRecord> records)
             {
