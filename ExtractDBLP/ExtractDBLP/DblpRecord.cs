@@ -59,7 +59,6 @@
             if (record is Paper p)
             {
                 this.year = p.year;
-                this.url = p.url;
                 this.doi = p.doi;
                 this.publisher
                     = p.journal != null ? p.journal
@@ -73,7 +72,6 @@
         public string key { get; set; }
         public string title { get; set; }
         public string year { get; set; }
-        public string url { get; set; }
         public string doi { get; set; }
         public string publisher { get; set; }
         public string[] authors { get; set; }

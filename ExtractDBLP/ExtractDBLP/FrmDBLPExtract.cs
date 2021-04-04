@@ -24,7 +24,7 @@
 
         private void btnStart_Click(object sender, EventArgs eventarg)
         {
-            var keywords = "blockchain";
+            var keywords = "blockchain,merkle,bitcoin,ethereum,hyperledger,monero,eosio,algorand,zcash,filecoin";
             var words = keywords
                 .Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries)
                 .Select(_ => _.Trim())
@@ -34,7 +34,7 @@
             var rs = GetRecords(this.txtDBLPfile.Text);
             var fw = FilterWords(rs).Select(_ => new ExportPaper(_)).ToArray();
             var json = JsonConvert.SerializeObject(
-                new { records = fw, stats = wordStats },
+                new { records = fw, stats = wordStats, filename = Path.GetFileName(this.txtDBLPfile.Text) },
                 Newtonsoft.Json.Formatting.Indented,
                 new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
             File.WriteAllText(@"..\..\papers.json", json);
