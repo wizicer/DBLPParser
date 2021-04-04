@@ -1,4 +1,4 @@
-﻿[
+[
   {
     "id": 1,
     "title": "TOCS",
@@ -19,7 +19,7 @@
     "rank": "A",
     "type": "Journal",
     "category": 1,
-    "crossref": "journals/tos"
+    "crossref": "journals/tos/"
   },
   {
     "id": 3,
@@ -30,7 +30,7 @@
     "rank": "A",
     "type": "Journal",
     "category": 1,
-    "crossref": "journals/tcad"
+    "crossref": "journals/tcad/"
   },
   {
     "id": 4,
@@ -155,14 +155,12 @@
   },
   {
     "id": 15,
-    "title": "NULL",
     "fullname": "Performance Evaluation: An International Journal",
     "publisher": "Elsevier",
     "url": "http://www.journals.elsevier.com/performance-evaluation/",
     "rank": "B",
     "type": "Journal",
-    "category": 1,
-    "crossref": "NULL"
+    "category": 1
   },
   {
     "id": 16,
@@ -177,7 +175,6 @@
   },
   {
     "id": 17,
-    "title": "NULL",
     "fullname": "Concurrency and Computation: Practice and Experience",
     "publisher": "Wiley",
     "url": "http://dblp.uni-trier.de/db/journals/concurrency/",
@@ -238,8 +235,7 @@
     "url": "http://link.springer.com/journal/10836",
     "rank": "C",
     "type": "Journal",
-    "category": 1,
-    "crossref": "NULL"
+    "category": 1
   },
   {
     "id": 23,
@@ -249,8 +245,7 @@
     "url": "http://link.springer.com/journal/10723",
     "rank": "C",
     "type": "Journal",
-    "category": 1,
-    "crossref": "NULL"
+    "category": 1
   },
   {
     "id": 24,
@@ -469,8 +464,7 @@
     "url": "http://www.hotchips.org/",
     "rank": "B",
     "type": "Meeting",
-    "category": 1,
-    "crossref": "NULL"
+    "category": 1
   },
   {
     "id": 44,
@@ -564,7 +558,6 @@
     "id": 52,
     "title": "ICPP",
     "fullname": "International Conference on Parallel Processing",
-    "publisher": "NULL",
     "url": "http://dblp.uni-trier.de/db/conf/icpp/",
     "rank": "B",
     "type": "Meeting",
@@ -679,7 +672,7 @@
     "rank": "C",
     "type": "Meeting",
     "category": 1,
-    "crossref": "conf/cf"
+    "crossref": "conf/cf/"
   },
   {
     "id": 63,
@@ -701,7 +694,7 @@
     "rank": "C",
     "type": "Meeting",
     "category": 1,
-    "crossref": "conf/nocs"
+    "crossref": "conf/nocs/"
   },
   {
     "id": 65,
@@ -712,7 +705,7 @@
     "rank": "C",
     "type": "Meeting",
     "category": 1,
-    "crossref": "conf/asap"
+    "crossref": "conf/asap/"
   },
   {
     "id": 66,
@@ -723,7 +716,7 @@
     "rank": "C",
     "type": "Meeting",
     "category": 1,
-    "crossref": "conf/aspdac"
+    "crossref": "conf/aspdac/"
   },
   {
     "id": 67,
@@ -1057,7 +1050,6 @@
   },
   {
     "id": 97,
-    "title": "NULL",
     "fullname": "Ad hoc Networks",
     "publisher": "Elsevier",
     "url": "http://dblp.uni-trier.de/db/journals/adhoc/",
@@ -1090,7 +1082,6 @@
   },
   {
     "id": 100,
-    "title": "NULL",
     "fullname": "IET Communications",
     "publisher": "IET",
     "url": "http://dblp.uni-trier.de/db/journals/iet-com/",
@@ -1123,7 +1114,6 @@
   },
   {
     "id": 103,
-    "title": "NULL",
     "fullname": "Networks",
     "publisher": "Wiley",
     "url": "http://dblp.uni-trier.de/db/journals/networks/",
@@ -1156,7 +1146,6 @@
   },
   {
     "id": 106,
-    "title": "NULL",
     "fullname": "Wireless Networks",
     "publisher": "Springer",
     "url": "http://dblp.uni-trier.de/db/journals/winet/",
@@ -1552,7 +1541,6 @@
   },
   {
     "id": 142,
-    "title": "NULL",
     "fullname": "Journal of Cryptology",
     "publisher": "Springer",
     "url": "http://dblp.uni-trier.de/db/journals/joc/",
@@ -1569,12 +1557,10 @@
     "url": "https://tops.acm.org/",
     "rank": "B",
     "type": "Journal",
-    "category": 3,
-    "crossref": "NULL"
+    "category": 3
   },
   {
     "id": 144,
-    "title": "NULL",
     "fullname": "Computers & Security",
     "publisher": "Elsevier",
     "url": "http://dblp.uni-trier.de/db/journals/compsec/",
@@ -1585,7 +1571,6 @@
   },
   {
     "id": 145,
-    "title": "NULL",
     "fullname": "Designs, Codes and Cryptography",
     "publisher": "Springer",
     "url": "http://dblp.uni-trier.de/db/journals/dcc/",
@@ -1613,12 +1598,10 @@
     "url": "http://www.journals.elsevier.com/computer-law-and-security-review/",
     "rank": "C",
     "type": "Journal",
-    "category": 3,
-    "crossref": "NULL"
+    "category": 3
   },
   {
     "id": 148,
-    "title": "NULL",
     "fullname": "EURASIP Journal on Information Security",
     "publisher": "Springer",
     "url": "http://dblp.uni-trier.de/db/journals/ejisec/",
@@ -1629,7 +1612,6 @@
   },
   {
     "id": 149,
-    "title": "NULL",
     "fullname": "IET Information Security",
     "publisher": "IET",
     "url": "http://dblp.uni-trier.de/db/journals/iet-ifs/",
@@ -2031,8 +2013,7 @@
     "url": "http://www.ifip119.org/Conferences/",
     "rank": "C",
     "type": "Meeting",
-    "category": 3,
-    "crossref": "NULL"
+    "category": 3
   },
   {
     "id": 186,
@@ -2141,8 +2122,7 @@
     "url": "http://www.usenix.org/events/",
     "rank": "C",
     "type": "Meeting",
-    "category": 3,
-    "crossref": "NULL"
+    "category": 3
   },
   {
     "id": 196,
@@ -2245,7 +2225,6 @@
   },
   {
     "id": 205,
-    "title": "NULL",
     "fullname": "Journal of Software: Evolution and Process",
     "publisher": "Wiley",
     "url": "http://dblp.uni-trier.de/db/journals/smr/",
@@ -2362,7 +2341,7 @@
     "rank": "C",
     "type": "Journal",
     "category": 4,
-    "crossref": "journals/jlp/jlap.html"
+    "crossref": "journals/jlp/jlap.html/"
   },
   {
     "id": 216,
@@ -2900,8 +2879,7 @@
     "url": "http://paris.utdallas.edu/qrs/",
     "rank": "C",
     "type": "Meeting",
-    "category": 4,
-    "crossref": "NULL"
+    "category": 4
   },
   {
     "id": 265,
@@ -3114,7 +3092,6 @@
   },
   {
     "id": 284,
-    "title": "NULL",
     "fullname": "GeoInformatica",
     "publisher": "Springer",
     "url": "http://dblp.uni-trier.de/db/journals/geoinformatica/",
@@ -3136,7 +3113,6 @@
   },
   {
     "id": 286,
-    "title": "NULL",
     "fullname": "Information Sciences",
     "publisher": "Elsevier",
     "url": "http://dblp.uni-trier.de/db/journals/isci/",
@@ -3318,8 +3294,7 @@
     "url": "http://www.tandfonline.com/loi/ugit20#.Vnv35pN97rI",
     "rank": "C",
     "type": "Journal",
-    "category": 5,
-    "crossref": "NULL"
+    "category": 5
   },
   {
     "id": 303,
@@ -3950,7 +3925,6 @@
   },
   {
     "id": 360,
-    "title": "NULL",
     "fullname": "Theory of Computing Systems",
     "publisher": "Springer",
     "url": "http://dblp.uni-trier.de/db/journals/mst/",
@@ -4330,8 +4304,7 @@
     "url": "http://scitation.aip.org/content/asa/journal/jasa",
     "rank": "B",
     "type": "Journal",
-    "category": 7,
-    "crossref": "NULL"
+    "category": 7
   },
   {
     "id": 395,
@@ -4374,8 +4347,7 @@
     "url": "http://onlinelibrary.wiley.com/journal/10.1002/(ISSN)1546-427X",
     "rank": "C",
     "type": "Journal",
-    "category": 7,
-    "crossref": "NULL"
+    "category": 7
   },
   {
     "id": 399,
@@ -4456,7 +4428,6 @@
   },
   {
     "id": 406,
-    "title": "NULL",
     "fullname": "Signal Processing",
     "publisher": "Elsevier",
     "url": "http://dblp.uni-trier.de/db/journals/sigpro/",
@@ -4676,7 +4647,6 @@
   },
   {
     "id": 426,
-    "title": "NULL",
     "fullname": "ACM Symposium on Virtual Reality Software and Technology",
     "publisher": "ACM",
     "url": "http://dblp2.uni-trier.de/db/conf/vrst/",
@@ -4711,7 +4681,6 @@
     "id": 429,
     "title": "INTERSPEECH",
     "fullname": "Conference of the International SpeechCommunication Association",
-    "publisher": "NULL",
     "url": "http://dblp.uni-trier.de/db/conf/interspeech/index.html",
     "rank": "C",
     "type": "Meeting",
@@ -4885,7 +4854,6 @@
   },
   {
     "id": 445,
-    "title": "NULL",
     "fullname": "Computational Linguistics",
     "publisher": "MIT Press",
     "url": "http://dblp.uni-trier.de/db/journals/coling/",
@@ -4918,7 +4886,6 @@
   },
   {
     "id": 448,
-    "title": "NULL",
     "fullname": "Evolutionary Computation",
     "publisher": "MIT Press",
     "url": "http://dblp.uni-trier.de/db/journals/ec/",
@@ -4951,7 +4918,6 @@
   },
   {
     "id": 451,
-    "title": "NULL",
     "fullname": "IEEE Transactions on Cybernetics",
     "publisher": "IEEE",
     "url": "http://dblp.uni-trier.de/db/journals/tcyb/",
@@ -5017,7 +4983,6 @@
   },
   {
     "id": 457,
-    "title": "NULL",
     "fullname": "Journal of Automated Reasoning",
     "publisher": "Springer",
     "url": "http://dblp.uni-trier.de/db/journals/jar/",
@@ -5034,12 +4999,10 @@
     "url": "http://jslhr.pubs.asha.org/",
     "rank": "B",
     "type": "Journal",
-    "category": 8,
-    "crossref": "NULL"
+    "category": 8
   },
   {
     "id": 459,
-    "title": "NULL",
     "fullname": "Machine Learning",
     "publisher": "Springer",
     "url": "http://dblp.uni-trier.de/db/journals/ml/",
@@ -5050,7 +5013,6 @@
   },
   {
     "id": 460,
-    "title": "NULL",
     "fullname": "Neural Computation",
     "publisher": "MIT Press",
     "url": "http://dblp.uni-trier.de/db/journals/neco/",
@@ -5061,7 +5023,6 @@
   },
   {
     "id": 461,
-    "title": "NULL",
     "fullname": "Neural Networks",
     "publisher": "Elsevier",
     "url": "http://dblp.uni-trier.de/db/journals/nn/",
@@ -5072,7 +5033,6 @@
   },
   {
     "id": 462,
-    "title": "NULL",
     "fullname": "Pattern Recognition",
     "publisher": "Elsevier",
     "url": "http://dblp.uni-trier.de/db/conf/par/",
@@ -5094,7 +5054,6 @@
   },
   {
     "id": 464,
-    "title": "NULL",
     "fullname": "Applied Intelligence",
     "publisher": "Springer",
     "url": "http://dblp.uni-trier.de/db/journals/apin/",
@@ -5116,7 +5075,6 @@
   },
   {
     "id": 466,
-    "title": "NULL",
     "fullname": "Artificial Life",
     "publisher": "MIT Press",
     "url": "http://dblp.uni-trier.de/db/journals/alife/",
@@ -5127,7 +5085,6 @@
   },
   {
     "id": 467,
-    "title": "NULL",
     "fullname": "Computational Intelligence",
     "publisher": "Wiley",
     "url": "http://dblp.uni-trier.de/db/journals/ci/",
@@ -5138,7 +5095,6 @@
   },
   {
     "id": 468,
-    "title": "NULL",
     "fullname": "Computer Speech and Language",
     "publisher": "Elsevier",
     "url": "http://dblp.uni-trier.de/db/journals/csl/",
@@ -5149,7 +5105,6 @@
   },
   {
     "id": 469,
-    "title": "NULL",
     "fullname": "Connection Science",
     "publisher": "Taylor & Francis",
     "url": "http://dblp.uni-trier.de/db/journals/connection/",
@@ -5182,7 +5137,6 @@
   },
   {
     "id": 472,
-    "title": "NULL",
     "fullname": "Expert Systems",
     "publisher": "Blackwell /Wiley",
     "url": "http://dblp.uni-trier.de/db/journals/es/",
@@ -5204,7 +5158,6 @@
   },
   {
     "id": 474,
-    "title": "NULL",
     "fullname": "Fuzzy Sets and Systems",
     "publisher": "Elsevier",
     "url": "http://dblp.uni-trier.de/db/journals/fss/",
@@ -5232,19 +5185,16 @@
     "url": "http://digital-library.theiet.org/content/journals/iet-cvi",
     "rank": "C",
     "type": "Journal",
-    "category": 8,
-    "crossref": "NULL"
+    "category": 8
   },
   {
     "id": 477,
-    "title": "NULL",
     "fullname": "IET Signal Processing",
     "publisher": "IET",
     "url": "http://digital-library.theiet.org/content/journals/iet-spr",
     "rank": "C",
     "type": "Journal",
-    "category": 8,
-    "crossref": "NULL"
+    "category": 8
   },
   {
     "id": 478,
@@ -5358,7 +5308,6 @@
   },
   {
     "id": 488,
-    "title": "NULL",
     "fullname": "Machine Translation",
     "publisher": "Springer",
     "url": "http://dblp.uni-trier.de/db/journals/mt/",
@@ -5369,7 +5318,6 @@
   },
   {
     "id": 489,
-    "title": "NULL",
     "fullname": "Machine Vision and Applications",
     "publisher": "Springer",
     "url": "http://dblp.uni-trier.de/db/journals/mva/",
@@ -5380,7 +5328,6 @@
   },
   {
     "id": 490,
-    "title": "NULL",
     "fullname": "Natural Computing",
     "publisher": "Springer",
     "url": "http://dblp.uni-trier.de/db/journals/nc/",
@@ -5424,7 +5371,6 @@
   },
   {
     "id": 494,
-    "title": "NULL",
     "fullname": "Neurocomputing",
     "publisher": "Elsevier",
     "url": "http://dblp.uni-trier.de/db/journals/ijon/",
@@ -5457,7 +5403,6 @@
   },
   {
     "id": 497,
-    "title": "NULL",
     "fullname": "Soft Computing",
     "publisher": "Springer",
     "url": "http://dblp.uni-trier.de/db/journals/soco/",
@@ -5750,7 +5695,7 @@
     "rank": "C",
     "type": "Meeting",
     "category": 8,
-    "crossref": "conf/conll"
+    "crossref": "conf/conll/"
   },
   {
     "id": 524,
@@ -5963,7 +5908,6 @@
   },
   {
     "id": 543,
-    "title": "NULL",
     "fullname": "IEEE Transactions on Human-Machine Systems",
     "publisher": "IEEE",
     "url": "http://dblp.uni-trier.de/db/journals/thms/",
@@ -6047,7 +5991,7 @@
     "rank": "A",
     "type": "Meeting",
     "category": 9,
-    "crossref": "conf/cscw"
+    "crossref": "conf/cscw/"
   },
   {
     "id": 551,
@@ -6058,7 +6002,7 @@
     "rank": "A",
     "type": "Meeting",
     "category": 9,
-    "crossref": "conf/chi"
+    "crossref": "conf/chi/"
   },
   {
     "id": 552,
@@ -6179,7 +6123,7 @@
     "rank": "C",
     "type": "Meeting",
     "category": 9,
-    "crossref": "conf/assets"
+    "crossref": "conf/assets/"
   },
   {
     "id": 563,
@@ -6205,7 +6149,6 @@
   },
   {
     "id": 565,
-    "title": "NULL",
     "fullname": "IEEE World Haptics Conference",
     "publisher": "IEEE",
     "url": "http://dblp.uni-trier.de/db/conf/haptics/",
@@ -6244,8 +6187,7 @@
     "url": "http://collaboratecom.org",
     "rank": "C",
     "type": "Meeting",
-    "category": 9,
-    "crossref": "NULL"
+    "category": 9
   },
   {
     "id": 569,
@@ -6300,7 +6242,7 @@
     "rank": "A",
     "type": "Journal",
     "category": 10,
-    "crossref": "journals/jacm"
+    "crossref": "journals/jacm/"
   },
   {
     "id": 574,
@@ -6315,7 +6257,6 @@
   },
   {
     "id": 575,
-    "title": "NULL",
     "fullname": "Bioinformatics",
     "publisher": "Oxford University Press",
     "url": "http://dblp.uni-trier.de/db/journals/bioinformatics/",
@@ -6326,7 +6267,6 @@
   },
   {
     "id": 576,
-    "title": "NULL",
     "fullname": "Briefings in Bioinformatics",
     "publisher": "Oxford University Press",
     "url": "http://dblp.uni-trier.de/db/journals/bib/",
@@ -6343,8 +6283,7 @@
     "url": "http://www.journals.elsevier.com/cognition/",
     "rank": "B",
     "type": "Journal",
-    "category": 10,
-    "crossref": "NULL"
+    "category": 10
   },
   {
     "id": 578,
@@ -6436,7 +6375,6 @@
   },
   {
     "id": 586,
-    "title": "NULL",
     "fullname": "PLOS Computational Biology",
     "publisher": "Public Library of Science",
     "url": "http://dblp.uni-trier.de/db/journals/ploscb/",
@@ -6447,7 +6385,6 @@
   },
   {
     "id": 587,
-    "title": "NULL",
     "fullname": "Science China Information Sciences",
     "publisher": "Science in China Press /Springer",
     "url": "http://dblp.uni-trier.de/db/journals/chinaf/",
@@ -6458,7 +6395,6 @@
   },
   {
     "id": 588,
-    "title": "NULL",
     "fullname": "The Computer Journal",
     "publisher": "Oxford University Press",
     "url": "http://dblp.uni-trier.de/db/journals/cj/",
@@ -6469,7 +6405,6 @@
   },
   {
     "id": 589,
-    "title": "NULL",
     "fullname": "World Wide Web Journal",
     "publisher": "Springer",
     "url": "http://dblp.uni-trier.de/db/journals/wwwj/",
@@ -6480,7 +6415,6 @@
   },
   {
     "id": 590,
-    "title": "NULL",
     "fullname": "BMC Bioinformatics",
     "publisher": "BioMed Central",
     "url": "http://dblp.uni-trier.de/db/journals/bmcbi/",
@@ -6491,7 +6425,6 @@
   },
   {
     "id": 591,
-    "title": "NULL",
     "fullname": "Cybernetics and Systems",
     "publisher": "Taylor & Francis",
     "url": "http://dblp.uni-trier.de/db/journals/cas/",
@@ -6513,7 +6446,6 @@
   },
   {
     "id": 593,
-    "title": "NULL",
     "fullname": "IEEE Geoscience and Remote Sensing Letters",
     "publisher": "IEEE",
     "url": "http://dblp.uni-trier.de/db/journals/lgrs/",
@@ -6524,7 +6456,6 @@
   },
   {
     "id": 594,
-    "title": "NULL",
     "fullname": "JBHI",
     "publisher": "IEEE Journal of Biomedical and Health Informatics",
     "url": "http://dblp.uni-trier.de/db/journals/titb/",
@@ -6535,7 +6466,6 @@
   },
   {
     "id": 595,
-    "title": "NULL",
     "fullname": "TBD",
     "publisher": "IEEE Transactions on Big Data",
     "url": "https://dblp.uni-trier.de/db/journals/tbd/",
@@ -6546,18 +6476,15 @@
   },
   {
     "id": 596,
-    "title": "NULL",
     "fullname": "IET Intelligent Transport Systems",
     "publisher": "IET",
     "url": "http://digital-library.theiet.org/content/journals/iet-its",
     "rank": "C",
     "type": "Journal",
-    "category": 10,
-    "crossref": "NULL"
+    "category": 10
   },
   {
     "id": 597,
-    "title": "NULL",
     "fullname": "JBI",
     "publisher": "Journal of Biomedical Informatics",
     "url": "https://dblp.uni-trier.de/db/journals/jbi/",
@@ -6568,7 +6495,6 @@
   },
   {
     "id": 598,
-    "title": "NULL",
     "fullname": "Medical Image Analysis",
     "publisher": "Elsevier",
     "url": "http://dblp.uni-trier.de/db/journals/mia/",
@@ -6597,7 +6523,7 @@
     "rank": "A",
     "type": "Meeting",
     "category": 10,
-    "crossref": "conf/rtss"
+    "crossref": "conf/rtss/"
   },
   {
     "id": 601,
@@ -6607,8 +6533,7 @@
     "url": "http://cognitivesciencesociety.org/conference2013/index.html",
     "rank": "B",
     "type": "Meeting",
-    "category": 10,
-    "crossref": "NULL"
+    "category": 10
   },
   {
     "id": 602,
@@ -6640,8 +6565,7 @@
     "url": "http://www.iscb.org/about-ismb",
     "rank": "B",
     "type": "Meeting",
-    "category": 10,
-    "crossref": "NULL"
+    "category": 10
   },
   {
     "id": 605,
@@ -6678,7 +6602,6 @@
   },
   {
     "id": 608,
-    "title": "NULL",
     "fullname": "IEEE International Conference on Big Data",
     "publisher": "IEEE",
     "url": "https://dblp.uni-trier.de/db/conf/bigdataconf/",
@@ -6689,7 +6612,6 @@
   },
   {
     "id": 609,
-    "title": "NULL",
     "fullname": "IEEE International Conference on Cloud Computing",
     "publisher": "IEEE",
     "url": "http://dblp.uni-trier.de/db/conf/IEEEcloud/",
