@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.btnStart = new System.Windows.Forms.Button();
-            this.txtOutput = new System.Windows.Forms.TextBox();
             this.txtDBLPfile = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.chkinproceeding = new System.Windows.Forms.CheckBox();
@@ -41,7 +40,7 @@
             // 
             // btnStart
             // 
-            this.btnStart.Location = new System.Drawing.Point(48, 62);
+            this.btnStart.Location = new System.Drawing.Point(15, 97);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(75, 23);
             this.btnStart.TabIndex = 0;
@@ -49,17 +48,9 @@
             this.btnStart.UseVisualStyleBackColor = true;
             this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 
-            // txtOutput
-            // 
-            this.txtOutput.Location = new System.Drawing.Point(48, 93);
-            this.txtOutput.Name = "txtOutput";
-            this.txtOutput.Size = new System.Drawing.Size(200, 20);
-            this.txtOutput.TabIndex = 3;
-            this.txtOutput.Text = "G:\\dblp\\2014\\dblp-2014-06-28";
-            // 
             // txtDBLPfile
             // 
-            this.txtDBLPfile.Location = new System.Drawing.Point(48, 147);
+            this.txtDBLPfile.Location = new System.Drawing.Point(106, 6);
             this.txtDBLPfile.Name = "txtDBLPfile";
             this.txtDBLPfile.Size = new System.Drawing.Size(216, 20);
             this.txtDBLPfile.TabIndex = 4;
@@ -68,7 +59,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(48, 128);
+            this.label1.Location = new System.Drawing.Point(12, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(79, 13);
             this.label1.TabIndex = 5;
@@ -79,7 +70,7 @@
             this.chkinproceeding.AutoSize = true;
             this.chkinproceeding.Checked = true;
             this.chkinproceeding.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkinproceeding.Location = new System.Drawing.Point(48, 211);
+            this.chkinproceeding.Location = new System.Drawing.Point(25, 179);
             this.chkinproceeding.Name = "chkinproceeding";
             this.chkinproceeding.Size = new System.Drawing.Size(93, 17);
             this.chkinproceeding.TabIndex = 6;
@@ -91,7 +82,7 @@
             this.chkArticle.AutoSize = true;
             this.chkArticle.Checked = true;
             this.chkArticle.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkArticle.Location = new System.Drawing.Point(48, 188);
+            this.chkArticle.Location = new System.Drawing.Point(25, 156);
             this.chkArticle.Name = "chkArticle";
             this.chkArticle.Size = new System.Drawing.Size(60, 17);
             this.chkArticle.TabIndex = 6;
@@ -103,7 +94,7 @@
             this.chkProceeding.AutoSize = true;
             this.chkProceeding.Checked = true;
             this.chkProceeding.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkProceeding.Location = new System.Drawing.Point(48, 234);
+            this.chkProceeding.Location = new System.Drawing.Point(25, 202);
             this.chkProceeding.Name = "chkProceeding";
             this.chkProceeding.Size = new System.Drawing.Size(85, 17);
             this.chkProceeding.TabIndex = 6;
@@ -115,7 +106,7 @@
             this.chkAuthor.AutoSize = true;
             this.chkAuthor.Checked = true;
             this.chkAuthor.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkAuthor.Location = new System.Drawing.Point(172, 211);
+            this.chkAuthor.Location = new System.Drawing.Point(149, 179);
             this.chkAuthor.Name = "chkAuthor";
             this.chkAuthor.Size = new System.Drawing.Size(62, 17);
             this.chkAuthor.TabIndex = 6;
@@ -127,7 +118,7 @@
             this.chkPhdthesis.AutoSize = true;
             this.chkPhdthesis.Checked = true;
             this.chkPhdthesis.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkPhdthesis.Location = new System.Drawing.Point(172, 188);
+            this.chkPhdthesis.Location = new System.Drawing.Point(149, 156);
             this.chkPhdthesis.Name = "chkPhdthesis";
             this.chkPhdthesis.Size = new System.Drawing.Size(76, 17);
             this.chkPhdthesis.TabIndex = 6;
@@ -146,7 +137,6 @@
             this.Controls.Add(this.chkinproceeding);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtDBLPfile);
-            this.Controls.Add(this.txtOutput);
             this.Controls.Add(this.btnStart);
             this.Name = "FrmDBLPExtract";
             this.Text = "DBLP Extraction";
@@ -159,7 +149,6 @@
         #endregion
 
         private System.Windows.Forms.Button btnStart;
-        private System.Windows.Forms.TextBox txtOutput;
         private System.Windows.Forms.TextBox txtDBLPfile;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox chkinproceeding;
