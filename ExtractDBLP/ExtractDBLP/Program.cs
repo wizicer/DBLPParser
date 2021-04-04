@@ -17,7 +17,6 @@ namespace ExtractDBLPForm
         [STAThread]
         static void Main()
         {
-            CleanCcf();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new FrmDBLPExtract());

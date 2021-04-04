@@ -36,6 +36,8 @@
             this.chkProceeding = new System.Windows.Forms.CheckBox();
             this.chkAuthor = new System.Windows.Forms.CheckBox();
             this.chkPhdthesis = new System.Windows.Forms.CheckBox();
+            this.lblStatus = new System.Windows.Forms.Label();
+            this.barProgress = new System.Windows.Forms.ProgressBar();
             this.SuspendLayout();
             // 
             // btnStart
@@ -125,11 +127,30 @@
             this.chkPhdthesis.Text = "PhdThesis";
             this.chkPhdthesis.UseVisualStyleBackColor = true;
             // 
+            // lblStatus
+            // 
+            this.lblStatus.AutoSize = true;
+            this.lblStatus.Location = new System.Drawing.Point(103, 102);
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(0, 13);
+            this.lblStatus.TabIndex = 7;
+            // 
+            // barProgress
+            // 
+            this.barProgress.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.barProgress.Location = new System.Drawing.Point(3, 126);
+            this.barProgress.Name = "barProgress";
+            this.barProgress.Size = new System.Drawing.Size(828, 10);
+            this.barProgress.TabIndex = 8;
+            // 
             // FrmDBLPExtract
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(834, 340);
+            this.Controls.Add(this.barProgress);
+            this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.chkArticle);
             this.Controls.Add(this.chkPhdthesis);
             this.Controls.Add(this.chkAuthor);
@@ -156,6 +177,8 @@
         private System.Windows.Forms.CheckBox chkProceeding;
         private System.Windows.Forms.CheckBox chkAuthor;
         private System.Windows.Forms.CheckBox chkPhdthesis;
+        private System.Windows.Forms.Label lblStatus;
+        private System.Windows.Forms.ProgressBar barProgress;
     }
 }
 

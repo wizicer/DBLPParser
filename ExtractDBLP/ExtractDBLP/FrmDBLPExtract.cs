@@ -1,7 +1,9 @@
 ﻿namespace ExtractDBLPForm
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
@@ -20,11 +22,80 @@
         {
         }
 
-        private async void btnStart_Click(object sender, EventArgs eventarg)
+        private void btnStart_Click(object sender, EventArgs eventarg)
         {
-            var d = GetRecords(this.txtDBLPfile.Text);
-            var dd = d.Take(10).ToArray();
-            var k = 1;
+            var keywords = "blockchain";
+            var words = keywords
+                .Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(_ => _.Trim())
+                .ToArray();
+            var wordStats = words.ToDictionary(_ => _, _ => 0);
+
+            var rs = GetRecords(this.txtDBLPfile.Text);
+            var fw = FilterWords(rs).Select(_ => new ExportPaper(_)).ToArray();
+            var json = JsonConvert.SerializeObject(
+                new { records = fw, stats = wordStats },
+                Newtonsoft.Json.Formatting.Indented,
+                new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+            File.WriteAllText(@"..\..\papers.json", json);
+
+            IEnumerable<DblpRecord> FilterWords(IEnumerable<DblpRecord> records)
+            {
+
+                var i = 0;
+                var p = 0;
+                foreach (var record in records)
+                {
+                    i++;
+                    var isMatch = false;
+                    foreach (var word in words)
+                    {
+                        if (record.title.IndexOf(word, StringComparison.OrdinalIgnoreCase) >= 0)
+                        {
+                            isMatch = true;
+                            wordStats[word]++;
+                        }
+                    }
+
+                    if (isMatch)
+                    {
+                        p++;
+                        yield return record;
+                    }
+
+                    this.UpdateProgress(i, p);
+                }
+
+                this.UpdateProgress(i, p, true);
+            }
+        }
+
+        private void UpdateProgress(int totalProcessed, int found, bool isFinished = false)
+        {
+            if (!isFinished && totalProcessed % 10000 != 0) return;
+
+            Application.DoEvents();
+            var p = found;
+            var i = totalProcessed;
+            var progTick = 100_0000;
+
+            this.Invoke((Action)(() =>
+            {
+                if (isFinished)
+                {
+                    this.lblStatus.Text = $"Finished [{p}/{i}]";
+                    this.barProgress.Maximum = 100;
+                    this.barProgress.Value = 100;
+                }
+                else
+                {
+                    this.lblStatus.Text = $"Processing {p}/{i} items";
+                    var m = (i / progTick) + 1;
+                    m = Math.Max(m, 9);
+                    this.barProgress.Maximum = m * progTick;
+                    this.barProgress.Value = i;
+                }
+            }));
         }
 
         private IEnumerable<DblpRecord> GetRecords(string dblpXmlFilePath)
@@ -35,6 +106,8 @@
                 ValidationType = ValidationType.DTD
             };
             var reader = XmlReader.Create(Path.GetFullPath(dblpXmlFilePath), settings);
+
+            var warnFields = new HashSet<string>();
 
             while (!reader.EOF)
             {
@@ -60,19 +133,19 @@
                     {
                         case "author":
                         case "editor":
-                            var tmp = reader.ReadElementContentAsString();
+                            var tmp = reader.ReadInnerXml();
                             author_names.Add(tmp);
                             break;
 
                         case "ee":
-                            var tmpee = reader.ReadElementContentAsString();
-                            if (tmpee.IndexOf("https://doi.org") > -1) fields.Add("doi", tmpee);
+                            var tmpee = reader.ReadInnerXml();
+                            if (tmpee.IndexOf("https://doi.org") > -1) AddField(fields, "doi", tmpee);
                             else ee.Add(tmpee);
                             break;
 
                         default:
-                            var field = reader.ReadElementContentAsString();
-                            fields.Add(entity, field);
+                            var field = reader.ReadInnerXml();
+                            AddField(fields, entity, field);
                             break;
                     };
                 }
@@ -85,6 +158,22 @@
                 var ent = ProduceEntity(type, fields);
                 if (ent == null) continue;
                 yield return ent;
+            }
+
+            void AddField(Dictionary<string, object> fields, string name, string value)
+            {
+                if (fields.ContainsKey(name))
+                {
+                    if (!warnFields.Contains(name))
+                    {
+                        warnFields.Add(name);
+                        Debug.WriteLine($"Find multiple fields [{name}]");
+                    }
+                }
+                else
+                {
+                    fields.Add(name, value);
+                }
             }
         }
 
@@ -111,7 +200,7 @@
                     break;
 
                 case "www":
-                    if (fields["title"] is string title && title == "Home Page")
+                    if (fields.ContainsKey("title") && fields["title"] is string title && title == "Home Page")
                     {
                         ent = new Www();
                     }
