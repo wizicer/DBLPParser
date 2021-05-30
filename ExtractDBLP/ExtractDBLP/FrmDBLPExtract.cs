@@ -15,7 +15,7 @@
         public FrmDBLPExtract()
         {
             InitializeComponent();
-            this.txtDBLPfile.Text = @"C:\Users\icer\Downloads\dblp\dblp-2021-04-01.xml";
+            this.txtDBLPfile.Text = @"C:\Users\icer\Downloads\dblp\dblp.xml";
         }
 
         private void FrmDBLPExtract_Load(object sender, EventArgs e)
@@ -24,7 +24,7 @@
 
         private void btnStart_Click(object sender, EventArgs eventarg)
         {
-            var keywords = "blockchain,merkle,bitcoin,ethereum,hyperledger,monero,eosio,algorand,zcash,filecoin";
+            var keywords = "blockchain,merkle,bitcoin,ethereum,hyperledger,monero,eosio,algorand,zcash,filecoin,immutable";
             var words = keywords
                 .Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries)
                 .Select(_ => _.Trim())
