@@ -32,9 +32,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -54,72 +53,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="article.cs">
-      <DependentUpon>dblpData.tt</DependentUpon>
-    </Compile>
-    <Compile Include="author.cs">
-      <DependentUpon>dblpData.tt</DependentUpon>
-    </Compile>
-    <Compile Include="AuthorDBLP.cs" />
-    <Compile Include="dblpData.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>dblpData.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="dblpData.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>dblpData.tt</DependentUpon>
-    </Compile>
-    <Compile Include="dblpData.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>dblpData.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="dblp_author.cs">
-      <DependentUpon>dblpData.tt</DependentUpon>
-    </Compile>
-    <Compile Include="dblp_conference.cs">
-      <DependentUpon>dblpData.tt</DependentUpon>
-    </Compile>
-    <Compile Include="dblp_inproceedings.cs">
-      <DependentUpon>dblpData.tt</DependentUpon>
-    </Compile>
+    <Compile Include="CcfRecord.cs" />
+    <Compile Include="DblpRecord.cs" />
     <Compile Include="FrmDBLPExtract.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FrmDBLPExtract.Designer.cs">
       <DependentUpon>FrmDBLPExtract.cs</DependentUpon>
     </Compile>
-    <Compile Include="inproceeding.cs">
-      <DependentUpon>dblpData.tt</DependentUpon>
-    </Compile>
-    <Compile Include="InproceedingsDBLP.cs" />
-    <Compile Include="Partners.cs" />
-    <Compile Include="ConferenceDBLP.cs" />
-    <Compile Include="phdthesi.cs">
-      <DependentUpon>dblpData.tt</DependentUpon>
-    </Compile>
-    <Compile Include="proceedings.cs">
-      <DependentUpon>dblpData.tt</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="table_articles.cs">
-      <DependentUpon>dblpData.tt</DependentUpon>
-    </Compile>
-    <Compile Include="table_inproceedings.cs">
-      <DependentUpon>dblpData.tt</DependentUpon>
-    </Compile>
-    <Compile Include="table_phdthesis.cs">
-      <DependentUpon>dblpData.tt</DependentUpon>
-    </Compile>
-    <Compile Include="table_proceedings.cs">
-      <DependentUpon>dblpData.tt</DependentUpon>
-    </Compile>
-    <Compile Include="table_www.cs">
-      <DependentUpon>dblpData.tt</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="FrmDBLPExtract.resx">
       <DependentUpon>FrmDBLPExtract.cs</DependentUpon>
     </EmbeddedResource>
@@ -132,22 +75,8 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EntityDeploy Include="dblpData.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>dblpData.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="dblpData.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>dblpData.edmx</DependentUpon>
-      <LastGenOutput>dblpData.Context.cs</LastGenOutput>
-    </None>
-    <None Include="dblpData.edmx.diagram">
-      <DependentUpon>dblpData.edmx</DependentUpon>
-    </None>
-    <None Include="dblpData.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>dblpData.edmx</DependentUpon>
-      <LastGenOutput>dblpData.cs</LastGenOutput>
+    <None Include="ccf.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
