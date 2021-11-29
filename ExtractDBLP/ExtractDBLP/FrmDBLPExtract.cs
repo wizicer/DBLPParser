@@ -15,7 +15,7 @@
         public FrmDBLPExtract()
         {
             InitializeComponent();
-            this.txtDBLPfile.Text = @"C:\Users\icer\Downloads\dblp\dblp.xml";
+            this.txtDBLPfile.Text = @"E:\Works\dblp\dblp.xml";
         }
 
         private void FrmDBLPExtract_Load(object sender, EventArgs e)
@@ -24,7 +24,9 @@
 
         private void btnStart_Click(object sender, EventArgs eventarg)
         {
-            var keywords = "blockchain,merkle,bitcoin,ethereum,hyperledger,monero,eosio,algorand,zcash,filecoin,immutable";
+            //var keywords = "blockchain,merkle,bitcoin,ethereum,hyperledger,monero,eosio,algorand,zcash,filecoin,immutable";
+            var keywords = "sgx,trusted execution,privacy,federat,enclave,trustzone,amd sev";
+            var yearstart = 2018;
             var words = keywords
                 .Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries)
                 .Select(_ => _.Trim())
@@ -32,14 +34,16 @@
             var wordStats = words.ToDictionary(_ => _, _ => 0);
 
             var rs = GetRecords(this.txtDBLPfile.Text);
-            var fw = FilterWords(rs).Select(_ => new ExportPaper(_)).ToArray();
+            var fw = Filter(rs)
+                .Select(_ => new ExportPaper(_))
+                .ToArray();
             var json = JsonConvert.SerializeObject(
                 new { records = fw, stats = wordStats, filename = Path.GetFileName(this.txtDBLPfile.Text) },
                 Newtonsoft.Json.Formatting.Indented,
                 new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
             File.WriteAllText(@"..\..\papers.js", "var papers = " + json);
 
-            IEnumerable<DblpRecord> FilterWords(IEnumerable<DblpRecord> records)
+            IEnumerable<DblpRecord> Filter(IEnumerable<DblpRecord> records)
             {
 
                 var i = 0;
@@ -48,12 +52,20 @@
                 {
                     i++;
                     var isMatch = false;
+                    // filter words
                     foreach (var word in words)
                     {
                         if (record.title.IndexOf(word, StringComparison.OrdinalIgnoreCase) >= 0)
                         {
                             isMatch = true;
-                            wordStats[word]++;
+
+                            // filter year
+                            if (isMatch && (record is Paper pp && (!int.TryParse(pp.year, out var y) || y < yearstart)))
+                            {
+                                isMatch = false;
+                            }
+
+                            if (isMatch) wordStats[word]++;
                         }
                     }
 
