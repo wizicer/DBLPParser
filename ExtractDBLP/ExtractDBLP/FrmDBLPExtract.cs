@@ -34,7 +34,8 @@
             var wordStats = words.ToDictionary(_ => _, _ => 0);
 
             var rs = GetRecords(this.txtDBLPfile.Text);
-            var fw = FilterByWords(rs, words, yearstart, wordStats)
+            //var fw = FilterByWords(rs, words, yearstart, wordStats)
+            var fw = FilterByKeyPrefix(rs, "conf/sigmod", (2021, 2021))
                 .Select(_ => new ExportPaper(_))
                 .ToArray();
             var json = JsonConvert.SerializeObject(
@@ -44,6 +45,35 @@
             File.WriteAllText(@"..\..\papers.js", "var papers = " + json);
         }
 
+        private IEnumerable<DblpRecord> FilterByKeyPrefix(IEnumerable<DblpRecord> records, string keyPrefix, (int start, int end) year)
+        {
+            var i = 0;
+            var p = 0;
+            foreach (var record in records)
+            {
+                i++;
+                var isMatch = false;
+
+                if (record.key.StartsWith(keyPrefix))
+                    isMatch = true;
+
+                // filter year
+                if (isMatch && (record is Paper pp && (!int.TryParse(pp.year, out var y) || (y < year.start || y > year.end))))
+                {
+                    isMatch = false;
+                }
+
+                if (isMatch)
+                {
+                    p++;
+                    yield return record;
+                }
+
+                this.UpdateProgress(i, p);
+            }
+
+            this.UpdateProgress(i, p, true);
+        }
         private IEnumerable<DblpRecord> FilterByWords(IEnumerable<DblpRecord> records, string[] words, int yearstart, Dictionary<string, int> wordStats)
         {
             var i = 0;
