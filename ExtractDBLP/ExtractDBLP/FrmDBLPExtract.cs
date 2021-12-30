@@ -26,7 +26,7 @@
         {
             //var keywords = "blockchain,merkle,bitcoin,ethereum,hyperledger,monero,eosio,algorand,zcash,filecoin,immutable";
             var keywords = "sgx,trusted execution,privacy,federat,enclave,trustzone,amd sev";
-            var yearstart = 2018;
+            //var yearstart = 2018;
             var words = keywords
                 .Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries)
                 .Select(_ => _.Trim())
@@ -35,7 +35,20 @@
 
             var rs = GetRecords(this.txtDBLPfile.Text);
             //var fw = FilterByWords(rs, words, yearstart, wordStats)
-            var fw = FilterByKeyPrefix(rs, "conf/sigmod", (2021, 2021))
+            var yearstart = 2018;
+            var yearend = 2022;
+            var dbaclass = new[] {
+                "journals/tods",
+                "journals/tois",
+                "journals/tkde",
+                "journals/vldb",
+                "conf/sigmod",
+                "conf/kdd",
+                "conf/icde",
+                "conf/sigir",
+                "conf/vldb",
+            };
+            var fw = FilterByKeyPrefix(rs, dbaclass, (yearstart, yearend))
                 .Select(_ => new ExportPaper(_))
                 .ToArray();
             var json = JsonConvert.SerializeObject(
@@ -45,7 +58,7 @@
             File.WriteAllText(@"..\..\papers.js", "var papers = " + json);
         }
 
-        private IEnumerable<DblpRecord> FilterByKeyPrefix(IEnumerable<DblpRecord> records, string keyPrefix, (int start, int end) year)
+        private IEnumerable<DblpRecord> FilterByKeyPrefix(IEnumerable<DblpRecord> records, string[] keyPrefixes, (int start, int end) year)
         {
             var i = 0;
             var p = 0;
@@ -54,7 +67,7 @@
                 i++;
                 var isMatch = false;
 
-                if (record.key.StartsWith(keyPrefix))
+                if (keyPrefixes.Any(_ => record.key.StartsWith(_)))
                     isMatch = true;
 
                 // filter year
