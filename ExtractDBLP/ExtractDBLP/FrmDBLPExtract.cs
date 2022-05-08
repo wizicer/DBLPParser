@@ -15,7 +15,7 @@
         public FrmDBLPExtract()
         {
             InitializeComponent();
-            this.txtDBLPfile.Text = @"E:\Works\dblp\dblp.xml";
+            this.txtDBLPfile.Text = @"C:\Data\dblp\dblp.xml";
         }
 
         private void FrmDBLPExtract_Load(object sender, EventArgs e)
@@ -35,7 +35,7 @@
 
             var rs = GetRecords(this.txtDBLPfile.Text);
             //var fw = FilterByWords(rs, words, yearstart, wordStats)
-            var yearstart = 2018;
+            var yearstart = 2011;
             var yearend = 2022;
             var dbaclass = new[] {
                 "journals/tods",
