@@ -157,7 +157,8 @@
             var settings = new XmlReaderSettings
             {
                 DtdProcessing = DtdProcessing.Parse,
-                ValidationType = ValidationType.DTD
+                ValidationType = ValidationType.DTD,
+                XmlResolver = new XmlUrlResolver(),
             };
             var reader = XmlReader.Create(Path.GetFullPath(dblpXmlFilePath), settings);
 
