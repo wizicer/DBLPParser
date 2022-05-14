@@ -1,5 +1,6 @@
 ﻿namespace ExtractDBLPForm
 {
+    using MessagePack;
     using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
@@ -20,6 +21,17 @@
 
         private void FrmDBLPExtract_Load(object sender, EventArgs e)
         {
+            var lz4Options = MessagePackSerializerOptions.Standard.WithCompression(MessagePackCompression.Lz4BlockArray);
+            var fw = MessagePackSerializer.Deserialize<ExportPaper[]>(File.ReadAllBytes(@"..\..\data.bin"), lz4Options);
+            //var lz4Options2 = MessagePackSerializerOptions.Standard.WithCompression(MessagePackCompression.Lz4Block);
+            var old = MessagePackSerializerOptions.Standard.WithOldSpec();
+            var data = MessagePackSerializer.Serialize(fw, old);
+            File.WriteAllBytes(@"..\..\paper.bin", data);
+            var json = JsonConvert.SerializeObject(
+                new { records = fw, },
+                Newtonsoft.Json.Formatting.Indented,
+                new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+            File.WriteAllText(@"..\..\data2.json", json);
         }
 
         private void btnStart_Click(object sender, EventArgs eventarg)
@@ -38,24 +50,40 @@
             var yearstart = 2011;
             var yearend = 2022;
             var dbaclass = new[] {
-                "journals/tods",
-                "journals/tois",
-                "journals/tkde",
-                "journals/vldb",
-                "conf/sigmod",
-                "conf/kdd",
-                "conf/icde",
-                "conf/sigir",
-                "conf/vldb",
+                "journals/tods/",
+                "journals/tois/",
+                "journals/tkde/",
+                "journals/vldb/",
+                "conf/sigmod/",
+                "conf/kdd/",
+                "conf/icde/",
+                "conf/sigir/",
+                "conf/vldb/",
             };
-            var fw = FilterByKeyPrefix(rs, dbaclass, (yearstart, yearend))
+            var dbbclass = new[] {
+                "journals/tkdd/", "journals/tweb/", "journals/aei/", "journals/dke/", "journals/datamine/", "journals/ejis/", "journals/geoinformatica/", "journals/ipm/", "journals/isci/", "journals/is/", "journals/jasis/", "journals/ws/", "journals/kais/", "conf/cikm/", "conf/wsdm/", "conf/pods/", "conf/dasfaa/", "conf/ecml/", "conf/semweb/", "conf/icdm/", "conf/icdt/", "conf/edbt/", "conf/cidr/", "conf/sdm/"
+            };
+            var dbcclass = new[] {
+                "journals/dpd/", "journals/iam/", "journals/ipl/", "journals/ir/", "journals/ijcis/", "journals/gis/", "journals/ijis/", "journals/ijkm/", "journals/ijswis/", "journals/jcis/", "journals/jdm/", "journals/jiis/", "journals/jsis/", "conf/apweb/", "conf/dexa/", "conf/ecir/", "conf/esws/", "conf/webdb/", "conf/er/", "conf/mdm/", "conf/ssdbm/", "conf/waim/", "conf/ssd/", "conf/pakdd/", "conf/wise/"
+            };
+            var otherclass = new string[] {
+                "journals/pvldb/",
+            };
+            var clses = new[] { dbaclass, dbbclass, dbcclass, otherclass }.SelectMany(_ => _).ToArray();
+            var fw = FilterByKeyPrefix(rs, clses, (yearstart, yearend))
                 .Select(_ => new ExportPaper(_))
                 .ToArray();
-            var json = JsonConvert.SerializeObject(
-                new { records = fw, stats = wordStats, filename = Path.GetFileName(this.txtDBLPfile.Text) },
-                Newtonsoft.Json.Formatting.Indented,
-                new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
-            File.WriteAllText(@"..\..\papers.js", "var papers = " + json);
+
+            var lz4Options = MessagePackSerializerOptions.Standard.WithCompression(MessagePackCompression.Lz4BlockArray);
+            var data = MessagePackSerializer.Serialize(fw, lz4Options);
+            File.WriteAllBytes(@"..\..\data.bin", data);
+
+
+            //var json = JsonConvert.SerializeObject(
+            //    new { records = fw, stats = wordStats, filename = Path.GetFileName(this.txtDBLPfile.Text) },
+            //    Newtonsoft.Json.Formatting.Indented,
+            //    new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+            //File.WriteAllText(@"..\..\papers.js", "var papers = " + json);
         }
 
         private IEnumerable<DblpRecord> FilterByKeyPrefix(IEnumerable<DblpRecord> records, string[] keyPrefixes, (int start, int end) year)
@@ -81,6 +109,8 @@
                     p++;
                     yield return record;
                 }
+
+                //if (p > 100) yield break;
 
                 this.UpdateProgress(i, p);
             }

@@ -1,5 +1,7 @@
 ﻿namespace ExtractDBLPForm
 {
+    using MessagePack;
+
     public class DblpRecord
     {
         public string type { get; set; }
@@ -48,8 +50,13 @@
 
     public class MasterThesis : Paper { }
 
+    [MessagePackObject(keyAsPropertyName: true)]
     public class ExportPaper
     {
+        public ExportPaper()
+        {
+        }
+
         public ExportPaper(DblpRecord record)
         {
             this.type = record.type;
