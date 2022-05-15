@@ -34,6 +34,7 @@
             this.lblStatus = new System.Windows.Forms.Label();
             this.barProgress = new System.Windows.Forms.ProgressBar();
             this.btnIndex = new System.Windows.Forms.Button();
+            this.btnExportDb = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnStart
@@ -96,6 +97,17 @@
             this.btnIndex.UseVisualStyleBackColor = true;
             this.btnIndex.Click += new System.EventHandler(this.btnIndex_Click);
             // 
+            // btnExportDb
+            // 
+            this.btnExportDb.Location = new System.Drawing.Point(120, 228);
+            this.btnExportDb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.btnExportDb.Name = "btnExportDb";
+            this.btnExportDb.Size = new System.Drawing.Size(88, 27);
+            this.btnExportDb.TabIndex = 0;
+            this.btnExportDb.Text = "Export DB";
+            this.btnExportDb.UseVisualStyleBackColor = true;
+            this.btnExportDb.Click += new System.EventHandler(this.btnExportDb_Click);
+            // 
             // FrmDBLPExtract
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -105,6 +117,7 @@
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtDBLPfile);
+            this.Controls.Add(this.btnExportDb);
             this.Controls.Add(this.btnIndex);
             this.Controls.Add(this.btnStart);
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -124,6 +137,7 @@
         private System.Windows.Forms.Label lblStatus;
         private System.Windows.Forms.ProgressBar barProgress;
         private System.Windows.Forms.Button btnIndex;
+        private System.Windows.Forms.Button btnExportDb;
     }
 }
 

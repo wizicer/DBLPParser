@@ -185,5 +185,12 @@
             Indexer.ProduceIndex();
             this.btnIndex.Enabled = true;
         }
+
+        private void btnExportDb_Click(object sender, EventArgs e)
+        {
+            this.btnExportDb.Enabled = false;
+            Exporter.ProduceDb();
+            this.btnExportDb.Enabled = true;
+        }
     }
 }
