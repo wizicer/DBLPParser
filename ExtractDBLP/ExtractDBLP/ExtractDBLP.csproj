@@ -86,7 +86,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CcfRecord.cs" />
+    <Compile Include="DblpParser.cs" />
     <Compile Include="DblpRecord.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="FrmDBLPExtract.cs">
       <SubType>Form</SubType>
     </Compile>
