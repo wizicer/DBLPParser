@@ -178,5 +178,12 @@
                 }
             }));
         }
+
+        private void btnIndex_Click(object sender, EventArgs e)
+        {
+            this.btnIndex.Enabled = false;
+            Indexer.ProduceIndex();
+            this.btnIndex.Enabled = true;
+        }
     }
 }

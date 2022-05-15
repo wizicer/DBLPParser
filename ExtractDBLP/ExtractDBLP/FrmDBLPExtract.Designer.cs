@@ -31,20 +31,17 @@
             this.btnStart = new System.Windows.Forms.Button();
             this.txtDBLPfile = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.chkinproceeding = new System.Windows.Forms.CheckBox();
-            this.chkArticle = new System.Windows.Forms.CheckBox();
-            this.chkProceeding = new System.Windows.Forms.CheckBox();
-            this.chkAuthor = new System.Windows.Forms.CheckBox();
-            this.chkPhdthesis = new System.Windows.Forms.CheckBox();
             this.lblStatus = new System.Windows.Forms.Label();
             this.barProgress = new System.Windows.Forms.ProgressBar();
+            this.btnIndex = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnStart
             // 
-            this.btnStart.Location = new System.Drawing.Point(15, 97);
+            this.btnStart.Location = new System.Drawing.Point(18, 112);
+            this.btnStart.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(75, 23);
+            this.btnStart.Size = new System.Drawing.Size(88, 27);
             this.btnStart.TabIndex = 0;
             this.btnStart.Text = "Start";
             this.btnStart.UseVisualStyleBackColor = true;
@@ -52,113 +49,65 @@
             // 
             // txtDBLPfile
             // 
-            this.txtDBLPfile.Location = new System.Drawing.Point(106, 6);
+            this.txtDBLPfile.Location = new System.Drawing.Point(124, 7);
+            this.txtDBLPfile.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.txtDBLPfile.Name = "txtDBLPfile";
-            this.txtDBLPfile.Size = new System.Drawing.Size(216, 20);
+            this.txtDBLPfile.Size = new System.Drawing.Size(251, 23);
             this.txtDBLPfile.TabIndex = 4;
             this.txtDBLPfile.Text = "G:\\dblp\\2014\\dblp-2014-06-28\\dblp.xml";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Location = new System.Drawing.Point(14, 10);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(79, 13);
+            this.label1.Size = new System.Drawing.Size(83, 15);
             this.label1.TabIndex = 5;
             this.label1.Text = "DBLP XML File";
-            // 
-            // chkinproceeding
-            // 
-            this.chkinproceeding.AutoSize = true;
-            this.chkinproceeding.Checked = true;
-            this.chkinproceeding.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkinproceeding.Location = new System.Drawing.Point(25, 179);
-            this.chkinproceeding.Name = "chkinproceeding";
-            this.chkinproceeding.Size = new System.Drawing.Size(93, 17);
-            this.chkinproceeding.TabIndex = 6;
-            this.chkinproceeding.Text = "Inproceedings";
-            this.chkinproceeding.UseVisualStyleBackColor = true;
-            // 
-            // chkArticle
-            // 
-            this.chkArticle.AutoSize = true;
-            this.chkArticle.Checked = true;
-            this.chkArticle.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkArticle.Location = new System.Drawing.Point(25, 156);
-            this.chkArticle.Name = "chkArticle";
-            this.chkArticle.Size = new System.Drawing.Size(60, 17);
-            this.chkArticle.TabIndex = 6;
-            this.chkArticle.Text = "Articles";
-            this.chkArticle.UseVisualStyleBackColor = true;
-            // 
-            // chkProceeding
-            // 
-            this.chkProceeding.AutoSize = true;
-            this.chkProceeding.Checked = true;
-            this.chkProceeding.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkProceeding.Location = new System.Drawing.Point(25, 202);
-            this.chkProceeding.Name = "chkProceeding";
-            this.chkProceeding.Size = new System.Drawing.Size(85, 17);
-            this.chkProceeding.TabIndex = 6;
-            this.chkProceeding.Text = "Proceedings";
-            this.chkProceeding.UseVisualStyleBackColor = true;
-            // 
-            // chkAuthor
-            // 
-            this.chkAuthor.AutoSize = true;
-            this.chkAuthor.Checked = true;
-            this.chkAuthor.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkAuthor.Location = new System.Drawing.Point(149, 179);
-            this.chkAuthor.Name = "chkAuthor";
-            this.chkAuthor.Size = new System.Drawing.Size(62, 17);
-            this.chkAuthor.TabIndex = 6;
-            this.chkAuthor.Text = "Authors";
-            this.chkAuthor.UseVisualStyleBackColor = true;
-            // 
-            // chkPhdthesis
-            // 
-            this.chkPhdthesis.AutoSize = true;
-            this.chkPhdthesis.Checked = true;
-            this.chkPhdthesis.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkPhdthesis.Location = new System.Drawing.Point(149, 156);
-            this.chkPhdthesis.Name = "chkPhdthesis";
-            this.chkPhdthesis.Size = new System.Drawing.Size(76, 17);
-            this.chkPhdthesis.TabIndex = 6;
-            this.chkPhdthesis.Text = "PhdThesis";
-            this.chkPhdthesis.UseVisualStyleBackColor = true;
             // 
             // lblStatus
             // 
             this.lblStatus.AutoSize = true;
-            this.lblStatus.Location = new System.Drawing.Point(103, 102);
+            this.lblStatus.Location = new System.Drawing.Point(120, 118);
+            this.lblStatus.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(0, 13);
+            this.lblStatus.Size = new System.Drawing.Size(0, 15);
             this.lblStatus.TabIndex = 7;
             // 
             // barProgress
             // 
             this.barProgress.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.barProgress.Location = new System.Drawing.Point(3, 126);
+            this.barProgress.Location = new System.Drawing.Point(4, 145);
+            this.barProgress.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.barProgress.Name = "barProgress";
-            this.barProgress.Size = new System.Drawing.Size(828, 10);
+            this.barProgress.Size = new System.Drawing.Size(966, 12);
             this.barProgress.TabIndex = 8;
+            // 
+            // btnIndex
+            // 
+            this.btnIndex.Location = new System.Drawing.Point(18, 228);
+            this.btnIndex.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.btnIndex.Name = "btnIndex";
+            this.btnIndex.Size = new System.Drawing.Size(88, 27);
+            this.btnIndex.TabIndex = 0;
+            this.btnIndex.Text = "Index";
+            this.btnIndex.UseVisualStyleBackColor = true;
+            this.btnIndex.Click += new System.EventHandler(this.btnIndex_Click);
             // 
             // FrmDBLPExtract
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(834, 340);
+            this.ClientSize = new System.Drawing.Size(973, 392);
             this.Controls.Add(this.barProgress);
             this.Controls.Add(this.lblStatus);
-            this.Controls.Add(this.chkArticle);
-            this.Controls.Add(this.chkPhdthesis);
-            this.Controls.Add(this.chkAuthor);
-            this.Controls.Add(this.chkProceeding);
-            this.Controls.Add(this.chkinproceeding);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtDBLPfile);
+            this.Controls.Add(this.btnIndex);
             this.Controls.Add(this.btnStart);
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "FrmDBLPExtract";
             this.Text = "DBLP Extraction";
             this.Load += new System.EventHandler(this.FrmDBLPExtract_Load);
@@ -172,13 +121,9 @@
         private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.TextBox txtDBLPfile;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.CheckBox chkinproceeding;
-        private System.Windows.Forms.CheckBox chkArticle;
-        private System.Windows.Forms.CheckBox chkProceeding;
-        private System.Windows.Forms.CheckBox chkAuthor;
-        private System.Windows.Forms.CheckBox chkPhdthesis;
         private System.Windows.Forms.Label lblStatus;
         private System.Windows.Forms.ProgressBar barProgress;
+        private System.Windows.Forms.Button btnIndex;
     }
 }
 
