@@ -27,9 +27,11 @@ public class Indexer
         foreach (var paper in papers)
         {
             var doc = new Document();
+            doc.Add(new StringField(nameof(paper.key), paper.key, Field.Store.YES));
             doc.Add(new StringField(nameof(paper.type), paper.type ?? string.Empty, Field.Store.YES));
             doc.Add(new TextField(nameof(paper.title), paper.title ?? string.Empty, Field.Store.YES));
-            doc.Add(new NumericDocValuesField(nameof(paper.year), int.TryParse(paper.year, out var y) ? y : -1));
+            doc.Add(new TextField(nameof(paper.year), paper.year ?? string.Empty, Field.Store.YES));
+            //doc.Add(new NumericDocValuesField(nameof(paper.year), int.TryParse(paper.year, out var y) ? y : -1));
             doc.Add(new TextField(nameof(paper.publisher), paper.publisher ?? string.Empty, Field.Store.YES));
             writer.AddDocument(doc);
         }
