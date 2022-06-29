@@ -35,6 +35,9 @@
             this.barProgress = new System.Windows.Forms.ProgressBar();
             this.btnIndex = new System.Windows.Forms.Button();
             this.btnExportDb = new System.Windows.Forms.Button();
+            this.btnExportPapers = new System.Windows.Forms.Button();
+            this.txtYear = new System.Windows.Forms.TextBox();
+            this.txtKeyPrefix = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // btnStart
@@ -108,6 +111,35 @@
             this.btnExportDb.UseVisualStyleBackColor = true;
             this.btnExportDb.Click += new System.EventHandler(this.btnExportDb_Click);
             // 
+            // btnExportPapers
+            // 
+            this.btnExportPapers.Location = new System.Drawing.Point(18, 318);
+            this.btnExportPapers.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.btnExportPapers.Name = "btnExportPapers";
+            this.btnExportPapers.Size = new System.Drawing.Size(88, 27);
+            this.btnExportPapers.TabIndex = 0;
+            this.btnExportPapers.Text = "Export Papers";
+            this.btnExportPapers.UseVisualStyleBackColor = true;
+            this.btnExportPapers.Click += new System.EventHandler(this.btnExportPapers_Click);
+            // 
+            // txtYear
+            // 
+            this.txtYear.Location = new System.Drawing.Point(18, 275);
+            this.txtYear.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.txtYear.Name = "txtYear";
+            this.txtYear.Size = new System.Drawing.Size(88, 23);
+            this.txtYear.TabIndex = 4;
+            this.txtYear.Text = "2022";
+            // 
+            // txtKeyPrefix
+            // 
+            this.txtKeyPrefix.Location = new System.Drawing.Point(120, 275);
+            this.txtKeyPrefix.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.txtKeyPrefix.Name = "txtKeyPrefix";
+            this.txtKeyPrefix.Size = new System.Drawing.Size(175, 23);
+            this.txtKeyPrefix.TabIndex = 4;
+            this.txtKeyPrefix.Text = "conf/sigmod";
+            // 
             // FrmDBLPExtract
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -116,7 +148,10 @@
             this.Controls.Add(this.barProgress);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.txtKeyPrefix);
+            this.Controls.Add(this.txtYear);
             this.Controls.Add(this.txtDBLPfile);
+            this.Controls.Add(this.btnExportPapers);
             this.Controls.Add(this.btnExportDb);
             this.Controls.Add(this.btnIndex);
             this.Controls.Add(this.btnStart);
@@ -138,6 +173,9 @@
         private System.Windows.Forms.ProgressBar barProgress;
         private System.Windows.Forms.Button btnIndex;
         private System.Windows.Forms.Button btnExportDb;
+        private System.Windows.Forms.Button btnExportPapers;
+        private System.Windows.Forms.TextBox txtYear;
+        private System.Windows.Forms.TextBox txtKeyPrefix;
     }
 }
 

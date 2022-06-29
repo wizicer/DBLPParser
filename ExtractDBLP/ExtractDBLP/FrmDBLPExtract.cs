@@ -192,5 +192,12 @@
             Exporter.ProduceDb();
             this.btnExportDb.Enabled = true;
         }
+
+        private void btnExportPapers_Click(object sender, EventArgs e)
+        {
+            this.btnExportPapers.Enabled = false;
+            Exporter.Export(this.txtKeyPrefix.Text, this.txtYear.Text);
+            this.btnExportPapers.Enabled = true;
+        }
     }
 }
