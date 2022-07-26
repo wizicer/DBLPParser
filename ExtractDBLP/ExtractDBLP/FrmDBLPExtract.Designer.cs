@@ -36,8 +36,9 @@
             this.btnIndex = new System.Windows.Forms.Button();
             this.btnExportDb = new System.Windows.Forms.Button();
             this.btnExportPapers = new System.Windows.Forms.Button();
-            this.txtYear = new System.Windows.Forms.TextBox();
-            this.txtKeyPrefix = new System.Windows.Forms.TextBox();
+            this.cmbKeyPrefix = new System.Windows.Forms.ComboBox();
+            this.numYear = new System.Windows.Forms.NumericUpDown();
+            ((System.ComponentModel.ISupportInitialize)(this.numYear)).BeginInit();
             this.SuspendLayout();
             // 
             // btnStart
@@ -122,34 +123,47 @@
             this.btnExportPapers.UseVisualStyleBackColor = true;
             this.btnExportPapers.Click += new System.EventHandler(this.btnExportPapers_Click);
             // 
-            // txtYear
+            // cmbKeyPrefix
             // 
-            this.txtYear.Location = new System.Drawing.Point(18, 275);
-            this.txtYear.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.txtYear.Name = "txtYear";
-            this.txtYear.Size = new System.Drawing.Size(88, 23);
-            this.txtYear.TabIndex = 4;
-            this.txtYear.Text = "2022";
+            this.cmbKeyPrefix.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbKeyPrefix.FormattingEnabled = true;
+            this.cmbKeyPrefix.Location = new System.Drawing.Point(120, 275);
+            this.cmbKeyPrefix.Name = "cmbKeyPrefix";
+            this.cmbKeyPrefix.Size = new System.Drawing.Size(175, 23);
+            this.cmbKeyPrefix.TabIndex = 9;
             // 
-            // txtKeyPrefix
+            // numYear
             // 
-            this.txtKeyPrefix.Location = new System.Drawing.Point(120, 275);
-            this.txtKeyPrefix.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.txtKeyPrefix.Name = "txtKeyPrefix";
-            this.txtKeyPrefix.Size = new System.Drawing.Size(175, 23);
-            this.txtKeyPrefix.TabIndex = 4;
-            this.txtKeyPrefix.Text = "conf/sigmod";
+            this.numYear.Location = new System.Drawing.Point(18, 275);
+            this.numYear.Maximum = new decimal(new int[] {
+            2050,
+            0,
+            0,
+            0});
+            this.numYear.Minimum = new decimal(new int[] {
+            1900,
+            0,
+            0,
+            0});
+            this.numYear.Name = "numYear";
+            this.numYear.Size = new System.Drawing.Size(89, 23);
+            this.numYear.TabIndex = 10;
+            this.numYear.Value = new decimal(new int[] {
+            2022,
+            0,
+            0,
+            0});
             // 
             // FrmDBLPExtract
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(973, 392);
+            this.Controls.Add(this.numYear);
+            this.Controls.Add(this.cmbKeyPrefix);
             this.Controls.Add(this.barProgress);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.txtKeyPrefix);
-            this.Controls.Add(this.txtYear);
             this.Controls.Add(this.txtDBLPfile);
             this.Controls.Add(this.btnExportPapers);
             this.Controls.Add(this.btnExportDb);
@@ -159,6 +173,7 @@
             this.Name = "FrmDBLPExtract";
             this.Text = "DBLP Extraction";
             this.Load += new System.EventHandler(this.FrmDBLPExtract_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.numYear)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -174,8 +189,8 @@
         private System.Windows.Forms.Button btnIndex;
         private System.Windows.Forms.Button btnExportDb;
         private System.Windows.Forms.Button btnExportPapers;
-        private System.Windows.Forms.TextBox txtYear;
-        private System.Windows.Forms.TextBox txtKeyPrefix;
+        private System.Windows.Forms.ComboBox cmbKeyPrefix;
+        private System.Windows.Forms.NumericUpDown numYear;
     }
 }
 

@@ -29,6 +29,8 @@
             //    Newtonsoft.Json.Formatting.Indented,
             //    new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
             //File.WriteAllText(@"..\..\data2.json", json);
+            this.cmbKeyPrefix.Items.Clear();
+            this.cmbKeyPrefix.Items.AddRange(this.GetAvailablePrefixes());
         }
 
         private void btnStart_Click(object sender, EventArgs eventarg)
@@ -46,6 +48,26 @@
             //var fw = FilterByWords(rs, words, yearstart, wordStats)
             var yearstart = 2011;
             var yearend = 2023;
+
+            var clses = GetAvailablePrefixes();
+            var fw = FilterByKeyPrefix(rs, clses, (yearstart, yearend))
+                .Select(_ => new ExportPaper(_))
+                .ToArray();
+
+            var lz4Options = MessagePackSerializerOptions.Standard.WithCompression(MessagePackCompression.Lz4BlockArray);
+            var data = MessagePackSerializer.Serialize(fw, lz4Options);
+            File.WriteAllBytes(@"..\..\data.bin", data);
+
+
+            //var json = JsonConvert.SerializeObject(
+            //    new { records = fw, stats = wordStats, filename = Path.GetFileName(this.txtDBLPfile.Text) },
+            //    Newtonsoft.Json.Formatting.Indented,
+            //    new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+            //File.WriteAllText(@"..\..\papers.js", "var papers = " + json);
+        }
+
+        private string[] GetAvailablePrefixes()
+        {
             var dbaclass = new[] {
                 "journals/tods/",
                 "journals/tois/",
@@ -66,21 +88,7 @@
             var otherclass = new string[] {
                 "journals/pvldb/",
             };
-            var clses = new[] { dbaclass, dbbclass, dbcclass, otherclass }.SelectMany(_ => _).ToArray();
-            var fw = FilterByKeyPrefix(rs, clses, (yearstart, yearend))
-                .Select(_ => new ExportPaper(_))
-                .ToArray();
-
-            var lz4Options = MessagePackSerializerOptions.Standard.WithCompression(MessagePackCompression.Lz4BlockArray);
-            var data = MessagePackSerializer.Serialize(fw, lz4Options);
-            File.WriteAllBytes(@"..\..\data.bin", data);
-
-
-            //var json = JsonConvert.SerializeObject(
-            //    new { records = fw, stats = wordStats, filename = Path.GetFileName(this.txtDBLPfile.Text) },
-            //    Newtonsoft.Json.Formatting.Indented,
-            //    new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
-            //File.WriteAllText(@"..\..\papers.js", "var papers = " + json);
+            return new[] { dbaclass, dbbclass, dbcclass, otherclass }.SelectMany(_ => _).ToArray();
         }
 
         private IEnumerable<DblpRecord> FilterByKeyPrefix(IEnumerable<DblpRecord> records, string[] keyPrefixes, (int start, int end) year)
@@ -196,7 +204,7 @@
         private void btnExportPapers_Click(object sender, EventArgs e)
         {
             this.btnExportPapers.Enabled = false;
-            Exporter.Export(this.txtKeyPrefix.Text, this.txtYear.Text);
+            Exporter.Export(this.cmbKeyPrefix.SelectedItem as string, this.numYear.Value.ToString());
             this.btnExportPapers.Enabled = true;
         }
     }
