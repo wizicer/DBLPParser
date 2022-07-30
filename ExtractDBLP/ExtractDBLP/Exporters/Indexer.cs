@@ -1,5 +1,6 @@
-﻿namespace ExtractDBLPForm;
+﻿namespace ExtractDBLPForm.Exporters;
 
+using ExtractDBLPForm.Models;
 using Lucene.Net.Analysis.En;
 using Lucene.Net.Documents;
 using Lucene.Net.Index;
@@ -10,7 +11,7 @@ using System.IO;
 
 public class Indexer
 {
-    const LuceneVersion luceneVersion = LuceneVersion.LUCENE_48;
+    private const LuceneVersion luceneVersion = LuceneVersion.LUCENE_48;
 
     public static void ProduceIndex()
     {

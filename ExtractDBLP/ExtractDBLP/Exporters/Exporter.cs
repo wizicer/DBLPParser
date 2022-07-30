@@ -1,5 +1,6 @@
-﻿namespace ExtractDBLPForm;
+﻿namespace ExtractDBLPForm.Exporters;
 
+using ExtractDBLPForm.Models;
 using MessagePack;
 using System;
 using System.IO;

@@ -1,4 +1,4 @@
-﻿namespace ExtractDBLPForm
+﻿namespace ExtractDBLPForm.Models
 {
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
