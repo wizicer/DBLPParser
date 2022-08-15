@@ -11,6 +11,7 @@ public class PublisherPrefixs
             "journals/tois/",
             "journals/tkde/",
             "journals/vldb/",
+            "journals/pvldb/",
             "conf/sigmod/",
             "conf/kdd/",
             "conf/icde/",
