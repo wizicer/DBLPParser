@@ -65,8 +65,11 @@ public class ExportPaper
         authors = record.authors;
         if (record is Paper p)
         {
+            volume = p.volume;
+            pages = p.pages;
             year = p.year;
             doi = p.doi;
+            editions = (p.ee?.Length ?? 0) > 0 ? p.ee : null;
             publisher
                 = p.journal != null ? p.journal
                 : p.booktitle != null ? p.booktitle
@@ -79,7 +82,10 @@ public class ExportPaper
     public string key { get; set; }
     public string title { get; set; }
     public string year { get; set; }
+    public string volume { get; set; }
+    public string pages { get; set; }
     public string doi { get; set; }
     public string publisher { get; set; }
     public string[] authors { get; set; }
+    public string[] editions { get; set; }
 }
