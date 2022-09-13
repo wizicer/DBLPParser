@@ -38,7 +38,9 @@
             this.btnExportPapers = new System.Windows.Forms.Button();
             this.cmbKeyPrefix = new System.Windows.Forms.ComboBox();
             this.numYear = new System.Windows.Forms.NumericUpDown();
+            this.numVolume = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.numYear)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numVolume)).BeginInit();
             this.SuspendLayout();
             // 
             // btnStart
@@ -154,11 +156,19 @@
             0,
             0});
             // 
+            // numVolume
+            // 
+            this.numVolume.Location = new System.Drawing.Point(301, 276);
+            this.numVolume.Name = "numVolume";
+            this.numVolume.Size = new System.Drawing.Size(89, 23);
+            this.numVolume.TabIndex = 10;
+            // 
             // FrmDBLPExtract
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(973, 392);
+            this.Controls.Add(this.numVolume);
             this.Controls.Add(this.numYear);
             this.Controls.Add(this.cmbKeyPrefix);
             this.Controls.Add(this.barProgress);
@@ -174,6 +184,7 @@
             this.Text = "DBLP Extraction";
             this.Load += new System.EventHandler(this.FrmDBLPExtract_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numYear)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numVolume)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -191,6 +202,7 @@
         private System.Windows.Forms.Button btnExportPapers;
         private System.Windows.Forms.ComboBox cmbKeyPrefix;
         private System.Windows.Forms.NumericUpDown numYear;
+        private System.Windows.Forms.NumericUpDown numVolume;
     }
 }
 

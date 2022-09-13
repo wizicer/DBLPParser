@@ -22,13 +22,17 @@ public class Exporter
         col.EnsureIndex(_ => _.key);
     }
 
-    public static void Export(string keyPrefix, string year)
+    public static void Export(string keyPrefix, string year, string volume)
     {
         var lz4Options = MessagePackSerializerOptions.Standard.WithCompression(MessagePackCompression.Lz4BlockArray);
         var papers = MessagePackSerializer.Deserialize<ExportPaper[]>(File.ReadAllBytes(@"..\..\data.bin"), lz4Options);
 
-        var jsonPath = @$"../../{keyPrefix.Replace("/", "")}{year}.json";
-        papers = papers.Where(_ => _.key.StartsWith(keyPrefix) && _.year == year).ToArray();
+        var jsonPath = volume == "0"
+            ? @$"../../{keyPrefix.Replace("/", "")}{year}.json"
+            : @$"../../{keyPrefix.Replace("/", "")}{volume}.json";
+        papers = volume == "0"
+            ? papers.Where(_ => _.key.StartsWith(keyPrefix) && _.year == year).ToArray()
+            : papers.Where(_ => _.key.StartsWith(keyPrefix) && _.volume == volume).ToArray();
         var json = MessagePackSerializer.SerializeToJson(papers);
         File.WriteAllText(jsonPath, json);
     }

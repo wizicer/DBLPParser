@@ -16,7 +16,8 @@ public partial class FrmDBLPExtract : Form
     public FrmDBLPExtract()
     {
         InitializeComponent();
-        this.txtDBLPfile.Text = @"C:\Data\dblp\dblp.xml";
+        //this.txtDBLPfile.Text = @"C:\Data\dblp\dblp.xml";
+        this.txtDBLPfile.Text = @"E:\Works\dblp\dblp.xml";
     }
 
     private void FrmDBLPExtract_Load(object sender, EventArgs e)
@@ -114,7 +115,7 @@ public partial class FrmDBLPExtract : Form
     private void btnExportPapers_Click(object sender, EventArgs e)
     {
         this.btnExportPapers.Enabled = false;
-        Exporter.Export(this.cmbKeyPrefix.SelectedItem as string, this.numYear.Value.ToString());
+        Exporter.Export(this.cmbKeyPrefix.SelectedItem as string, this.numYear.Value.ToString(), this.numVolume.Value.ToString());
         this.btnExportPapers.Enabled = true;
     }
 }
