@@ -40,7 +40,8 @@ public partial class FrmDBLPExtract : Form
     private void btnStart_Click(object sender, EventArgs eventarg)
     {
         //var keywords = "blockchain,merkle,bitcoin,ethereum,hyperledger,monero,eosio,algorand,zcash,filecoin,immutable";
-        var keywords = "sgx,trusted execution,privacy,federat,enclave,trustzone,amd sev";
+        //var keywords = "sgx,trusted execution,privacy,federat,enclave,trustzone,amd sev";
+        var keywords = "zero-knowledge,zero knowledge,authenticated,authentication,authenticating,integrity,verifiable";
         //var yearstart = 2018;
         var words = keywords
             .Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries)
@@ -49,18 +50,23 @@ public partial class FrmDBLPExtract : Form
         var wordStats = words.ToDictionary(_ => _, _ => 0);
 
         var rs = DblpParser.GetRecords(this.txtDBLPfile.Text);
-        //var fw = FilterByWords(rs, words, yearstart, wordStats)
-        var yearstart = 2011;
-        var yearend = 2023;
+        var yearstart = 2013;
+        var yearend = 2024;
 
         var clses = PublisherPrefixs.GetAllDbPublisherPrefixes();
-        var fw = rs.FilterByKeyPrefix(clses, (yearstart, yearend), this.UpdateProgress)
-            .Select(_ => new ExportPaper(_))
-            .ToArray();
+
+        var fp = new List<ExportPaper>();
+        var fw = new List<ExportPaper>();
+
+        var tasks = rs.UpdateProgress(this.UpdateProgress)
+            .MatchKeyPrefix(clses, (yearstart, yearend), _ => fp.Add(new ExportPaper(_)))
+            .MatchWords(words, yearstart, wordStats, _ => fw.Add(new ExportPaper(_)));
+
+        foreach (var task in tasks) { }
 
         var lz4Options = MessagePackSerializerOptions.Standard.WithCompression(MessagePackCompression.Lz4BlockArray);
-        var data = MessagePackSerializer.Serialize(fw, lz4Options);
-        File.WriteAllBytes(@"..\..\data.bin", data);
+        File.WriteAllBytes(@"..\..\words.bin", MessagePackSerializer.Serialize(fw, lz4Options));
+        File.WriteAllBytes(@"..\..\pub.bin", MessagePackSerializer.Serialize(fp, lz4Options));
 
 
         //var json = JsonConvert.SerializeObject(
@@ -70,12 +76,11 @@ public partial class FrmDBLPExtract : Form
         //File.WriteAllText(@"..\..\papers.js", "var papers = " + json);
     }
 
-    private void UpdateProgress(int totalProcessed, int found, bool isFinished = false)
+    private void UpdateProgress(int totalProcessed, bool isFinished = false)
     {
         if (!isFinished && totalProcessed % 10000 != 0) return;
 
         Application.DoEvents();
-        var p = found;
         var i = totalProcessed;
         var progTick = 100_0000;
 
@@ -83,13 +88,13 @@ public partial class FrmDBLPExtract : Form
         {
             if (isFinished)
             {
-                this.lblStatus.Text = $"Finished [{p}/{i}]";
+                this.lblStatus.Text = $"Finished [{i}]";
                 this.barProgress.Maximum = 100;
                 this.barProgress.Value = 100;
             }
             else
             {
-                this.lblStatus.Text = $"Processing {p}/{i} items";
+                this.lblStatus.Text = $"Processing {i} items";
                 var m = (i / progTick) + 1;
                 m = Math.Max(m, 9);
                 this.barProgress.Maximum = m * progTick;

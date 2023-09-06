@@ -16,7 +16,7 @@ public class Indexer
     public static void ProduceIndex()
     {
         var lz4Options = MessagePackSerializerOptions.Standard.WithCompression(MessagePackCompression.Lz4BlockArray);
-        var papers = MessagePackSerializer.Deserialize<ExportPaper[]>(File.ReadAllBytes(@"..\..\data.bin"), lz4Options);
+        var papers = MessagePackSerializer.Deserialize<ExportPaper[]>(File.ReadAllBytes(@"..\..\words.bin"), lz4Options);
 
         var indexConfig = new IndexWriterConfig(luceneVersion, new EnglishAnalyzer(luceneVersion))
         {

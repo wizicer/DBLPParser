@@ -7,17 +7,14 @@ using System.Linq;
 
 public static class FilterExtensions
 {
-    public static IEnumerable<DblpRecord> FilterByKeyPrefix(
+    public static IEnumerable<DblpRecord> MatchKeyPrefix(
         this IEnumerable<DblpRecord> records,
         string[] keyPrefixes,
         (int start, int end) year,
-        Action<int, int, bool> updateProgress)
+        Action<DblpRecord> found)
     {
-        var i = 0;
-        var p = 0;
         foreach (var record in records)
         {
-            i++;
             var isMatch = false;
 
             if (keyPrefixes.Any(_ => record.key.StartsWith(_)))
@@ -31,56 +28,64 @@ public static class FilterExtensions
 
             if (isMatch)
             {
-                p++;
-                yield return record;
+                found(record);
             }
 
-            //if (p > 100) yield break;
-
-            updateProgress(i, p, false);
+            yield return record;
         }
-
-        updateProgress(i, p, true);
     }
-    public static IEnumerable<DblpRecord> FilterByWords(
+
+    public static IEnumerable<DblpRecord> MatchWords(
         this IEnumerable<DblpRecord> records,
         string[] words,
         int yearstart,
         Dictionary<string, int> wordStats,
-        Action<int, int, bool> updateProgress)
+        Action<DblpRecord> found)
     {
-        var i = 0;
-        var p = 0;
         foreach (var record in records)
         {
-            i++;
             var isMatch = false;
-            // filter words
-            foreach (var word in words)
+            if (!string.IsNullOrEmpty(record.title))
             {
-                if (record.title.IndexOf(word, StringComparison.OrdinalIgnoreCase) >= 0)
+                // filter words
+                foreach (var word in words)
                 {
-                    isMatch = true;
-
-                    // filter year
-                    if (isMatch && (record is Paper pp && (!int.TryParse(pp.year, out var y) || y < yearstart)))
+                    if (record.title.IndexOf(word, StringComparison.OrdinalIgnoreCase) >= 0)
                     {
-                        isMatch = false;
-                    }
+                        isMatch = true;
 
-                    if (isMatch) wordStats[word]++;
+                        // filter year
+                        if (isMatch && (record is Paper pp && (!int.TryParse(pp.year, out var y) || y < yearstart)))
+                        {
+                            isMatch = false;
+                        }
+
+                        if (isMatch) wordStats[word]++;
+                    }
                 }
             }
 
             if (isMatch)
             {
-                p++;
-                yield return record;
+                found(record);
             }
 
-            updateProgress(i, p, false);
+            yield return record;
+        }
+    }
+
+    public static IEnumerable<DblpRecord> UpdateProgress(
+        this IEnumerable<DblpRecord> records,
+        Action<int, bool> updateProgress)
+    {
+        var i = 0;
+        foreach (var record in records)
+        {
+            i++;
+            updateProgress(i, false);
+            yield return record;
         }
 
-        updateProgress(i, p, true);
+        updateProgress(i, true);
     }
 }
