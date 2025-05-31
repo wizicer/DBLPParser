@@ -74,6 +74,40 @@ public static class FilterExtensions
         }
     }
 
+    public static IEnumerable<DblpRecord> MatchFederatedLearning(
+        this IEnumerable<DblpRecord> records,
+        int yearstart,
+        Action<DblpRecord> found)
+    {
+        foreach (var record in records)
+        {
+            var isMatch = false;
+            if (!string.IsNullOrEmpty(record.title))
+            {
+                if (record.title.IndexOf("federated", StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    if (record.title.IndexOf("learning", StringComparison.OrdinalIgnoreCase) >= 0)
+                    {
+                        isMatch = true;
+
+                        // filter year
+                        if (isMatch && (record is Paper pp && (!int.TryParse(pp.year, out var y) || y < yearstart)))
+                        {
+                            isMatch = false;
+                        }
+                    }
+                }
+            }
+
+            if (isMatch)
+            {
+                found(record);
+            }
+
+            yield return record;
+        }
+    }
+
     public static IEnumerable<DblpRecord> UpdateProgress(
         this IEnumerable<DblpRecord> records,
         Action<int, bool> updateProgress)

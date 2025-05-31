@@ -17,6 +17,7 @@ public partial class FrmDBLPExtract : Form
     {
         InitializeComponent();
         //this.txtDBLPfile.Text = @"C:\Data\dblp\dblp.xml";
+        // download from https://dblp.uni-trier.de/xml/
         this.txtDBLPfile.Text = @"E:\Works\dblp\dblp.xml";
     }
 
@@ -41,7 +42,8 @@ public partial class FrmDBLPExtract : Form
     {
         //var keywords = "blockchain,merkle,bitcoin,ethereum,hyperledger,monero,eosio,algorand,zcash,filecoin,immutable";
         //var keywords = "sgx,trusted execution,privacy,federat,enclave,trustzone,amd sev";
-        var keywords = "zero-knowledge,zero knowledge,authenticated,authentication,authenticating,integrity,verifiable";
+        //var keywords = "zero-knowledge,zero knowledge,authenticated,authentication,authenticating,integrity,verifiable";
+        var keywords = "federated";
         //var yearstart = 2018;
         var words = keywords
             .Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries)
@@ -51,7 +53,7 @@ public partial class FrmDBLPExtract : Form
 
         var rs = DblpParser.GetRecords(this.txtDBLPfile.Text);
         var yearstart = 2013;
-        var yearend = 2024;
+        var yearend = 2026;
 
         var clses = PublisherPrefixs.GetAllDbPublisherPrefixes();
 
@@ -60,7 +62,9 @@ public partial class FrmDBLPExtract : Form
 
         var tasks = rs.UpdateProgress(this.UpdateProgress)
             .MatchKeyPrefix(clses, (yearstart, yearend), _ => fp.Add(new ExportPaper(_)))
-            .MatchWords(words, yearstart, wordStats, _ => fw.Add(new ExportPaper(_)));
+            //.MatchWords(words, yearstart, wordStats, _ => fw.Add(new ExportPaper(_)))
+            .MatchFederatedLearning(yearstart, _ => fw.Add(new ExportPaper(_)))
+            ;
 
         foreach (var task in tasks) { }
 
@@ -96,7 +100,7 @@ public partial class FrmDBLPExtract : Form
             {
                 this.lblStatus.Text = $"Processing {i} items";
                 var m = (i / progTick) + 1;
-                m = Math.Max(m, 9);
+                m = Math.Max(m, 12);
                 this.barProgress.Maximum = m * progTick;
                 this.barProgress.Value = i;
             }
@@ -122,5 +126,12 @@ public partial class FrmDBLPExtract : Form
         this.btnExportPapers.Enabled = false;
         Exporter.Export(this.cmbKeyPrefix.SelectedItem as string, this.numYear.Value.ToString(), this.numVolume.Value.ToString());
         this.btnExportPapers.Enabled = true;
+    }
+
+    private void btnExportSite_Click(object sender, EventArgs e)
+    {
+        this.btnExportSite.Enabled = false;
+        Exporter.ExportSurveySiteFormat();
+        this.btnExportSite.Enabled = true;
     }
 }
