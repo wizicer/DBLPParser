@@ -43,13 +43,67 @@ public partial class FrmDBLPExtract : Form
         //var keywords = "blockchain,merkle,bitcoin,ethereum,hyperledger,monero,eosio,algorand,zcash,filecoin,immutable";
         //var keywords = "sgx,trusted execution,privacy,federat,enclave,trustzone,amd sev";
         //var keywords = "zero-knowledge,zero knowledge,authenticated,authentication,authenticating,integrity,verifiable";
+
+        string[] learningKeywords = new[]
+        {
+            "learning",
+            "training",
+            "aggregation",
+        };
+
+        string[] decorativeKeywords = new[]
+        {
+            "federated",
+            "distributed",
+            "collaborative",
+            "split",
+            "edge",
+            "swarm",
+            "hierarchical",
+            "cross-silo",
+            "cross-device",
+            "decentralized",
+            "peer-to-peer",
+            "multi-party",
+            "privacy-preserving",
+            "secure",
+            "cross-organizational",
+            "consensus",
+        };
+
+
+        string[] web3Keywords = new[]
+        {
+            "blockchain",
+            "web3",
+            "smart contract",
+            "ethereum",
+            "bitcoin",
+            "decentralized",
+            "token",
+            "on-chain",
+            "onchain",
+            "ipfs",
+            "ownership",
+            "incentive",
+            "zero-knowledge",
+            "zk"
+        };
+
+        var wordsGroups = new string[][]
+        {
+            learningKeywords,
+            decorativeKeywords,
+            //web3Keywords,
+        };
+
         var keywords = "federated";
         //var yearstart = 2018;
         var words = keywords
             .Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries)
             .Select(_ => _.Trim())
             .ToArray();
-        var wordStats = words.ToDictionary(_ => _, _ => 0);
+        var wordStats = new Dictionary<string, int>();
 
         var rs = DblpParser.GetRecords(this.txtDBLPfile.Text);
         var yearstart = 2013;
@@ -63,7 +117,7 @@ public partial class FrmDBLPExtract : Form
         var tasks = rs.UpdateProgress(this.UpdateProgress)
             .MatchKeyPrefix(clses, (yearstart, yearend), _ => fp.Add(new ExportPaper(_)))
             //.MatchWords(words, yearstart, wordStats, _ => fw.Add(new ExportPaper(_)))
-            .MatchFederatedLearning(yearstart, _ => fw.Add(new ExportPaper(_)))
+            .MatchByKeywordGroups(yearstart, wordsGroups, wordStats, _ => fw.Add(new ExportPaper(_)))
             ;
 
         foreach (var task in tasks) { }
@@ -71,6 +125,11 @@ public partial class FrmDBLPExtract : Form
         var lz4Options = MessagePackSerializerOptions.Standard.WithCompression(MessagePackCompression.Lz4BlockArray);
         File.WriteAllBytes(@"..\..\words.bin", MessagePackSerializer.Serialize(fw, lz4Options));
         File.WriteAllBytes(@"..\..\pub.bin", MessagePackSerializer.Serialize(fp, lz4Options));
+        var json = JsonConvert.SerializeObject(
+            new { stats = wordStats, filename = Path.GetFileName(this.txtDBLPfile.Text) },
+            Newtonsoft.Json.Formatting.Indented,
+            new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+        File.WriteAllText(@"..\..\stats.json", json);
 
 
         //var json = JsonConvert.SerializeObject(
