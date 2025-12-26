@@ -18,7 +18,7 @@ public partial class FrmDBLPExtract : Form
         InitializeComponent();
         //this.txtDBLPfile.Text = @"C:\Data\dblp\dblp.xml";
         // download from https://dblp.uni-trier.de/xml/
-        this.txtDBLPfile.Text = @"E:\Works\dblp\dblp.xml";
+        this.txtDBLPfile.Text = @"D:\LargeWork\dblp\origin_data\dblp.xml";
     }
 
     private void FrmDBLPExtract_Load(object sender, EventArgs e)
@@ -76,25 +76,27 @@ public partial class FrmDBLPExtract : Form
         {
             "blockchain",
             "web3",
+            "web 3.0",
             "smart contract",
             "ethereum",
             "bitcoin",
-            "decentralized",
-            "token",
+            //"decentralized",
+            //"token",
             "on-chain",
             "onchain",
             "ipfs",
-            "ownership",
-            "incentive",
-            "zero-knowledge",
-            "zk"
+            "ledger",
+            //"ownership",
+            //"incentive",
+            //"zero-knowledge",
+            //"zk"
         };
 
         var wordsGroups = new string[][]
         {
             learningKeywords,
-            decorativeKeywords,
-            //web3Keywords,
+            //decorativeKeywords,
+            web3Keywords,
         };
 
         var keywords = "federated";
