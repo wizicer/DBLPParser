@@ -10,7 +10,7 @@ var rootCommand = new RootCommand("DBLP Parser CLI - Parse and export DBLP XML d
 var parseCommand = new Command("parse", "Parse DBLP XML file and extract papers");
 var xmlFileOption = new Option<string>("--xml", () => @"D:\LargeWork\dblp\origin_data\dblp.xml", "Path to DBLP XML file") { IsRequired = true };
 var rulesFileOption = new Option<string>("--rules", () => "parse-rules.json", "Path to filter rules JSON file") { IsRequired = true };
-var outputDirOption = new Option<string>("--output", () => ".", "Output directory for generated files");
+var outputDirOption = new Option<string>("--output", () => "./target", "Output directory for generated files");
 
 parseCommand.AddOption(xmlFileOption);
 parseCommand.AddOption(rulesFileOption);
