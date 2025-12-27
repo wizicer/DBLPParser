@@ -1,4 +1,4 @@
-﻿namespace ExtractDBLPForm.Models;
+namespace DblpCli.Models;
 
 using System.Linq;
 

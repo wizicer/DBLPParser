@@ -1,6 +1,6 @@
-﻿namespace ExtractDBLPForm.Parsers;
+namespace DblpCli.Parsers;
 
-using ExtractDBLPForm.Models;
+using DblpCli.Models;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
