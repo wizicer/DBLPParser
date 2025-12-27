@@ -14,6 +14,8 @@ public class DblpParserExporter
 {
     public static void Execute(string xmlFile, string rulesFile, string outputDir)
     {
+        var startTime = DateTime.UtcNow;
+        
         Console.WriteLine($"Parsing DBLP XML: {xmlFile}");
         Console.WriteLine($"Rules file: {rulesFile}");
         Console.WriteLine($"Output directory: {outputDir}");
@@ -45,6 +47,19 @@ public class DblpParserExporter
             Console.WriteLine($"[{filter.Name}] Saved {filter.MatchCount} papers to {filter.OutputPath}");
             Console.WriteLine($"[{filter.Name}] Saved stats to {filter.StatsPath}");
         }
+
+        // Output timing statistics
+        var endTime = DateTime.UtcNow;
+        var duration = endTime - startTime;
+        var totalMatches = filters.Sum(f => f.MatchCount);
+        
+        Console.WriteLine();
+        Console.WriteLine($"=== Statistics ===");
+        Console.WriteLine($"Total processing time: {duration.TotalMinutes:F2} minutes");
+        Console.WriteLine($"Total records processed: {totalMatches:N0} papers");
+        Console.WriteLine($"Processing rate: {(totalMatches / duration.TotalSeconds):F0} papers/second");
+        Console.WriteLine($"Rules executed: {filters.Count} enabled, {disabledRules.Count} disabled");
+        Console.WriteLine($"Output directory: {outputDir}");
     }
 
     private static void ExecuteScanWithFilters(
