@@ -93,24 +93,11 @@ exportSiteCommand.SetHandler((input, output) =>
     Exporter.ExportSurveySiteFormat(input, output);
 }, siteInputOption, siteOutputOption);
 
-// ============ LIST-PREFIXES COMMAND ============
-var listPrefixesCommand = new Command("list-prefixes", "List all available publisher prefixes");
-listPrefixesCommand.SetHandler(() =>
-{
-    var prefixes = PublisherPrefixs.GetAllDbPublisherPrefixes();
-    Console.WriteLine("Available publisher prefixes:");
-    foreach (var prefix in prefixes.Distinct().OrderBy(p => p))
-    {
-        Console.WriteLine($"  {prefix}");
-    }
-});
-
 // Add all commands to root
 rootCommand.AddCommand(parseCommand);
 rootCommand.AddCommand(indexCommand);
 rootCommand.AddCommand(exportDbCommand);
 rootCommand.AddCommand(exportPapersCommand);
 rootCommand.AddCommand(exportSiteCommand);
-rootCommand.AddCommand(listPrefixesCommand);
 
 return await rootCommand.InvokeAsync(args);
