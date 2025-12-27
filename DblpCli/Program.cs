@@ -9,27 +9,17 @@ var rootCommand = new RootCommand("DBLP Parser CLI - Parse and export DBLP XML d
 // ============ PARSE COMMAND ============
 var parseCommand = new Command("parse", "Parse DBLP XML file and extract papers");
 var xmlFileOption = new Option<string>("--xml", () => @"D:\LargeWork\dblp\origin_data\dblp.xml", "Path to DBLP XML file") { IsRequired = true };
+var rulesFileOption = new Option<string>("--rules", () => "parse-rules.json", "Path to filter rules JSON file") { IsRequired = true };
 var outputDirOption = new Option<string>("--output", () => ".", "Output directory for generated files");
-var keywordsOption = new Option<string>("--keywords", () => "federated", "Comma-separated keywords to match");
-var yearStartOption = new Option<int>("--year-start", () => 2013, "Start year for filtering");
-var yearEndOption = new Option<int>("--year-end", () => 2026, "End year for filtering");
-var keywordGroupsOption = new Option<string[]>("--keyword-groups", "Keyword groups (each group is comma-separated, use multiple --keyword-groups for AND logic)") { AllowMultipleArgumentsPerToken = true };
-var keywordGroupsFileOption = new Option<string>("--keyword-groups-file", "Path to JSON file containing keyword groups");
-var publisherPrefixesFileOption = new Option<string>("--publisher-prefixes-file", "Path to JSON file containing publisher prefixes");
 
 parseCommand.AddOption(xmlFileOption);
+parseCommand.AddOption(rulesFileOption);
 parseCommand.AddOption(outputDirOption);
-parseCommand.AddOption(keywordsOption);
-parseCommand.AddOption(yearStartOption);
-parseCommand.AddOption(yearEndOption);
-parseCommand.AddOption(keywordGroupsOption);
-parseCommand.AddOption(keywordGroupsFileOption);
-parseCommand.AddOption(publisherPrefixesFileOption);
 
-parseCommand.SetHandler((xmlFile, outputDir, keywords, yearStart, yearEnd, keywordGroups, keywordGroupsFile, publisherPrefixesFile) =>
+parseCommand.SetHandler((xmlFile, rulesFile, outputDir) =>
 {
-    DblpParserExporter.Execute(xmlFile, outputDir, keywords, yearStart, yearEnd, keywordGroups, keywordGroupsFile, publisherPrefixesFile);
-}, xmlFileOption, outputDirOption, keywordsOption, yearStartOption, yearEndOption, keywordGroupsOption, keywordGroupsFileOption, publisherPrefixesFileOption);
+    DblpParserExporter.Execute(xmlFile, rulesFile, outputDir);
+}, xmlFileOption, rulesFileOption, outputDirOption);
 
 // ============ INDEX COMMAND ============
 var indexCommand = new Command("index", "Create Lucene index from parsed papers");
