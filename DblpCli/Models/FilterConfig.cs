@@ -30,10 +30,19 @@ public class FilterRule
     public string[][]? KeywordGroups { get; set; }
     
     public bool Enabled { get; set; } = true;
+    
+    public OutputFormat Format { get; set; } = OutputFormat.Raw;
 }
 
 public enum FilterType
 {
     PublisherPrefix,
     KeywordGroups
+}
+
+public enum OutputFormat
+{
+    Raw,
+    Json,
+    Bin
 }

@@ -1,7 +1,7 @@
 namespace DblpCli.Exporters.Filters;
 
+using DblpCli.Helpers;
 using DblpCli.Models;
-using MessagePack;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
@@ -46,11 +46,10 @@ public class UnifiedFilter
 
     public void Finish()
     {
-        var lz4Options = MessagePackSerializerOptions.Standard.WithCompression(MessagePackCompression.Lz4BlockArray);
-        File.WriteAllBytes(_outputPath, MessagePackSerializer.Serialize(_matches.ToArray(), lz4Options));
+        SerializationHelper.SerializePapers(_matches.ToArray(), _outputPath, _rule.Format);
 
         var json = JsonConvert.SerializeObject(
-            new { stats = _stats, rule = _rule.Name, count = _matches.Count },
+            new { stats = _stats, rule = _rule.Name, count = _matches.Count, format = _rule.Format.ToString().ToLower() },
             Formatting.Indented,
             new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
         File.WriteAllText(_statsPath, json);

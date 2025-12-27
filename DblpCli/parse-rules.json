@@ -7,6 +7,7 @@
       "start": 2013,
       "end": 2026,
       "enabled": true,
+      "format": "Raw",
       "prefixes": [
         "journals/tods/",
         "journals/tois/",
@@ -75,6 +76,7 @@
       "type": "KeywordGroups",
       "start": 2013,
       "enabled": true,
+      "format": "Raw",
       "keywords": [
         ["learning", "training", "aggregation"],
         ["blockchain", "web3", "web 3.0", "smart contract", "ethereum", "bitcoin", "on-chain", "onchain", "ipfs", "ledger"]
