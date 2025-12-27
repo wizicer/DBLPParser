@@ -22,10 +22,17 @@ public class DblpParserExporter
 
         // Load configuration
         var config = LoadConfig(rulesFile);
-        Console.WriteLine($"Loaded {config.Rules.Count} filter rules");
+        var enabledRules = config.Rules.Where(r => r.Enabled).ToList();
+        var disabledRules = config.Rules.Where(r => !r.Enabled).ToList();
+        
+        Console.WriteLine($"Loaded {config.Rules.Count} filter rules ({enabledRules.Count} enabled, {disabledRules.Count} disabled)");
+        if (disabledRules.Count > 0)
+        {
+            Console.WriteLine($"Disabled rules: {string.Join(", ", disabledRules.Select(r => r.Name))}");
+        }
 
-        // Create filters
-        var filters = config.Rules.Select(rule => new UnifiedFilter(rule, outputDir)).ToList();
+        // Create filters (only enabled ones)
+        var filters = enabledRules.Select(rule => new UnifiedFilter(rule, outputDir)).ToList();
 
         // Execute single scan with chained FilterExtensions
         var progressBar = new ProgressBar();

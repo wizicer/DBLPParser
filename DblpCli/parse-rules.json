@@ -2,11 +2,12 @@
   "rules": [
     {
       "name": "publisher",
-      "outputFile": "pub.bin",
+      "output": "pub.bin",
       "type": "PublisherPrefix",
-      "yearStart": 2013,
-      "yearEnd": 2026,
-      "publisherPrefixes": [
+      "start": 2013,
+      "end": 2026,
+      "enabled": true,
+      "prefixes": [
         "journals/tods/",
         "journals/tois/",
         "journals/tkde/",
@@ -70,10 +71,11 @@
     },
     {
       "name": "keywords",
-      "outputFile": "words.bin",
+      "output": "words.bin",
       "type": "KeywordGroups",
-      "yearStart": 2013,
-      "keywordGroups": [
+      "start": 2013,
+      "enabled": true,
+      "keywords": [
         ["learning", "training", "aggregation"],
         ["blockchain", "web3", "web 3.0", "smart contract", "ethereum", "bitcoin", "on-chain", "onchain", "ipfs", "ledger"]
       ]
